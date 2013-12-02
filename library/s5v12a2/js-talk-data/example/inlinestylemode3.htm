@@ -1,0 +1,14 @@
+<style>
+	.hide{display:none}
+</style>
+<p id="foo">I am foo</p>  
+<script type="text/javascript">  
+    var foo = document.getElementById('foo');  
+    document.onclick = function(){  
+		if(foo.className.indexOf('hide') == -1)
+			foo.className += 'hide';
+		else
+			foo.className = foo.className.replace(/hide/g, '');
+    }  
+</script>   
+

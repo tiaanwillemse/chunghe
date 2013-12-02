@@ -1,0 +1,116 @@
+<!doctype html>
+
+<style>
+  .container {
+    height: 250px;
+    width: 250px;
+    background: #ccc;
+    overflow: hidden;
+    margin-bottom:50px;
+    display: inline-block;
+    vertical-align: top;
+  }
+</style>
+
+<p>css max-height, max-width</p>
+<p>ref: <a href="http://www.brunildo.org/test/vertmiddle.html">http://www.brunildo.org/test/vertmiddle.html</a></p>
+<p>ref: <a href="http://www.brunildo.org/test/img_center.html">http://www.brunildo.org/test/img_center.html</a></p>
+
+<div class="container">
+  <img src="portrait.jpg" style="max-width:100%; max-height: 100%; display:block; margin: 0 auto;">
+</div>
+
+<div class="container" style="display:table-cell; vertical-align: middle;">
+  <img src="landscape.jpg" style="max-width: 100%; max-height: 100%; display: block;">
+</div>
+
+
+<p>使用 display: table-cell, 要使用百分比高度的話, parent container 要設 display: table</p>
+<div class="outter" style="height:500px; width:500px; background:#ccc; margin-top:50px; display:table;">
+  <div class="container" style="display:table-cell; vertical-align: middle; height:100%; width:100%;">
+    <img src="landscape.jpg" style="max-width: 100%; max-height: 100%; display: block;">
+  </div>
+</div>
+
+<hr>
+
+<p>a portrait photo (javascript)</p>
+<div class="container contain">
+  <img src="portrait.jpg">
+  <p>background-size: contain</p>
+</div>
+
+<div class="container cover">
+  <img src="portrait.jpg">
+</div>
+
+<hr>
+
+<p>a landscape photo (javascript)</p>
+<div class="container contain">
+  <img src="landscape.jpg">
+</div>
+
+<div class="container cover">
+  <img src="landscape.jpg">
+</div>
+
+<hr>
+
+
+<p>css3 background-size</p>
+<div class="container" style="background-size:contain; background-position: center center; background-repeat: no-repeat; background-image:url(http://chunghe.googlecode.com/svn/trunk/experiment/image.size.contain.cover/portrait.jpg)"> </div>
+
+<div class="container" style="background-size:cover; background-position: center center; background-repeat: no-repeat; background-image:url(http://chunghe.googlecode.com/svn/trunk/experiment/image.size.contain.cover/portrait.jpg)"> </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+  function cal ($container, img) {
+    var contH = $container.height();
+    var contW = $container.width();
+    var imgH = img.height;
+    var imgW = img.width;
+
+    /*
+    if ($container.hasClass('cover')) {
+      if (imgH/imgW <= contH/contW) {
+        img.height = contH;
+        img.style.marginLeft = (contW - img.width) / 2 + 'px';
+      } else {
+        img.width = contW;
+        img.style.marginTop = (contH - img.height) / 2 + 'px';
+      }
+    } else if ($container.hasClass('contain')) {
+
+      if (imgH/imgW >= contH/contW) {
+        img.height = contH;
+        img.style.marginLeft = (contW - img.width) / 2 + 'px';
+      } else {
+        img.width = contW;
+        img.style.marginTop = (contH - img.height) / 2 + 'px';
+      }
+    
+    }
+    */
+
+    if (($container.hasClass('cover') && imgH/imgW <= contH/contW) || ($container.hasClass('contain') && imgH/imgW >= contH/contW)) {
+      img.style.height = contH + 'px';
+      img.style.marginLeft = (contW - img.width) / 2 + 'px';
+    } else {
+      img.style.width = contW + 'px';
+      img.style.marginTop = (contH - img.height) / 2 + 'px';
+    }
+  }
+
+  window.onload = function () {
+
+    var $images = $('img')
+    $images.each(function (index, img) {
+    
+      var container = $(img).closest('.container');
+      if (container.is('.contain, .cover'))
+      cal(container, img);
+
+    });
+  }
+</script>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  .container{margin: 50px; width: 950px; height: 20px; position: relative; background:silver;}
+  .container span{position:absolute; left:0; width:50px; height:20px; background:green; display: block;}
+  .note {width: 700px; margin-left:50px;}
+
+  /* - - - - - - - - - */
+  .container1 span{-webkit-transition-duration: 4s; -webkit-transition-timing-function: ease; -webkit-transition-delay: 2s;}
+  .container1:hover span{left:900px;}
+
+  .container2 span{-webkit-transition-duration: 4s; -webkit-transition-timing-function: linear; -webkit-transition-delay: -2s;}
+  .container2:hover span{left:900px;}
+
+</style>
+<body>
+
+<pre>-webkit-transition-delay: 2s; -webkit-transition-duration: 4s;</pre>
+<div class="container container1"><span></span></div>
+<pre>-webkit-transition-delay: -2s; -webkit-transition-duration: 4s;</pre>
+<p>You can also use negative values for transition-delay, which has an inter- esting effect: The transition begins immediately but skips ahead by the amount of the negative value.</p>
+<div class="container container2"><span></span></div>
+</body>

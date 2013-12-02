@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html>
+<head>
+<style>
+  .flex-container {
+    display: -webkit-flex;
+    display: flex;
+    background: silver;
+    width: 500px;
+    height: 240px;
+  }
+  .flex-start {
+    justify-content: flex-start; /* (default) */
+  }
+  .flex-end {
+    justify-content: flex-end; 
+  }
+  .center {
+    justify-content: center;
+  }
+  .space-between {
+    justify-content: space-between;
+  }
+  .space-around {
+    justify-content: space-around;
+  }
+  .flex-item {
+    background: DeepSkyBlue;
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+  }
+</style>
+</head>
+<body>
+<p>justify-cotent: flex-start | flex-end | space-between | center</p>
+<img src="http://bocoup.com/img/weblog/flex-pack.svg">
+
+<p>justify-content: flex-start</p>
+<div class="flex-container flex-start">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>justify-content: flex-end</p>
+<div class="flex-container flex-end">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>justify-content: space-between</p>
+<div class="flex-container space-between">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>justify-content: center</p>
+<div class="flex-container center">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>justify-content: space-around</p>
+<div class="flex-container space-around">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+
+</body>
+</html>

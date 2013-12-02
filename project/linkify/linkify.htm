@@ -1,0 +1,31 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+	body{font-family:arial}
+	p{padding:0 ; margin:0}
+	a{color:#39c; font-size:16px}
+</style>
+<li>http://tw.yahoo.com</li>
+<li>http://tw.yahoo.com/</li>
+<li>(http://tw.yahoo.com/)</li>
+<li>(http://tw.yahoo.com/foo&amp;bar)</li>
+<li>(http://tw.yahoo.com/foo?bar)</li>
+<li>中文http://tw.yahoo.com中文</li>
+<li>中文http://tw.yahoo.com;</li>
+<li>中文http://tw.yahoo.com,</li>
+<script>
+  var formatText = function(text){
+    //var urlRegex = /\b(https?:\/\/([^\s+]+)\b)/ig; 
+	var urlRegex = /((https?):\/\/[^\s'"'<>()]*)/gi;
+	// '中文'.replace(/[^\x00-\xff]/g, 00)
+	//var urlRegex = /([^\x00-\xff/g])/gi;
+
+    return text.replace(urlRegex, "<a href=\"$1\" target=\"blank\">$1</a>");
+  };
+  var i, li = document.getElementsByTagName('li');
+  for(i=0; i<li.length; i++) {
+  	//console.log(formatText(li[i].innerHTML));
+	li.innerHTML = formatText(li[i].innerHTML);
+	//console.log(formatText(li[i].innerHTML))
+	document.body.innerHTML += '<p>' + formatText(li[i].innerHTML) + '</p>';
+  }
+</script>

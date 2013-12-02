@@ -1,0 +1,45 @@
+<html><head>
+<style type="text/css">
+.centerwrap{
+  display: inline;
+  text-align:center;
+}
+.centerwrap img{border:none}
+.centerwrap a{
+	display:block;
+	text-align:center;
+	vertical-align:middle;
+	height:100px; 
+	width:100px; 
+	border:1px solid #ccc
+}
+.centerwrap a *{
+  vertical-align: middle;
+}
+
+.centerwrap>a{display:table-cell}
+/*\*//*/
+.centerwrap {
+    display: block;
+}
+.centerwrap span {
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+}
+/**/
+.centerwrap span {
+    +display: inline-block;
+    +height: 100%;
+}
+
+</style>
+
+	
+</head>
+<body>
+	<div class="centerwrap">
+		<a href="###"><span></span>
+		<img src="http://developer.yahoo.com/yui/docs/assets/logo.gif"></a>
+	</div>
+</body></html>

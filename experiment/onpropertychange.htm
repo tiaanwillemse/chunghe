@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<head>
+</head>
+<body>
+	<input id="t" onpropertychange="handle()"  type="text" />
+	<input type="button" onclick = "r.innerHTML=''" value="clear" />
+	<input type="button" value="change className" onclick="input.className='test'">
+	<input type="button" value="clear onpropertychange listener" onclick="t.onpropertychange=null" />
+	<input type="button" value="bind onpropertychange listener" onclick="t.onpropertychage='handle()'">
+	<!--<input type="button" value="bind onpropertychange listener" onclick="t.setAttribute('onpropertychange','handle()' )">-->
+
+	<div id="r">
+	</div>
+<script>
+/*
+ * change className will trigger onpropertychange!
+ */
+input = document.getElementById('t');
+r = document.getElementById('r');
+function handle(){
+	//alert(window.event.srcElement.id + ' ' + window.event.type);
+	// window.event.srcElement.id -> 't' 
+	// window.event.type -> onpropertychange
+
+	r.innerHTML += 'onpropertychange' + '<br />';
+}
+</script>
+</body>

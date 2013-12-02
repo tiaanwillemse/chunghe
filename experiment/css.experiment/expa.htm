@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.0/build/reset/reset-min.css">
+<style>
+	img{float:left}
+	p#sec{clear:left}
+	#btn{position:absolute; top:0; right:0}
+
+</style>
+</head>
+<body>
+	<img src="http://www.tjkdesign.com/articles/css-layout/img/noFloat.gif">
+	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean ipsum. Nunc a quam. Proin nibh leo, iaculis eu, dapibus et, bibendum sed, ligula. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut iaculis egestas sem. Donec elit dui, condimentum nec, convallis nec, volutpat ac, metus. Cras tellus. Nunc ac dui ac odio iaculis pellentesque. Nullam viverra rhoncus nunc. Quisque eu lacus. Morbi sed nibh et nunc tristique iaculis. Donec tellus lectus, hendrerit vitae, viverra et, nonummy at, metus. Vivamus semper accumsan odio. Sed vitae nisl eget sapien elementum suscipit. Nulla arcu quam, tincidunt ultricies, imperdiet euismod, dapibus at, purus. Pellentesque nisi velit, aliquam nec, semper non, lacinia non, justo. Maecenas ante massa, mollis sit amet, bibendum sit amet, faucibus at, velit. Donec aliquam lectus.</p>
+	<p id="sec">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean ipsum. Nunc a quam. Proin nibh leo, iaculis eu, dapibus et, bibendum sed, ligula. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut iaculis egestas sem. Donec elit dui, condimentum nec, convallis nec, volutpat ac, metus. Cras tellus. Nunc ac dui ac odio iaculis pellentesque. Nullam viverra rhoncus nunc. Quisque eu lacus. Morbi sed nibh et nunc tristique iaculis. Donec tellus lectus, hendrerit vitae, viverra et, nonummy at, metus. Vivamus semper accumsan odio. Sed vitae nisl eget sapien elementum suscipit. Nulla arcu quam, tincidunt ultricies, imperdiet euismod, dapibus at, purus. Pellentesque nisi velit, aliquam nec, semper non, lacinia non, justo. Maecenas ante massa, mollis sit amet, bibendum sit amet, faucibus at, velit. Donec aliquam lectus.</p>
+	<input type="button" value="cancel clear" id="btn"></input>
+</body>
+<script>
+	status = 'both';
+	document.getElementById('btn').onclick = function(){
+		if(status=='both'){
+			console.log('status = ' + document.getElementById('sec').style.clear);
+			document.getElementById('sec').style.clear = 'none'
+		}
+		else{
+			console.log('status = ' + document.getElementById('sec').style.clear);
+			document.getElementById('sec').style.clear = 'left'
+		}
+			
+	}
+</script>
+</html>

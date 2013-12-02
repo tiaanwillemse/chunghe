@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<style>
+  #text {width:40px;} 
+  .container{padding-top: 80px; width: 950px; margin: 0 auto;}
+  .threed {outline: 4px dashed silver; width: 230px; display: inline-block; margin:0 100px 100px 0; opacity:0.75; position:relative; z-index:10;}
+  .threed div {background: #fff; border: 10px solid #000; padding: 10px;}
+  .container p {width: 500px; font-family:monospace; font-size: 15px;}
+  /* - - - - - - - - - - - */
+
+
+</style>
+<body>
+
+<div class="container">
+  <p>-webkit-transform: translate(20px, 20px)</p>
+  <div class="threed">
+    <div>
+      <h2>The book of</h2>
+      <h1>CSS3</h1>
+    </div>
+  </div>
+  <p>-webkit-transform: translate(-20px, 20px)</p>
+  <div class="threed">
+    <div>
+      <h2>The book of</h2>
+      <h1>CSS3</h1>
+    </div>
+  </div>
+  <p>-webkit-transform: translate(50%, 50%)</p>
+  <div class="threed">
+    <div>
+      <h2>The book of</h2>
+      <h1>CSS3</h1>
+    </div>
+  </div>
+
+</div>
+
+</div>
+<script src="../../../library/jquery-1.7.2.js"></script>
+<script>
+
+window.onload = function () {
+
+  $('.container .threed').each(function (index, el) {
+    console.log (el)
+    $el = $(el)
+    $div = $('<div>').css({
+      'height': $el.height(),
+      'width': $el.width(),
+      'position': 'absolute',
+      'left': $el.position().left,
+      'top': $el.position().top,
+      'background': 'silver'
+    })
+    $(document.body).append($div);
+  });
+
+  $('.container .threed')[0].style.webkitTransform = 'translate(20px, 20px)';
+  $('.container .threed')[1].style.webkitTransform = 'translate(-20px, 20px)';
+  $('.container .threed')[2].style.webkitTransform = 'translate(50%, 50%)';
+}
+  
+</script>

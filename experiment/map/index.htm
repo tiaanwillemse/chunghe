@@ -1,0 +1,135 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css"> 
+	<style>
+
+	.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; } 
+	.clearfix {zoom:1}
+
+	/*button style borrowed from doc.google.com*/
+	.btn, .btn:visited{
+		color:#334455 !important;
+		cursor:pointer;
+		float:left;
+		font-size:12px;
+		margin:0 5px 5px 0;
+		outline:none;
+		text-decoration:none;
+	}
+	.btn b{
+		display:block; 
+		float:left; 
+		font-weight:normal; 
+		margin:0 3px 0 0; 
+		position:relative;
+		background: #fff url(img/button-bg.gif) repeat-x left bottom;
+		border: solid #bcc7d4;
+		border-width: 1px 0;
+	}
+	.btn b b{
+		background: none; 
+		display:block; 
+		position:relative; 
+		margin:0 -1px; 
+		border-width: 0 1px
+	}
+	.btn b b b {
+		margin:0; 
+		border-width:0; 
+		padding:2px 5px;
+	}
+	.btn:active b{background-image:none; background-color:#ccc}
+	.btn:active b b{background-color: transparent}
+
+	html{
+		background-color:#E0E6F1;
+	}
+	body{
+		background-color:transparent;
+		background-image:url(img/page-grad-bg.gif);
+		background-repeat:repeat-x;
+	}
+
+	
+	#doc{background-color:#f7f7f7; border-left:1px solid #ddd; border-right:1px solid #ddd}
+	/* #hd */
+	#hd{height:150px; background: transparent url(img/page-bg.gif) repeat-x}
+
+	/* #bd */
+	.yui-nav{width:100%; background: transparent url(img/navbar_bg.png) repeat scroll left top}
+	.yui-nav li{float:left; border-right:1px solid #5599dd; list-style-type:none}
+	.yui-nav li.selected{background:transparent url(img/navbar_curr_bg.png) repeat scroll left top}
+	.yui-nav li a{color:#eee; text-decoration:none; outline:none; display:block; padding:5px 15px}
+	.yui-nav li a em{font-weight:bold}
+	.yui-nav li a:hover{background: url(img/navbar_hover_bg.png)}
+	.yui-nav li.selected a:hover{background:none}
+	.yui-content{padding:1em}
+
+	/* #ft */
+	#ft{text-align:center; font-size:12px; color:#aaa; padding: 3em 0 1em;  line-height:1.4 }
+	#ft ul li{display:inline}
+	#ft ul li a{text-decoration:none; color:#aaa; padding:0 2px}
+	</style>
+</head>
+<body>
+	<div id="doc" class="yui-t2">
+		<div id="hd"></div>
+		<div id="bd">
+			<div id="tab" class="yui-navset"> 
+				<ul class="yui-nav clearfix"> 
+					<li class="selected"><a href="#tab1"><em>Google map</em></a></li> 
+					<li><a href="#tab2"><em>Twitter whale</em></a></li> 
+					<li><a href="#tab3"><em>About</em></a></li> 
+				</ul>             
+				<div class="yui-content"> 
+					<div>
+						<div id="map" style="width:600px; height:350px; margin:0 auto"></div>
+						<style>
+						</style>
+						<!--<p>
+							<a class="btn"><b><b><b>OK</b></b></b></a>
+							<a class="btn"><b><b><b>Cancel</b></b></b></a>
+						</p>-->
+					</div> <!-- end of tab1 content -->
+					<div style="display:none; text-align:center">
+						<a href="http://www.flickr.com/photos/birdegg/2661034753/" title="whale by birdegg, on Flickr"><img src="http://farm4.static.flickr.com/3154/2661034753_9c956062b8.jpg" width="500" height="375" alt="whale" /></a>
+					</div> <!-- end of tab2 content --> 
+					<div style="display:none">
+						<a href="http://www.flickr.com/photos/birdegg/2658551398/" title="blackox_vstone_glow by birdegg, on Flickr"><img src="http://farm3.static.flickr.com/2189/2658551398_7c84507541_m.jpg" width="240" height="156" alt="blackox_vstone_glow" /></a>
+					</div> <!-- end of tab3 content-->
+				</div> 
+			</div> 
+		</div>
+		<div id="ft">
+			<ul>
+				<li><a href="http://tw.rd.yahoo.com/referurl/wretch/index/f/tos/*http://tw.info.yahoo.com/legal/utos.html">服務條款</a>· </li>
+				<li><a href="http://tw.rd.yahoo.com/referurl/wretch/index/f/pri/*http://info.yahoo.com/privacy/tw/yahoo/">隱私權政策</a>· </li>
+				<li><a href="http://tw.rd.yahoo.com/referurl/wretch/index/f/press/*http://www.wretch.cc/etc/press.html">新聞中心</a>· </li>
+				<li><a href="http://tw.rd.yahoo.com/referurl/wretch/index/f/contact/*http://www.wretch.cc/common/contact">聯絡我們</a>· </li>
+				<li><a href="http://tw.rd.yahoo.com/referurl/wretch/index/f/mkt/*http://tw.emarketing.yahoo.com/wretch/">網路行銷</a>· </li>
+				<li class="last"><a href="http://tw.rd.yahoo.com/referurl/wretch/index/f/hire/*http://tw.info.yahoo.com/careers">招賢納士</a></li>
+			</ul>
+			<p>&copy; 2008 Yahoo!, Inc.</p>
+		</div><!-- end of div id="ft"-->
+	</div>
+</body>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yahoo-dom-event/yahoo-dom-event.js&2.5.2/build/element/element-beta-min.js&2.5.2/build/tabview/tabview-min.js"></script> 
+<script type="text/javascript"> 
+var tab = new YAHOO.widget.TabView("tab"); 
+</script>  
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAALH5ivltM4DWW5OYq216vDhT2zYU4B9WYsjmCzi0CF23zxM65bxT0CSOkXO0BI8AKxPxBxRKWHXDUwQ" type="text/javascript"></script>
+<script>
+function load() {
+  if (GBrowserIsCompatible()) {
+	var map = new GMap2(document.getElementById("map"));
+	map.setCenter(new GLatLng(25.028509, 121.521535), 17);
+	map.openInfoWindow(map.getCenter(), document.createTextNode('\u53F0\u5317\u5E02\u4E2D\u6B63\u5340\u7F85\u65AF\u798F\u8DEF\u4E8C\u6BB5'));
+  }
+}
+
+window.onload = load;
+</script>
+
+</html>

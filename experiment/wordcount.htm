@@ -1,0 +1,99 @@
+<style>
+
+	.warning{color:red}
+</style>
+<div id="wrap">
+<textarea class="inputtext" style="width:400px; height: 200px;">
+</textarea>
+<div class="wordcount"></div>
+<div class="warning"></div>
+</div>
+<script type="text/javascript" src="../library/yui/yahoo-dom-event.js"></script>
+<script type="text/javascript">
+
+	var YUD = YAHOO.util.Dom, YUE = YAHOO.util.Event;
+	/*
+	 * tag id="oModule" width className : inputtext, wordCount, warning
+	 * */
+	var wordCountDown = function(oModule, iMaxWord){
+		// input field
+		var dText = YUD.getElementsByClassName('inputtext',null,oModule)[0];
+		// count for number of words input
+		var dCount = YUD.getElementsByClassName('wordcount',null,oModule)[0];
+		var dWarning = YUD.getElementsByClassName('warning',null,oModule)[0];
+		var iCountId = 0;
+
+		var wordCount = function(e){
+			if(!e) e = window.event;
+
+			//dWarning.innerHTML = e.srcElement.innerHTML + e.srcElement.tagName;
+			if(dText.value.length>iMaxWord) {
+				dText.value = dText.value.substring(0, iMaxWord);
+				dText.scrollTop = dText.scrollHeight - dText.clientHeight;
+				dWarning.innerHTML= '(max word exceed:' + iMaxWord + ')'; 
+				YUD.setStyle(dWarning, 'display', 'block');
+			} else {
+				//YUD.setStyle(dWarning,'display','none');
+			}
+			dCount.innerHTML = dText.value.length;
+		}
+
+		/* oninput for mozilla, onpropertychange for ie */
+		if(dText.addEventListener){
+			dText.addEventListener('input', wordCount, false);
+		}
+		else if(dText.attachEvent){
+			dText.attachEvent('onpropertychange', wordCount);
+		}
+	}
+	wordCountDown(document.getElementById('wrap'), 10);
+	
+	
+
+
+// 有一些輸入法的 keypress event 不會 fire
+/*
+
+YTWAU.Util = {
+	wordCountDown:function(oModule,iMaxWord) {
+		var dText = YUD.getElementsByClassName('inputtext',null,oModule)[0];
+		var dCount = YUD.getElementsByClassName('wordcount',null,oModule)[0];
+		var dWarning = YUD.getElementsByClassName('warning',null,oModule)[0];
+		var iCountId = 0;
+		//var iTemp = 0;
+		var countAndCheck = function() {
+			//var sTemp = dText.value;
+			//var iCount = iMaxWord - dText.value.replace(/[^\x00-\xff]/g,"00").length;
+			var iCount = iMaxWord - dText.value.length;
+			dCount.innerHTML = iCount; //+ ',' + ++iTemp;
+			if(iCount<0) {
+				dText.value = dText.value.substring(0,50);
+				dText.scrollTop = dText.scrollHeight - dText.clientHeight;
+				YUD.setStyle(dCount.parentNode,'display','none');
+				
+				YUD.setStyle(dWarning,'display','block');
+				dWarning.innerHTML="（最多填寫50個中文字）";
+			} else {
+				YUD.setStyle(dCount.parentNode,'display','block');
+				YUD.setStyle(dWarning,'display','none');
+			}
+		};
+		var doCount = function(e) {
+			if(e.keyCode == 229) {
+				if(!iCountId) {
+					iCountId = setInterval(countAndCheck,500);
+				}
+			} else {
+				clearInterval(iCountId);
+				iCountId = 0;
+			}
+			countAndCheck();
+			setTimeout(countAndCheck,500);
+		};
+		countAndCheck();
+		YUE.addListener(dText,'keydown',doCount);
+		YUE.addListener(dText,'blur',function(e){clearInterval(iCountId);});
+	}
+}
+*/
+</script>

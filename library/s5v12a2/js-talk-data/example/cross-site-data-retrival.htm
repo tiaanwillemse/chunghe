@@ -1,0 +1,14 @@
+
+<script>
+document.onclick = function(){
+    var script = document.createElement('script');
+    script.src = 'http://kitty.2y.idv.tw/~chfang/cross-site-data.js';
+    document.documentElement.appendChild(script);
+    var init = function(){
+		for(add in address){
+			document.documentElement.innerHTML += '<li><a href="'+address[add]+'">'+add+'</a></li>'
+		}	
+    }
+    script.onload = init;
+}
+</script>

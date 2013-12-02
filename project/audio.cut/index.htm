@@ -1,0 +1,134 @@
+<!doctype html>
+
+<style>
+  canvas{background:#efefef;}
+</style>
+<canvas id="canvas" height="250" width="800"></div>
+<audio id="audio" src="./fly.mp3"></audio>
+
+<script>
+// http://webaudio-io2012.appspot.com/#1
+//var audio = document.getElementById('audio');
+
+var soundBuffer, audioContext = new webkitAudioContext();
+
+
+var request = new XMLHttpRequest();
+request.open("GET", "yellow.mp3", true);
+request.responseType = "arraybuffer";
+request.onload = function() {
+  audioContext.decodeAudioData(request.response, function(buffer) {
+    //console.log('buffer', buffer);
+    soundBuffer = buffer;
+    // playSoundWithDelay(buffer);
+    visualizeSound(buffer);
+  });
+}
+request.send();
+
+function playSound(buffer) {
+  var sourceNode = audioContext.createBufferSource();
+  sourceNode.buffer = buffer;
+  sourceNode.connect(audioContext.destination);
+  sourceNode.noteOn(0);
+}
+
+// create a delayNode
+function playSoundWithDelay(buffer) {
+  var sourceNode = audioContext.createBufferSource();
+  sourceNode.buffer = buffer;
+  var delayNode = audioContext.createDelayNode();
+  delayNode.delayTime.value = 0.5;
+  var gainNode = audioContext.createGainNode();
+  gainNode.gain.value = 0.5;
+
+  sourceNode.connect(audioContext.destination);
+  sourceNode.connect(gainNode);
+  gainNode.connect(delayNode);
+  delayNode.connect(gainNode);
+  delayNode.connect(audioContext.destination);
+  sourceNode.noteOn(0);
+}
+
+// visualize stuff here
+
+var analyserNode = null,
+    elCanvas = document.getElementById('canvas');
+
+function updateAnalyser(analyserNode, drawContext) {
+  var SPACER_WIDTH = 3;
+  var BAR_WIDTH = 3;
+  var OFFSET = 100;
+  var CUTOFF = 23;
+  var CANVAS_WIDTH = 800;
+  var CANVAS_HEIGHT = 250;
+  var numBars = Math.round(CANVAS_WIDTH / SPACER_WIDTH) * 2;
+  var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+
+  analyserNode.getByteFrequencyData(freqByteData);
+
+  drawContext.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  drawContext.fillStyle = '#F6D565';
+  drawContext.lineCap = 'round';
+  var multiplier = analyserNode.frequencyBinCount / numBars;
+
+  // Draw rectangle for each frequency bin.
+  for (var i = 0; i < numBars; ++i) {
+    var magnitude = 0;
+    var offset = Math.floor(i * multiplier);
+    // gotta sum/average the block, or we miss narrow-bandwidth spikes
+    for (var j = 0; j < multiplier; j++)
+    magnitude += freqByteData[offset + j];
+    magnitude = magnitude / multiplier;
+    var magnitude2 = freqByteData[i * multiplier];
+    drawContext.fillStyle = "hsl( " + Math.round((i * 360) / numBars) + ", 100%, 50%)";
+    drawContext.fillRect(i * SPACER_WIDTH, CANVAS_HEIGHT, BAR_WIDTH, -magnitude);
+  }
+}
+
+function updateVisualizer(time) {
+  //console.log('elCanvas', elCanvas);
+  updateAnalyser(analyserNode, elCanvas.getContext('2d'));
+  rafId = window.webkitRequestAnimationFrame(updateVisualizer);
+}
+
+function visualizeSound() {
+
+  sourceNode = audioContext.createBufferSource();
+  sourceNode.buffer = soundBuffer;
+  sourceNode.loop = false;
+
+  analyserNode = audioContext.createAnalyser();
+  analyserNode.fftSize = 2048;
+  analyserNode.maxDecibels = 0;
+
+  sourceNode.connect(audioContext.destination);
+  sourceNode.connect(analyserNode);
+  sourceNode.noteOn(0);
+  updateVisualizer(0);
+
+  // var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+  // analyserNode.getByteFrequencyData(freqByteData);
+  // console.log('freqByteData', freqByteData);
+}
+
+
+/*
+window.addEventListener('load', init, false);
+function init() {
+  try {
+    var audioContext = new webkitAudioContext();
+    var sourceNode = context.createMediaElementSource(audio);
+    var analyser  = audioContext.createAnalyser();  
+    analyser.fftsize = 1024;
+    console.log('context', context);
+    console.log('source', sourceNode);
+  }
+  catch(e) {
+    alert('Web Audio API is not supported in this browser');
+  }
+}*/
+</script>
+
+
+

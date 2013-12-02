@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset/reset-min.css">
+<style>
+body{padding: 5em 1em; font-size:13px; font-family:arial}
+
+div{margin-bottom:1em}
+#b1 input{ border:1px solid #ccc; background:#36c; color:#fff; cursor:pointer}
+#b2 input{ border:1px solid #ccc; background:#36c; color:#fff; cursor:pointer; width:150px; height:50px}
+#b3 input{  cursor:pointer; width:150px; height:50px}
+</style>
+</head>
+<body>
+	<div id="b0">
+		<p>no style at all</p>
+		<input type="button" value="input button">
+		<input type="button" value="中文的 input button">
+	</div>
+	<div id="b1">
+		<p>add backgroundcolor and fontcolor, ie下中文的按鈕比較高, 而且中文的按鈕margin-bottom比margin-top大</p>	
+		<input type="button" value="input button">
+		<input type="button" value="中文的 input button">
+	</div>
+	<div id="b2">
+		<p>add button height 50px width 150px</p>
+		<p>result: ie/firefox both result in 50px/150px button</p>
+		<input type="button" value="input button">
+		<input type="button" value="中文的 input button">
+	</div>
+	<div id="b3">
+		<p>remove backgroundcolor and color</p>
+		<input type="button" value="input button">
+		<input type="button" value="中文的 input button">
+	</div>
+</body>
+</html>

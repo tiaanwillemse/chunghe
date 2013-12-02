@@ -1,0 +1,325 @@
+html{color:#000;background:#666;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}sup{vertical-align:text-top;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+
+body{font:13px/1.231 arial, sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+
+/*---------------------------------------------------*/
+#navbar {
+display: none;
+}
+
+blockquote {
+  white-space: pre;
+  margin:0 2em 1em;
+  font-family: Georgia, serif;
+  background: transparent url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%26%00%00%00%1D%08%03%00%00%00%F1%5E%EE%F2%00%00%03%00PLTE%FF%FF%FF%FF%FF%FF%FF%CD%9B%FF%CE%9D%FF%FE%FE%FF%FE%FD%FF%D7%AF%FF%F5%EB%FF%F5%EC%FF%F9%F3%FF%E1%C4%FF%D0%A1%FF%F2%E6%FF%FD%FB%FF%DA%B5%FF%DB%B7%FF%D7%B0%FF%D0%A2%FF%D9%B4%FF%D6%AD%FF%ED%DC%FF%F7%F0%FF%E5%CC%FF%F1%E3%FF%D4%A9%FF%E7%CF%FF%E8%D2%FF%E6%CE%FF%FB%F7%FF%DD%BC%FF%E2%C5%FF%EA%D5%FF%F1%E4%FF%FB%F8%FF%D6%AE%FF%F8%F2%FF%E4%CA%FF%D9%B3%FF%D1%A3%FF%F8%F1%FF%E7%D0%FF%D8%B1%FF%CF%9F%FF%DC%BA%FF%F3%E7%FF%E9%D3%FF%FC%FA%FF%F9%F4%FF%D1%A4%FF%D2%A6%FF%CD%9C%FF%F7%EF%FF%E3%C7%FF%F4%E9%FF%D3%A7%FF%E1%C3%FF%F6%ED%FF%EC%D9%FF%F0%E2%FF%CF%A0%FF%DE%BD%FF%EF%E0%FF%EE%DD%FF%E0%C1%FF%E4%C9%FF%DD%BB%FF%FC%F9%FF%E5%CB%FF%FA%F6%FF%EF%DF%FF%DA%B6%FF%D5%AB%FF%ED%DB%FF%F2%E5%FF%EA%D6%FF%E3%C8%FF%EE%DEQ%04%B5%0D%00%00Q%05%B5%0B%00%00%00%04%B5%0B%00%00%00%05%B5%22%00%00P%04%B5%09%00%00P%05%B5%08%00%00%00%04%B5%2F%00%00P%05%B5%03%00%00Q%04%B5%0F%00%00R%05%B5%13%00%00%00%04%B5%01%00%00%00%05%B5%18%00%00P%04%B5%05%00%00P%05%B5%07%00%00%00%04%B5%17%00%00%00%05%B5)%00%00Q%04%B5%0D%00%00Q%05%B5%11%00%00%00%04%B5%0B%00%00%00%05%B5%25%00%00P%04%B5%09%00%00P%05%B5%0A%00%00%00%04%B5%2F%00%00P%05%B5%04%00%00Q%04%B5%0F%00%00R%07%B5%1F%00%00%00%04%B5%01%00%00%00%05%B5%00%00%00P%04%B5%05%00%00P%05%B5%06%00%00%00%04%B5%17%00%00%00%05%B5(%00%00Q%04%B5%0D%00%00Q%05%B5%0B%00%00%00%04%B5%0B%00%00%00%05%B5%22%00%00P%04%B5%09%00%00P%05%B5%08%00%00%00%04%B5%2F%00%00P%05%B5%03%00%00Q%04%B5%0F%00%00R%05%B5%13%00%00%00%04%B5%01%00%00%00%05%B5%18%00%00P%04%B5%05%00%00P%05%B5%07%00%00%00%04%B5%17%00%00%00%05%B5)%00%00Q%04%B5%0D%00%00Q%05%B5%11%00%00%00%04%B5%0B%00%00%00%05%B5%25%00%00P%04%B5%09%00%00P%05%B5%0A%00%00%00%04%B5%2F%00%00P%05%B5%04%00%00Q%04%B5%0F%00%00R%07%B5%17%00%00%00%04%B5%01%00%00%00%05%B5%00%00%00P%04%B5%05%00%00P%05%B5%06%00%00%00%04%B5%17%00%00%00%05%B5(%00%00Q%04%B5%0D%00%00Q%05%B5%0B%00%00%00%04%B5%0B%00%00%00%05%B5%22%00%00P%04%B5%09%00%00P%05%B5%08%00%00%00%04%B5%2F%00%00P%05%B5%03%00%00Q%04%B5%0F%00%00R%05%B5%13%00%00%00%04%B5%01%00%00%00%05%B5%18%00%00P%04%B5%05%00%00P%05%B5%07%00%00%00%04%B5%17%00%00%00%05%B5)%00%00Q%04%B5%0D%00%00Q%05%B5%11%00%00%00%04%B5%0B%00%00%00%05%B5%25%00%00P%04%B5%09%00%00P%05%B5%0A%00%00%00%04%B5%2F%00%00P%05%B5%04%00%00Q%04%B5%0F%00%00S%07%B5%EB~8%F7%00%00%00%01tRNS%00%40%E6%D8f%00%00%00%09pHYs%00%00%0E%C3%00%00%0E%C3%01%C7o%A8d%00%00%01%2CIDATx%9CmTA%0E%84%20%0Cl%AF%84%84%84%1E%F9%04)j%B2%89'%E2%C9%F8%FF%F7%AC%05%11%8B%CE%CD%C9%B4%D3N%89%00%05%D6%10QH%A0%B0%05O%B4%1E%F7w%F2%5C1a%17a%B8H%BA%AA%E7%C8%0D%EB%ADCw%93%B1%E8RW1%EFM%E6%1E%24%9D%C5H%0F%82%97K%B5%3FI%B6%00%87%22x%2B%AA%1C%15%19%00H%CB%D2G36%B0%F1%97%CCi2%8C%9E%B1%AE%A9%3D%F9%80%A0%89P%83%D5%E4%820%95%1Em%40%AA%B9%A5%FA%D1d%E7%A2%A6%AEge%9A%D8%AE%90j%E3%3C%89%B9%93q%C5%94%8AQ%EA'%DD%DA2%98R%BEW'%18%80%7D%E7%0B3%F7%E8%3B%A8N%F4(%14%FB%3C%CA%CC%BDt%C3Zr%19%60O%D2%2BF%5C%DD%A7%AB~%A5%EE%C5%40%7D%10F1%12%92%C7A%86%FEU%2C%D1%ED%83%AC%14%93*.%EF%F9%B5%C5%8F%9Fo%5E%90_15%13%A3u%FE%CBW%0E%E4T%A4(y%AE%E3%BE%F6%8C~%D1%D3X16%830K%F6%A4%84%18%E4l~%1B%1A%CA8Q%09%F3~v%9C%C7%09%ED%3A%06-%DC%EB%1E%F2%2F%D9%FFwB_%F5%8E%85%C4i%00%00%00%00IEND%AEB%60%82") left top no-repeat;
+}
+blockquote div {
+  color:#444;
+  padding: 0 2.5em;
+  background: transparent        url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%26%00%00%00%1D%08%03%00%00%00%F1%5E%EE%F2%00%00%03%00PLTE%FF%FF%FF%FF%FF%FF%FF%CD%9B%FF%FE%FE%FF%CE%9D%FF%FE%FD%FF%F5%EC%FF%D7%AF%FF%DA%B5%FF%F5%EB%FF%D0%A2%FF%E1%C4%FF%F7%F0%FF%F9%F4%FF%E8%D2%FF%FD%FB%FF%E7%CF%FF%ED%DC%FF%F2%E6%FF%D6%AD%FF%F1%E4%FF%D0%A1%FF%D7%B0%FF%EE%DD%FF%DD%BC%FF%D9%B4%FF%FB%F7%FF%D4%A9%FF%CD%9C%FF%F1%E3%FF%F9%F3%FF%D2%A6%FF%FB%F8%FF%F8%F2%FF%E4%CA%FF%D9%B3%FF%D6%AE%FF%EF%E0%FF%D1%A3%FF%D1%A4%FF%E2%C5%FF%EA%D5%FF%E3%C7%FF%DB%B7%FF%CF%9F%FF%F8%F1%FF%E3%C8%FF%E5%CC%FF%FC%FA%FF%DB%B8%FF%DC%BA%FF%EA%D6%FF%F3%E7%FF%FC%F9%FF%F2%E5%FF%DE%BD%FF%CF%A0%FF%E1%C3%FF%DD%BB%FF%E7%D0%FF%E0%C1%FF%E4%C9%FF%E8%D1%FF%FA%F6%FF%E5%CB%FF%E6%CE%FF%EE%DE%FF%D8%B1%FF%E9%D3%FF%F4%EA%FF%ED%DB%FF%D3%A7%FF%F4%E9%FF%F6%ED%22%00%00%00%05%B5%23%00%00Q%04%B5%0B%00%00P%05%B5%0A%00%00%00%04%B5%08%00%00%00%05%B5%12%00%00P%04%B5%09%00%00P%05%B5%07%00%00%00%04%B5%2C%00%00P%05%B5%03%00%00Q%04%B5%0D%00%00R%06%B5%13%00%00%00%04%B5%01%00%00Q%04%B5%0F%00%00%00%04%B5-%00%00P%05%B5%06%00%00%00%04%B5%22%00%00%00%05%B5%25%00%00Q%04%B5%0B%00%00Q%05%B5%11%00%00%00%04%B5%08%00%00%00%05%B5%19%00%00P%04%B5%09%00%00P%05%B5%08%00%00%00%04%B5%2C%00%00P%05%B5%04%00%00Q%04%B5%0D%00%00R%07%B5%1B%00%00%00%04%B5%01%00%00Q%04%B5%0F%00%00%00%04%B5-%00%00P%05%B5%05%00%00%00%04%B5%22%00%00%00%05%B5%23%00%00Q%04%B5%0B%00%00P%05%B5%0A%00%00%00%04%B5%08%00%00%00%05%B5%12%00%00P%04%B5%09%00%00P%05%B5%07%00%00%00%04%B5%2C%00%00P%05%B5%03%00%00Q%04%B5%0D%00%00%00%06%B5%00%00%00%00%04%B5%01%00%00Q%04%B5%0F%00%00%00%04%B5-%00%00P%05%B5%06%00%00%00%04%B5%22%00%00%00%05%B5%25%00%00Q%04%B5%0B%00%00Q%05%B5%11%00%00%00%04%B5%08%00%00%00%05%B5%19%00%00P%04%B5%09%00%00P%05%B5%08%00%00%00%04%B5%2C%00%00P%05%B5%04%00%00Q%04%B5%0D%00%00R%07%B5%17%00%00%00%04%B5%01%00%00Q%04%B5%0F%00%00%00%04%B5-%00%00P%05%B5%05%00%00%00%04%B5%22%00%00%00%05%B5%23%00%00Q%04%B5%0B%00%00P%05%B5%0A%00%00%00%04%B5%08%00%00%00%05%B5%12%00%00P%04%B5%09%00%00P%05%B5%07%00%00%00%04%B5%2C%00%00P%05%B5%03%00%00Q%04%B5%0D%00%00R%06%B5%13%00%00%00%04%B5%01%00%00Q%04%B5%0F%00%00%00%04%B5-%00%00P%05%B5%06%00%00%00%04%B5%22%00%00%00%05%B5%25%00%00Q%04%B5%0B%00%00Q%05%B5%11%00%00%00%04%B5%08%00%00%00%05%B5%19%00%00P%04%B5%09%00%00P%05%B5%08%00%00%00%04%B5%2C%00%00P%05%B5%04%00%00Q%04%B5%0D%00%00S%07%B5%17%1CL%91%00%00%00%01tRNS%00%40%E6%D8f%00%00%00%09pHYs%00%00%0E%C3%00%00%0E%C3%01%C7o%A8d%00%00%01)IDATx%9CeT%B1%0E%85%20%0C%84%19%26%3A%91%B0%93%C8H%88%A3%81%E5%F9%FF_%F4h%2B%02%F5%269%8F%F6z%A0Ju%B4%13%20%D5Km%B0%15%00%8C%9Bk%08%8C%AA%A7H%1F%0F%E9%ED%A3%8Aa%20%BD%3A%7D%BEd%BC%89%800%91%86%2C%2Fd%C4z.%AC%C8%8F%EC%B7%92%D0%9B%D4M%16%0B%A9%AE%8D%0CM)%B33%5C%CE%EE%24%C8j%8F%3B!%0B%97j%3B%11iX%1Dw%B6)%FD%DB%19%0EY%F4%A8%CB%A8%9C%0C%A7%F9%C6%04T%F7%40%23%09%9B%1D%85K%D8q%0A%F8%3E9%1E%DA%10W%AC%D5%C3%F8%3CYk%E9%19%B8%E9r%D8(%D3J%00%C2L%9D%E08%22%01%1C%F1%5E%89%FA%98%DDP%DE%94%06%7Cg%9C%94a%AE%A7%B4%F6%ED%99dOCq%0B%D8%B0%5C%AFAx9%A7%F63J%26%40%10%84%2CB%A3%5B%FDi%89%FE%D3%FA%85%18%995%82%82%2Cs%5D%92%8Czt%F4%8B%AA%F5%A4%A3L%CC%A2%0D3%3B64%7F%16!B%170%B76%BC0%5E%94%BA0%87%98%17%F3%7D%D7%F99%A1%BBW%CA%5B%FD%2C%FF%1D%ECK%EC%FC%03%A8y%3F%C9d%A7%EFn%00%00%00%00IEND%AEB%60%82") right bottom no-repeat;
+}
+code{background-color:#eee;padding:0 5px}
+
+a{ color:#368; text-decoration:none }
+
+/* Page Structure
+----------------------------------------------- */
+
+#wrap{width:950px; margin:0 auto; background:#fff}
+#wrap4{margin:0 1em}
+#main-wrapper {word-wrap: break-word; /* fix for long text breaking sidebar float in IE */}
+#sidebar-wrapper {word-wrap: break-word; /* fix for long text breaking sidebar float in IE */}
+
+/* Header
+----------------------------------------------- */
+#header .title{display:none}
+.main h2.title{display:none}
+.main .widget-content{text-align:right}
+
+/* Widget
+ * */
+#sidebar .BlogArchive{float:left; width:40%}
+#sidebar #Label1{margin-left:41%; width:59%}
+#sidebar #Label1 li{width:160px; float:left}
+#sidebar{background:#666; color:#ccc; margin:2em -1em 0; padding:2em}
+#sidebar a{color:#eee}
+.widget-item-control img{display:none}
+#sidebar #HTML2{display:none}
+
+/* Posts
+----------------------------------------------- */
+h2.date-header {
+  margin:.5em 0 .5em;
+  color: #000;
+  font-family: Georgia, serif;
+}
+
+.post {
+  line-height:1.6em;
+  font-size: 120%;
+  margin:.5em 0 1.5em;
+}
+
+.post h3 {
+  font-family:Trebuchet MS,sans-serif;
+  font-size: 160%;
+  line-height:1.6em;
+}
+.post h3 a, .post h3 strong {
+  display:block;
+  text-align: center;
+  color:#fff;
+  background:#999;
+}
+
+.post-body {
+  padding:12px 0 0 1em;
+}
+
+.post-body a:hover{
+    background-color: #eee;
+}
+
+.post p { 
+  margin:0 0 .75em;
+}
+.post-footer {
+  color:#999;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size: 78%;
+  line-height: 1.4em;
+}
+
+.comment-link {
+  margin-left:.4em;
+}
+
+.post-footer .post-timestamp,
+.post-footer .post-author {
+  color:#666;
+  }
+.comment-link strong {
+  font-size:130%;
+  }
+.comment-link {
+  margin-left:.4em;
+  }
+.post img {
+  padding:4px;
+  border:1px solid #cde;
+  }
+
+
+/* Comments
+----------------------------------------------- */
+#comments {
+  padding:15px 0 0;
+}
+#comments h4 {
+  margin:1em 0;
+  font-weight: bold;
+  line-height: 1.6em;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  color: $dateHeaderColor;
+  font: bold 78% Georgia Serif;
+  }
+#comments h4 strong {
+  font-size:130%;
+  }
+#comments-block {
+  margin:1em 0 1.5em;
+  line-height:1.4em;
+  }
+#comments-block dt {
+  margin:.5em 0;
+  }
+#comments-block dd {
+  margin:.25em 20px 0;
+  }
+#comments-block dd.comment-timestamp {
+  margin:-.25em 20px 1.5em;
+  line-height: 1.4em;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  }
+#comments-block dd p {
+  margin:0 0 .75em;
+  }
+.deleted-comment {
+  font-style:italic;
+  color:gray;
+  }
+
+.feed-links {
+  clear: both;
+  line-height: 2.5em;
+}
+
+#blog-pager-newer-link {
+  float: left;
+ }
+
+#blog-pager-older-link {
+  float: right;
+ }
+ 
+#blog-pager {   
+  text-align: center; 
+ }
+
+.comment-footer { 
+  font: 78%/1.4em Georgia , Serif;
+ }
+
+/* Sidebar Content
+----------------------------------------------- */
+
+.sidebar ul { 
+  list-style:none;
+  margin-left: 0;
+ }
+
+.sidebar li {
+  margin:0;
+  padding:0 0 .25em 15px;
+  line-height:1.5em;
+  }
+.sidebar p {
+  color:#666;
+  line-height:1.5em;
+  }
+
+
+/* Profile 
+----------------------------------------------- */
+.profile-datablock {
+  margin:.5em 0 .5em;
+ }
+.profile-data {
+  margin:0;
+  font: normal normal 78% Georgia, serif;
+  font-weight: bold;
+  line-height: 1.6em;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  }
+
+.profile-img { 
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 4px;
+  border: 1px solid #cde;
+}
+
+.profile-textblock {
+  margin:.5em 0 .5em;
+  }
+.profile-link {
+  font:78%/1.4em Georgia,Serif;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  }
+
+/* Footer
+----------------------------------------------- */
+
+#footer .widget {
+  margin:0;
+  padding-top:15px;
+  line-height: 1.6em;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  }
+.hi{background: #FFF2CC;}
+/*syntax highlighter*/
+.dp-highlighter
+{
+	font-family:  "Courier New", Courier, mono, serif;
+	font-size: 15px;
+	background: #333;
+	width: 99%;
+	overflow: auto;
+	padding:2px;
+}
+
+/* clear styles */
+.dp-highlighter ol,
+.dp-highlighter ol li,
+.dp-highlighter ol li span 
+{
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.dp-highlighter a,
+.dp-highlighter a:hover
+{
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+.dp-highlighter ol
+{
+	/*list-style: decimal;  for ie */
+	background-color: #333;
+	margin: 0px 0px 1px 0px !important; /* 1px bottom margin seems to fix occasional Firefox scrolling */
+	padding: 5px 0px;
+	color: #5C5C5C;
+}
+
+.dp-highlighter.nogutter ol,
+.dp-highlighter.nogutter ol li
+{
+	list-style: none !important;
+	margin-left: 0px !important;
+}
+
+.dp-highlighter ol li,
+.dp-highlighter .columns div
+{
+	list-style-type:none;
+	background-color: #333;
+	color: #5C5C5C;
+	padding: 2px 10px; 
+	margin: 0 !important;
+	line-height: 14px;
+}
+
+.dp-highlighter .columns
+{
+	background-color: #F8F8F8;
+	color: gray;
+	overflow: hidden;
+	width: 100%;
+}
+
+.dp-highlighter .columns div
+{
+	padding-bottom: 5px;
+}
+
+.dp-highlighter ol li.alt
+{
+	background-color: #FFF;
+	color: inherit;
+}
+
+.dp-highlighter ol li span
+{
+	color: white;
+	background-color: inherit;
+}
+/* Language specific styles */
+
+.dp-highlighter .comment, .dp-highlighter .comments { color: #87CEEB; background-color: inherit; }
+.dp-highlighter .string { color: #FFA0A0; background-color: inherit; }
+.dp-highlighter .keyword { color: #98FB98;  background-color: inherit; }
+.dp-highlighter .preprocessor { color: gray; background-color: inherit; }
+ul br, ol br{display:none}

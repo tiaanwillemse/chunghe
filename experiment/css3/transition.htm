@@ -1,0 +1,35 @@
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <style type="text/css" media="screen">
+body{font-size:14px; font-family: "Lucida grande", sans-serif; width:500px;}
+ 
+.target {
+    -webkit-transition-property: -webkit-transform, opacity;
+    -webkit-transition-duration: 4s 2s;
+    -webkit-transition-delay: 2s 0;
+}
+ 
+div.fadeAway {
+    opacity:0;
+    width:300px;
+    -webkit-transform:rotate(45deg);
+}
+ 
+    </style>
+</head>
+<body>
+ 
+<h4>Note: There are actually two types of animations: declared animations and implicit animations. This article describes implicit animations, which are called transitions. Read "Animations" for details on declared animations.</h4>
+ 
+<div class="target" style="width:100px;
+            height:100px;
+            background-color:blue;"
+            onclick="className = 'target fadeAway'">
+Tap to fade
+</div>
+ 
+</body>
+</html>

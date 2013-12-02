@@ -1,0 +1,87 @@
+<!doctype>
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<style>
+	*{margin:0; padding:0}
+	ul{width:600px; margin:2em auto}
+	ul li.on{background:green; color:#fff}
+	ul a{text-decoration:none; color:#36c}
+	ul li {list-style-type:none; border-bottom:2px solid #ccc; padding:3px 5px; cursor:pointer; display:block; *display:inline-block}
+</style>
+<div class="bd" id="bd">
+	<ul id="ul">
+		<li class="135"><p><a href="http://www.wretch.cc/blog/giaji/135"><span class="title">這是心情行業校園團體分身</span></a> - <span class="date">2008-08-28 16:33:00</span></p><p class="summary">這是心情行業校園團體分身</p></li>
+		<li class="134"><p><a href="http://www.wretch.cc/blog/giaji/134"><span class="title">會記憶流行時尚嗎</span></a> - <span class="date">2008-08-20 19:33:00</span></p><p class="summary"/></li>
+		<li class="133"><p><a href="http://www.wretch.cc/blog/giaji/133"><span class="title">這是流行時尚分類</span></a> - <span class="date">2008-08-20 19:32:00</span></p><p class="summary"/></li>
+		<li class="132"><p><a href="http://www.wretch.cc/blog/giaji/132"><span class="title">aaaaaaaaaaaaa</span></a> - <span class="date">2008-08-20 19:28:00</span></p><p class="summary"/></li>
+		<li class="131"><p><a href="http://www.wretch.cc/blog/giaji/131"><span class="title">減炭小秘訣</span></a> - <span class="date">2008-08-20 12:46:00</span></p><p class="summary">儘量選擇當季當地食材食用，減少因長程運送而產生的碳排放。 自備水壺方便又解渴，如需飲用瓶裝水，也以本地生產製造為宜。</p></li>
+	</ul>
+</div>
+
+<script>
+	var YUD = YAHOO.util.Dom,
+		YUE = YAHOO.util.Event,
+		$   = YAHOO.util.Dom.get;
+	
+	var bd=  $('bd');
+	var ul = $('ul');
+	var li = $('li');
+	
+	var onmouseenter = new YAHOO.util.CustomEvent('onmouseenter', this);
+	var onmouseleave = new YAHOO.util.CustomEvent('onmouseleave', this);
+
+	/*must add zoom:1 to li for ie*/
+	var withinElement = function(event) {
+		// Check if mouse(over|out) are still within the same parent element
+		//var parent = event.relatedTarget;
+		var parent = YUE.getRelatedTarget(event);
+		// Traverse up the tree
+		while ( parent && parent != this )
+			try { parent = parent.parentNode; }
+			catch(e) { parent = this; }
+		var self  = this;
+		if (parent != this) {
+			if(event.type == 'mouseover')
+				onmouseenter.fire({target: self});
+			if(event.type == 'mouseout')
+				onmouseleave.fire({target: self});
+		}
+	}
+	/*
+	// not workable
+	var withinElement = function(event) {
+		var self = this;
+		if(YUD.isAncestor( YUE.getRelatedTarget(event), this)){
+			switch(event.type) {
+				case 'mouseover':
+					onmouseenter.fire({target: self});
+					break;
+				case 'mouseout':
+					onmouseleave.fire({target: self});
+					break;
+			}
+		}
+	}*/
+
+	YUE.on(ul.getElementsByTagName('li'), 'mouseover', function(event) {
+		withinElement.call(this, event);
+	});
+
+	YUE.on(ul.getElementsByTagName('li'), 'mouseout', function(event) {
+		withinElement.call(this, event);
+	});
+
+	onmouseenter.subscribe(function(e, o){
+		//console.log('mouse enter', o[0]);
+		YUD.addClass(o[0].target, 'on');
+		window.location.hash = YAHOO.lang.dump(e);
+	})
+	onmouseleave.subscribe(function(e, o){
+		//console.log('mouse leave', o[0]);
+		YUD.removeClass(o[0].target ,'on');
+		window.location.hash = YAHOO.lang.dump(e);
+	})
+
+</script>
+</html>

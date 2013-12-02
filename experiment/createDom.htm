@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<style>
+.on{background:red;}
+</style>
+</head>
+<body>
+<script>
+var Dom = YAHOO.util.Dom,
+    Lang = YAHOO.lang;
+
+function createDom (tagName, attrs, text) {
+  var attr, el = document.createElement(tagName);
+
+  if (attrs) {
+    if (Lang.isString(attrs)) {
+      el.className = attrs;
+    } else {
+      for (i in attrs) {
+        if (Lang.hasOwnProperty(attrs, i)) {
+          Dom.setAttribute(el, i, attrs[i]);
+        }
+      }
+    }
+
+  }
+
+  if (Lang.isString(text)) {
+    el.appendChild(document.createTextNode(text));
+  }
+
+  return el;
+}; 
+
+var link = createDom('a', {'href':'http://www.yahoo.com', 'target':'_blank', 'class': 'on'}, 'some link') 
+document.body.appendChild(link);
+</script>
+</body>
+</html>

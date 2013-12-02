@@ -1,0 +1,19 @@
+
+
+<div id="d">
+	<p id="p">
+		<a href="###" id="link">clcik</a>
+	</p>
+</div>
+<script>
+	var link = document.getElementById('link');
+	var p = document.getElementById('p');
+	var d = document.getElementById('d');
+
+	d.addEventListener('click', function(){console.log(this)}, true);
+	p.addEventListener('click', function(){console.log(this)}, true);
+	link.addEventListener('click', function(){console.log(this)}, true);
+	d.addEventListener('click', function(){console.log(this)}, false);
+	p.addEventListener('click', function(){console.log(this)}, false);
+	link.addEventListener('click', function(){console.log(this)}, false);
+</script>

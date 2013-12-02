@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+#hover {width: 750px; margin: 50px auto; background:#efefef;}
+#hover li {display: inline-block; height: 100px; width: 100px; border: 1px solid #ccc; text-align:center; line-height: 100px; margin: 0 50px 50px 0;}
+    </style>
+    <script src="../../library/jquery-1.7.2.js"></script>
+    <script src="../../library/underscore.js"></script>
+    <script src="../../library/backbone.js"></script>
+  </head>
+  <body>
+<div id="main">
+    <ul id="hover">
+      <li class="li-1">hover me</li>
+      <li class="li-2">hover me</li>
+      <li class="li-3">hover me</li>
+      <li class="li-4">hover me</li>
+      <li class="li-5">hover me</li>
+      <li class="li-6">hover me</li>
+      <li class="li-7">hover me</li>
+      <li class="li-8">hover me</li>
+      <li class="li-9">hover me</li>
+      <li class="li-10">hover me</li>
+      <li class="li-11">hover me</li>
+      <li class="li-12">hover me</li>
+    </ul>
+</div>
+<script>
+
+    DemoView = Backbone.View.extend({
+        initialize: function(){
+          console.log('initialized');
+        },
+        events: {
+            "click #hover": "handleClick",
+            "mouseover #hover li": "handleMouseover"
+        },
+        handleClick: function( event ){
+          console.log ('fn: Click');
+        },
+        handleMouseover: function(e) {
+          $currentTarget = $(e.currentTarget)
+          index = ($currentTarget.index('#hover li'))
+          console.log ('fn: handleMouseover', e.currentTarget, index);
+        }
+    });
+
+    var demo_view = new DemoView({ el: $("#main") });
+    console.log('list all evnets:', $('#main').data('events'));
+</script>
+  </body>
+</html>

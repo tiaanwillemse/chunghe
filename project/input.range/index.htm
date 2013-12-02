@@ -1,0 +1,49 @@
+
+<!doctype html>
+
+
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  background: #666;
+}
+
+
+input[type='range'] {  
+  -webkit-appearance: none;  
+  background-color: #fff;  
+  height: 5px;
+  padding: 0;
+  width: 960px;
+  margin: 50px 0 0;
+}  
+
+input[type='range']::-webkit-slider-thumb {  
+  -webkit-appearance: none;  
+  width: 32px;  
+  height: 32px;  
+  border-radius: 16px;
+  -webkit-box-shadow: 0 0 4px #000;
+  cursor: pointer;
+  background: url(./assets/knob.jpg) center center no-repeat;
+} 
+
+input[type='range'].plane::-webkit-slider-thumb {  
+  background:-webkit-linear-gradient(top, #f9f9fa, #c5c5c5);
+}
+
+input[type='range']::-webkit-slider-thumb:hover {  
+  -webkit-transform: rotate(45deg);
+}
+input[type='range']::-webkit-slider-thumb:active {  
+  background: #cecece;
+}
+</style>
+</head>
+<body>
+  <input id="range" class="plane" type="range" min="1" max="70" step="1" value="1">
+  <input id="range" type="range" min="1" max="70" step="1" value="1">
+</body>
+</html>

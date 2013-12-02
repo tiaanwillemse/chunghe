@@ -1,0 +1,1781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>HTML, JavaScript, YUI</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.2a2" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/container.css" type="text/css" />
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- embedded styles -->
+<style type="text/css" media="all">
+.imgcon {width: 525px; margin: 0 auto; padding: 0; text-align: center;}
+#anim {width: 270px; height: 320px; position: relative; margin-top: 0.5em;}
+#anim img {position: absolute; top: 42px; left: 24px;}
+img#me01 {top: 0; left: 0;}
+img#me02 {left: 23px;}
+img#me04 {top: 44px;}
+img#me05 {top: 43px;left: 36px;}
+</style>
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+<script src="ui/default/shCoreJsCss-min.js" type="text/javascript"></script>
+<script src="ui/default/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="ui/default/animation-min.js" type="text/javascript"></script>
+<script src="ui/default/container-min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<!--<div id="footer">
+<h1>S5 Testbed</h1>
+<h2>Your computer &#8226; Today's date</h2>
+</div>-->
+</div>
+
+<div class="presentation">
+
+<div class="slide">
+    <h1 onclick = "window.open('./js-talk.html', '', 'width=1000,height=700,toolbar=no,status=no,resizable=yes')">HTML, JavaScript, YUI</h1>
+    <h3>&lt;present by="chunghe" email="chunghe@gmail.com"  /&gt;</h3>
+</div>
+
+
+<style type="text/css">
+.index{font-family:verdana, sans-serif}
+.index ul{list-style-type:none}
+.index ul li{ padding: .5em; font-size: 1.2em; text-indent:1em; cursor:pointer; ; -moz-border-radius:10px; background-color:#666}
+/*.index ul li:hover{background-color:#8DBB01; -moz-border-radius: 10px;}*/
+.index ul li.on{text-indent:0; background-color:#8DBB01}
+.index ul li.on:before{content: "\00BB "; padding-right:.5em}
+</style>
+
+<div class="slide index">
+	<span style="display:none" id="index-html"></span>
+    <ul>
+	<li class="on" onclick="goTo(document.getElementById('index-html').parentNode.id.replace('slide',''))">HTML</li>
+	<li onclick="goTo(document.getElementById('index-dom').parentNode.id.replace('slide',''))">JavaScript - DOM</li>
+	<li onclick="goTo(document.getElementById('index-event').parentNode.id.replace('slide',''))">JavaScript - Event</li>
+	<li onclick="goTo(document.getElementById('index-yui').parentNode.id.replace('slide',''))">YAHOO User Interface</li>
+    </ul>
+</div>
+
+
+<div class="slide">
+	<h1>HTML - DocType</h1>
+	<p style="border: 1px solid #fff; padding: .5em">&lt;!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'&gt;</p>
+	<p style="margin:0">Available doctypes</p>
+	<img src="js-talk-data/img/doctype.png">
+	<p style="margin:0"><a href="http://www.alistapart.com/articles/doctype/" rel="external">A List Apart: Articles: Fix Your Site With the Right DOCTYPE!</a></p>
+</div>
+
+
+<div class="slide">
+	<h1>HTML - DocType</h1>
+	<ul>
+		<li>Must appear at the very top of every web page</li>
+		<li>Using an incomplete or outdated DOCTYPE—or no DOCTYPE at all—throws these same browsers into “Quirks” mode, where the browser assumes you’ve written old-fashioned, invalid markup and code per the depressing industry norms of the late 1990s.</li>
+	</ul>
+	<p style="margin-bottom:0"><a style="padding-right:.5em" href="js-talk-data/example/boxmodel.htm" rel="external">example(without doctype)</a><a rel="external" href="js-talk-data/example/boxmodel-with-doctype.htm">example(with doctype)</a></p>
+	<img style="margin-left:7%" src="js-talk-data/img/Box-model-bug.png" />
+	<p><a href="http://en.wikipedia.org/wiki/boxmodel.htm" rel="external">Internet Explorer box model bug - Wikipedia, the free encyclopedia</a></p>
+</div>
+
+<div class="slide">
+	<h1>HTML - DocType</h1>
+	<p style="text-align:center"><img src="js-talk-data/img/google.png" style="margin-top:-1em; margin-bottom:-0.5em" /></p>
+	
+</div>
+
+<div class="slide">
+	<h1>HTML - Differences between XHTML and HTML</h1>
+	<ul>
+		<li>The &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; tags are all required in XHTML.</li>
+		<li>All elements must be closed. An opening tag must have either an equal closing tag (if it’s a container tag) or a selfclosing <em>space-plus-slash</em>.  <code>&lt;br /&gt; <span style="text-decoration:line-through">&lt;br/&gt;</span></code> <code>&lt;br&gt;</code></li>
+		<li>All tags must be written in lowercase. (HTML is case insensitive.)</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>HTML - Differences between XHTML and HTML</h1>
+	<ul>
+		<li>All attribute values must be quoted with either single quotes or double quotes. Thus, class=page is invalid but <code>class="page"</code> and <code>class='page'</code> are both fine. </li>
+		<li> All attributes must have values. Some attributes, such as the selected attribute used with the <code>&lt;option&gt;</code> tag, could be written in a shortened form in HTML—that is, <code>&lt;option selected&gt;data&lt;/option&gt;</code> would be valid. In XHTML, however, you must write <code>&lt;option selected="selected"&gt;data&lt;/option&gt;</code>.  </li>
+		<li>Ampersands should be encoded. That is, you should write <code>&amp;amp;</code> instead of just &amp;. This is true wherever the ampersand is: in your content or in a URL. </li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>HTML - Deprecated Tags and alternatives</h1>
+	<table style="margin-bottom:1em">
+		<tr>
+			<th>HTML tag</th>
+			<th>Style Property</th>
+		</tr>
+		<tr>
+			<td>&lt;center&gt;</td>
+			<td>text-align:center</td>
+		</tr>
+		<tr>
+			<td>&lt;b&gt;</td>
+			<td>font-weight:bold</td>
+		</tr>
+		<tr>
+			<td>&lt;u&gt;</td>
+			<td>font-style:italic</td>
+		</tr>
+		<tr>
+			<td>&lt;font&gt;</td>
+			<td>font-family: <i>font name</i></td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<th>HTML Attribute</th>
+			<th>Style Property</th>
+		</tr>
+		<tr>
+			<td>algin</td>
+			<td>text-align: center</td>
+		</tr>
+		<tr>
+			<td>bgcolor</td>
+			<td>background-color</td>
+		</tr>
+		<tr>
+			<td>size</td>
+			<td>font-size: <i>size</i></td>
+		</tr>
+	</table>
+</div>
+
+<div class="slide">
+	<h1>HTML - Well-Formedness</h1>
+	<p>Change Name to Lowercase: Make all element and attribute names lowercase.</p>
+		<pre>
+&lt;BLOCKQUOTE CITE='<span style="color:#ffa0a0">http://www.gutenberg.org/dirs/etext00/dvlft10.txt</span>'&gt;           
+	&lt;P&gt;                                                              
+	It was, then, with &lt;EM&gt;considerable&lt;/EM&gt; surprise that I
+	received a telegram from Holmes last Tuesday&MDASH;he has
+	never been known to write where a telegram would
+	serve&MDASHin the following terms:                 
+	&lt;/P&gt;
+&lt;/BLOCKQUOTE&gt; </pre>
+ 		<p></p>
+		<pre class="css" name="code">
+<blockquote cite='http://www.gutenberg.org/dirs/etext00/dvlft10.txt'>           
+	<p>                                                              
+	It was, then, with <em>considerable</em> surprise that I
+	received a telegram from Holmes last Tuesday&mdash;he has
+	never been known to write where a telegram would
+	serve&mdash;in the following terms:
+	</p>											  
+</blockquote></pre>
+</div>
+
+<div class="slide">
+	<h1>HTML - Well-Formedness</h1>
+	<p>Quote Attribute Value</p>
+	<pre>
+&lt;div id=speech1&gt;                                 
+	&lt;span class=speaker&gt;PROSPERO&lt;/span&gt;
+	&lt;blockquote cite=http://www-tech.mit.edu/Shakespeare/tempest.4.1.html&gt;
+	&lt;span class=verse id=a4s1v1&gt;If I have too austerely punish'd you,&lt;/span&gt;
+	&lt;/blockquote&gt;
+&lt;/div&gt; </pre>
+	<p></p>
+	<pre class="css" name="code">
+<div id="speech1">                               
+	<span class="speaker">PROSPERO</span>
+	<blockquote cite="http://www-tech.mit.edu/Shakespeare/tempest.4.1.html">
+	<span class="verse" id="a4s1v1">If I have too austerely
+	punish'd you,</span> 
+	</blockquote>                                                       
+</div></pre>
+</div>
+
+<div class="slide">
+	<h1>HTML - Well-Formedness</h1>
+	<p>Add End-tag: Close all paragraphs, list items, table cells, and other nonempty elements</p>	
+	<pre style="padding:.5em">
+&lt;ol&gt;
+	&lt;li&gt;Machine-Tools, Wire, Transmission and Textiles
+	&lt;li&gt;Milling Machinery
+	&lt;li&gt;Electrical Apparatus
+	&lt;li&gt;Transportation
+	&lt;li&gt;Importers
+	&lt;li&gt;Synthetic Products based on chemical processes
+&lt;/ol&gt;  </pre>
+ 	<p></p>
+	<pre style="padding:.5em">
+&lt;ol&gt;           
+	&lt;li&gt;Machine-Tools, Wire, Transmission and Textiles&lt;/li&gt;   
+	&lt;li&gt;Milling Machinery&lt;/li&gt;
+	&lt;li&gt;Electrical Apparatus&lt;/li&gt;
+	&lt;li&gt;Transportation&lt;/li&gt;
+	&lt;li&gt;Importers&lt;/li&gt;
+	&lt;li&gt;Synthetic Products based on chemical processes&lt;/li&gt;
+&lt;/ol&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>HTML - Well-Formedness</h1>
+	<p>Remove Overlap</p>
+	<pre style="padding:.5em">
+This is &lt;strong&gt;&lt;em&gt;very important&lt;/strong&gt;&lt;/em&gt;!
+&lt;p&gt;Sarah answered, &lt;q&gt;I'm really not sure about this.&lt;/p&gt;
+&lt;p&gt;Maybe you should ask somebody else?&lt;/q&gt; Then she
+sat down.
+&lt;/p&gt; </pre>
+	<p></p>
+	<pre style="padding:.5em">
+ This is &lt;strong&gt;&lt;em&gt;very important&lt;/em&gt;&lt;/strong&gt;!
+ &lt;p&gt;Sarah answered, &lt;q&gt;I'm really not sure about this.&lt;/q&gt;
+ &lt;/p&gt;
+ &lt;p&gt;&lt;q&gt;Maybe you should ask somebody else?&lt;/q&gt; Then she
+ &lt;/p&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>HTML - Well-Formedness</h1>
+	<p>Espcape &lt; &gt; &amp; &quot;</p>
+	<pre name="code" class="css">
+ <a href="/discipline/470.html">Health & Kinesiology</a>                 
+ <img src="text.gif" alt="Texts & Technology" /> </pre>
+ 	<p></p>
+	<pre name="code" class="css">
+ <a href="/discipline/470.html">Health &amp; Kinesiology</a>             
+ <img src="text.gif" alt="Texts &amp;amp; Technology" /> </pre>
+ <a href="http://www.w3schools.com/HTML/html_entities.asp" rel="external">HTML Entities</a>
+</div>
+
+<div class="slide">
+	<h1>HTML - Well-Formedness</h1>
+	<p>Nest Inline Elements inside Block Elements - Give every inline element a block-level parent, and remove all block-level elements from paragraphs.</p>
+	<p style="margin-bottom:0">A <code>p</code> element represents a paragraph. However, unlike other block-level elements, a <code>p</code> may not contain another <code>p</code> or another block element such as blockquote. It can only contain plain text and inline elements. It is in some sense the lowest block-level element.</p>
+	<pre name="code" class="css">
+ Do you like this picture?&lt;br /&gt;                                    
+ &lt;img src="file.gif" alt="Goose" width='100' height='100'/&gt;         
+ I think it's really &lt;em&gt;neat&lt;/em&gt;.&lt;br /&gt;     </pre>
+ 	<p></p>
+	<pre name="code" class="css">
+ &lt;p&gt;Do you like this picture?&lt;/p&gt;                                   
+ &lt;div&gt;                                                              
+  &lt;img src="file.gif" alt="Goose" width='100' height='100'/&gt;        
+ &lt;/div&gt;                                                             
+ &lt;p&gt;I think it's really &lt;em&gt;neat&lt;/em&gt;.&lt;/p&gt;    </pre>
+</div>
+
+<div class="slide">
+	<h1>HTML - Validator</h1>
+	<p style="text-align:center"><img src="js-talk-data/img/validate.png" style="margin-top:-1em; margin-bottom:-0.5em" /></p>
+</div>
+
+<div class="slide">
+	<h1>HTML - tables and forms</h1>
+	<p><a href="http://www.cs.tut.fi/~jkorpela/forms/tables.html" rel="external">How to use tables to structurize forms in HTML, and about alternatives, like FIELDSET</a></p>
+	<ul>
+		<li>Tables and forms can be nested either way. But if you put forms into tables, each form must be completely included into a single table cell (one TD element in practice). Thereby the forms are each completely independent.</li>
+	</ul>
+	<pre style="padding:.5em">
+&lt;table&gt;  
+&lt;tr&gt;
+	&lt;td&gt;...&lt;/td&gt;&lt;td&gt;...&lt;/td&gt;...  
+	&lt;td&gt;  
+		<em>&lt;form action="..."&gt;  
+			&lt;input ...&gt;  
+			&lt;input ...&gt;  
+		&lt;/form&gt;</em>
+	&lt;/td&gt;  
+&lt;/tr&gt;  
+&lt;/table&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>HTML - tables and forms</h1>
+		<li>Notice the submit button is outside the table. The reason is that it has a different role than the other fields. It could be within the table too, but perhaps it is easier to find if it isn't.</li>
+	<pre style="padding:.5em">
+&lt;form method="post" action="http://www.cs.tut.fi/cgi-bin/run/~jkorpela/echo.cgi"&gt;
+&lt;table border="1"&gt;
+  &lt;tr&gt;
+    &lt;td&gt;your name&lt;/td&gt;
+    &lt;td&gt;
+      &lt;input type="text" name="name" size="20"&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;your e-mail address&lt;/td&gt;
+    &lt;td&gt;&lt;input type="text" name="email" size="25"&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+<em>&lt;p&gt;&lt;input type="submit" value="submit" name="b1"&gt;&lt;/p&gt;</em>
+&lt;/form&gt;</pre>
+</div>
+
+<div class="slide index">
+	<span style="display:none" id="index-dom"></span>
+    <ul>
+	<li onclick="goTo(document.getElementById('index-html').parentNode.id.replace('slide',''))">HTML</li>
+	<li class="on" onclick="goTo(document.getElementById('index-dom').parentNode.id.replace('slide',''))">JavaScript - DOM</li>
+	<li onclick="goTo(document.getElementById('index-event').parentNode.id.replace('slide',''))">JavaScript - Event</li>
+	<li onclick="goTo(document.getElementById('index-yui').parentNode.id.replace('slide',''))">YAHOO User Interface</li>
+    </ul>
+</div>
+
+<div class="slide">
+	<h1>DOM - Document Object Model</h1>
+	<p style="text-align:center"><img src="js-talk-data/img/dom.png" style="margin-top:-1em; margin-bottom:-0.5em" /></p>
+	<pre class="js" name="code">&lt;html&gt;
+    &lt;head&gt; &lt;title&gt;Hacking JavaScript&lt;/title&gt; &lt;/head&gt;
+    &lt;body&gt;
+		&lt;h1&gt;Hello world!&lt;/h1&gt;
+		&lt;p&gt;I am a JavaScript hacker!&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>DOM - Document Object Model</h1>
+	<ul>
+		<li>To the W3C DOM, everything in an HTML document is a <em>node</em></li>
+		<li>&lt;body&gt;, &lt;p&gt;, or even &lt;br /&gt;, is an <em>element node</em></li>
+		<li>texts contained in thses elements are <em>text nodes</em>.</li>
+		<li>HTML attributes like ID are <em>attribute nodes</em>.</li>
+		<li>comments are <em>comment nodes</em></li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>DOM Levels and Features</h1>
+	<a href="http://www.w3.org/DOM/DOMTR" rel="external">Document Object Model (DOM) Specifications</a>
+	<p style="margin-bottom:0">DOM Level 1</p>
+	<ul>
+		<li>standardized in October 1998.</li>
+		<li>defines the core DOM interfaces, such as Node, Element, Attr, and Document</li>
+	</ul>
+	<p style="margin-bottom:0">DOM Level 2</p>
+	<ul>
+		<li>standarized in November 2000.</li>
+		<li>greatly expanded to define standard APIs for working with document events and CSS stylesheets.</li>
+		<li><code>getElementById</code>, <code>addEventListener</code>, etc</li>
+	</ul>
+	<p style="margin-bottom:0">DOM Level 3</p>
+	<ul>
+		<li>W3C has released specifications for several Level 3 modules.</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>DOM Level 0 (Legacy DOM)</h1>
+	<ul>
+		<li>DOM Level 0 does not refer to any formal standard but does informally to the common features of the HTML document object models implemented by Netscape and Internet Exploer prior to W3C standarization.</li>
+		<li>Level 0 DOM nodeLists are available only for a limited number of elements, most importantly form fields, images and links</li>
+		<li>Level 0 DOM nodeLists allow you to search for an element by name or ID.</li>
+		<li><code>options[]</code> allows you to create and remove option elements.
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>DOM Level 0 (Legacy DOM)</h1>
+	<pre style="padding:.5em">
+&lt;body&gt;
+	&lt;img src="someImg.gif" name="firstIMG" /&gt;
+	&lt;img src="someOtherImg.gif" id="secondIMG" /&gt;
+&lt;/body&gt; </pre></li>
+	<ul>
+		<li><code>document.images</code> equals <code>document.getElementsByTagName('img')</code></li>
+		<li><code>document.images[0]</code> equals <code>document.getElementsByTagName('img')[0]</code></li>
+		<li>In addition, the Level 0 DOM allows <code>document.images['firstIMG']</code> and <code>document.images['secondIMG']</code>.</li>
+	</ul>
+</div>
+
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em">Selectors</p>
+	<h2>DOM</h2>
+	<p style="margin-top:0; margin-left:1em">Methods</p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>#ID{ }</code></p>
+	<h2>DOM</h2>
+	<p style="margin-top:0; margin-left:1em"><code>document.getElementById('ID')</code></p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>#footer{ }</code></p>
+	<h2>DOM</h2>
+	<p style="margin-top:0; margin-left:1em"><code>document.getElementById('footer')</code></p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>tagName{ }</code></p>
+	<h2>DOM</h2>
+	<p style="margin-top:0; margin-left:1em"><code>document.getElement<em>s</em>ByTagName('tagName')</code></p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>p{ }</code></p>
+	<h2>DOM</h2>
+	<p style="margin-top:0; margin-left:1em"><code>document.getElement<em>s</em>ByTagName('p')</code></p>
+	<ul>
+		<li><code>document.body</code> refers to the &lt;body&gt; tag</li>
+		<li><code>document.head</code> refers to the &lt;head&gt; tag</li>
+		<li><code>document.documentElement</code> refers to the &lt;html&gt; tag that serves as the root element of the document.</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>#nav a{ }</code></p>
+	<h2>DOM</h2>
+	<p style="margin-top:0; margin-left:1em"><code>document.getElementById('nav').getElementsByTagName('a')</code></p>
+	<h2>CSS Selector</h2>
+	<p style="margin-top:0; margin-left:1em"><code>$$('#nav a')</code></p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>* { }</code></p>
+	<h2>DOM - Universal Selector</h2>
+	<p style="margin-top:0; margin-left:1em"><code>document.getElementsByTagName('*')</code></p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<h2>CSS</h2>
+	<p style="margin-top:0; margin-left:1em"><code>.className{ }</code></p>
+	<h2>DOM - Universal Selector</h2>
+	<p style="margin-top:0; margin-left:1em;text-decoration:line-through"><code>document.getElementsByClassName('className')</code></p>
+	<p>now natively supported by the most recent versions of Firefox, Safari, and Opera</p>
+</div>
+
+<div class="slide">
+	<h1>DOM - getElementsByClassName</h1>
+	<pre class="js" name="code">
+	document.getElementsByClassName = function(name) {
+	  var results = new Array();
+	  var elems = document.getElementsByTagName("*");
+	  for (var i=0; i&lt;elems.length; i++) {
+		if (elems[i].className.indexOf(name) != -1) {
+		  results[results.length] = elems[i];
+		}
+	  }
+	  return results;
+	};</pre>
+	... or using <code>YAHOO.util.Dom.getElementsByClassName('name')</code>
+</div>
+
+<div class="slide">
+	<pre class="js" name="code">
+&lt;script type="text/javascript"&gt;
+	alert(document.getElementById('foo').id);
+&lt;/script&gt;
+&lt;div id="foo"&gt;hello, foo&lt;/div&gt; </pre>
+	<p></p>
+	<pre class="js" name="code">
+&lt;div id="foo"&gt;hello, foo&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+	alert(document.getElementById('foo').id);
+&lt;/script&gt;</pre>
+	<p></p>
+	<pre class="js" name="code">
+&lt;script type="text/javascript"&gt;
+	window.onload = function(){
+		alert(document.getElementById('foo').id);
+	}
+&lt;/script&gt;
+&lt;div id="foo"&gt;hello, foo&lt;/div&gt;</pre>
+</div>
+
+<div class="slide">
+	<h1>DOM - creating and appending elements</h1>
+	<p style="margin-bottom:0; margin-top:0"><code>createElement(), createTextNode(), appendChild(), removeChild()</code></p>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/createelements.htm" rel="external">example</a></p>
+	<pre name="code" class="js">
+&lt;body&gt;&lt;/body&gt;
+&lt;script type="text/javascript"&gt;
+	document.onclick = function(){
+		var p = document.createElement('p');
+		var text = document.createTextNode('This is dynamic created text');
+		p.appendChild(text);
+		document.body.appendChild(p);
+	}
+&lt;/script&gt; </pre>
+	<p style="margin-bottom:0">Removing all child Nodes</p>
+	<pre class="js" name="code">
+while (x.childNodes[0])
+    x.removeChild(x.childNodes[0]); </pre>
+	<p style="margin-bottom:0">... or using <code>innerHTML</code></p>
+	<pre class="js" name="code">
+x.innerHTML = ''; </pre>
+</div>
+
+
+
+<div class="slide">
+	<h1>DOM - innerHTML</h1>
+	<ul>
+		<li>not a part of W3C DOM specification.</li>
+		<li>perfect browser compatibility and supported by all modern browsers.</li>
+		<li>usually faster(~35 times), more convenient and compact than describing it as a sequence of calls to <code>createElement()</code> and <code>appendChild()</code>.</li>
+		<li>dynamic
+		<pre class="js" name="code">
+document.body.innerHTML += '<div id="p">foo</div>'
+document.getElementById('p').style.backgroundColor = 'red'; </pre></li>
+		<li>mix with DOM
+		<pre class="js" name="code">
+var table = document.createElement('table');
+table.innerHTML = '&lt;tr&gt;&lt;th&gt;name&lt;/th&gt;&lt;th&gt;value&lt;/th&gt;&lt;/tr&gt;'; </pre></li>
+		<li>rewrite the previous example with <code>innerHTML</code>
+			<pre name="code" class="js">
+document.body.innerHTML = '<p>This is dynamic created text</p>'; </pre> </li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>DOM - Changing the document tree</h1>
+	<p style="margin-bottom:0"><code>insertBefore(), replaceChild()</code></p>
+	<a href="js-talk-data/example/insertBefore.htm" rel="external">Example</a>
+	<pre class="js" name="code">
+<p id="first">first paragraph</p>
+<p id="second">second paragraph</p>
+<p id="third">third paragraph</p>
+&lt;script&gt;
+	var first = document.getElementById('first');
+	var third = document.getElementById('third');
+	document.onclick = function(){
+		first.parentNode.insertBefore(third, first);
+	}
+&llt;/script&gt;</pre>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<p style="margin-bottom:0"><code>parentNode, firstChild, lastChild, previousSibling, nextSibling</code></p>
+	<p style="text-align:center"><img src="js-talk-data/img/dom-family.png" /></p>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<pre class="js" name="code">
+&lt;body&gt;
+&lt;p&gt;first exmpale paragraph&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+	document.onclick = function(){
+		console.log(document.body.firstChild);
+	}
+&lt;/script&gt;
+&lt;/body&gt; </pre>
+	output:
+	<pre class="js" name="code">
+Firefox : "\n\n"
+Internet explorer: "first example paragraph" </pre>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<ul>
+		<li>No empty text Nodes in Explorer: Explorer Windows does not support empty text nodes. This is an excellent idea, but unfortunately all other browsers disagree, and thus incompatibilities are born.</li>
+		<li>Living with empty text nodes:
+			<table>
+				<tr>
+					<th>Element type</th>
+					<th>nodeType</th>
+				</tr>
+				<tr>
+					<td>Element</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>Attribute</td>
+					<td>2</td>
+				</tr>
+				<tr>
+					<td>Text</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Comment</td>
+					<td>8</td>
+				</tr>
+				<tr>
+					<td>Document</td>
+					<td>9</td>
+				</tr>
+			</table>
+		</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>DOM - Finding elements</h1>
+	<pre name="code" class="js">
+	var x = document.getElementsByTagName('p')[0];
+	x.parentNode.insertBefore(x,x.previousSibling.previousSibling); </pre>
+
+	<p style="margin-bottom:0">The following has a better change to work across the borard</p>
+	<h1>DOM - Finding elements</h1>
+	<pre name="code" class="js">
+	var x = document.getElementsByTagName('p')[0];
+	var previousElement = x.previousSibling;
+	while (previousElement.nodeType == 3)
+		previousElement = previousElement.previousSibling
+	x.parentNode.insertBefore(x,x.previousElement);
+	</pre>
+	... or use <code>YAHOO.util.Dom.getPreviousSibling<code> / <code>YAHOO.util.Dom.getNextSibling</code>
+
+</div>
+
+<div class="slide">
+	<h1>DOM - WalkTheDOM &amp; getElementsByClassName</h1>
+	<pre class="js" name="code">
+function walkTheDOM(node, func) {  
+    func(node);   node = node.firstChild;   
+	while (node) {   
+		walkTheDOM(node, func);   
+		node = node.nextSibling;   
+	}   
+}   
+function getElementsByClassName(className) {   
+    var results = [];   
+    walkTheDOM(document.body, function (node) {   
+        var a, c = node.className, i;   
+        if (c) {   
+            a = c.split(' ');   
+            for (i = 0; i &lt; a.length; i += 1) {   
+                if (a[i] === className) {   results.push(node);   break;   }   
+            }   
+        }   
+    });   
+    return results;   
+} 
+	</pre>
+</div>
+
+
+<div class="slide">
+	<h1>DOM - Attributes</h1>
+	<p style="margin-bottom:0"><code>getAttribute(), setAttribute()</code></p>
+	<pre class="js" name="code">
+&lt;img src="http://www.quirksmode.org/pix/logo.gif" id="test" /&gt;
+&lt;script type="text/javascript"&gt;
+var imgEl = document.getElementById('test');
+alert(imgEl.getAttribute('src'));
+imgEl.setAttribute('src', 'http://www.quirksmode.org/pix/logo2.gif');
+&lt;/script&gt;</pre>
+	<p style="margin-bottom:0">Before W3C specified the DOM, JavaScript needed a way to access a few important HTML attributes. In order to do this without the as-yet-unspecified getAttribute() method, JavaScript's inventors decided to map certain properties of JavaScript objects to HTML attributes.</p>
+	<pre class="js" name="code">
+imgEl.setAttribute('src', 'http://www.quirksmode.org/pix/logo2.gif');
+imgEl.src = 'http://www.quirksmode.org/pix/logo2.gif';	</pre>
+</div>
+
+<div class="slide">
+	<h1>DOM - Inline style modification</h1>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/inlinestylemode.htm" rel="external">example</a></p>
+	<pre class="js" name="code">
+&lt;p id="foo"&gt;I am foo&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+	var foo = document.getElementById('foo');
+	document.onclick = function(){
+		foo.style.color = 'red';
+	}
+&lt;/script&gt;	</pre>
+	<p style="margin-bottom:0">Naming Conventions: CSS Attributes in JavaScript</p>
+	<table>
+		<tr>
+			<th>css attributes</th>
+			<th>JavaScript</th>
+		</tr>
+		<tr>
+			<td>font-family</td>  
+			<td>element.style.fontFamily</td>
+		</tr>
+		<tr>
+			<td>background-color</td>
+			<td>element.style.backgroundColor</td>
+		</tr>
+		<tr>
+			<td>float</td>		 
+			<td>element.style.<em>cssFloat</em></td>
+		</tr>
+	</table>
+</div>
+
+<div class="slide">
+	<h1>DOM - Inline style modification</h1>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/inlinestylemode2.htm" rel="external">example</a></p>
+	<pre class="js" name="code">
+&lt;p id="foo"&gt;I am foo&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+	var foo = document.getElementById('foo');
+	document.onclick = function(){
+		if(foo.style.display == 'none')
+			foo.style.display = '';
+		else
+			foo.style.display = 'none';
+	}
+&lt;/script&gt; </pre>	
+</div>
+
+<div class="slide">
+	<h1>DOM - Inline style modification</h1>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/inlinestylemode3.htm" rel="external">example</a></p>
+	<pre class="js" name="code">
+&lt;style&gt; .hide{display:none} &lt;/style&gt;
+&lt;p id="foo"&gt;I am foo&lt;/p&gt;  
+&lt;script type="text/javascript"&gt;  
+    var foo = document.getElementById('foo');  
+    document.onclick = function(){  
+		if(foo.className.indexOf('hide') == -1)
+			foo.className += 'hide';
+		else
+			foo.className = foo.className.replace(/hide/g, '');
+    }  
+&lt;/script&gt;   </pre>
+</div>
+
+
+<div class="slide index">
+	<span style="display:none" id="index-event"></span>
+    <ul>
+	<li onclick="goTo(document.getElementById('index-html').parentNode.id.replace('slide',''))">HTML</li>
+	<li onclick="goTo(document.getElementById('index-dom').parentNode.id.replace('slide',''))">JavaScript - DOM</li>
+	<li class="on" onclick="goTo(document.getElementById('index-event').parentNode.id.replace('slide',''))">JavaScript - Event</li>
+	<li onclick="goTo(document.getElementById('index-yui').parentNode.id.replace('slide',''))">YAHOO User Interface</li>
+    </ul>
+</div>
+
+<div class="slide">
+	<h1>supplemental materials</h1>
+	<p style="margin-bottom:0"><a href="http://www.amazon.com/HTML-Mastery-Semantics-Standards-Styling/dp/1590597656/ref=pd_bbs_sr_1?ie=UTF8&s=books&qid=1213681723&sr=8-1">Amazon.com: HTML Mastery: Semantics, Standards, and Styling: Paul Haine: Books</a></p>
+	<img src="js-talk-data/img/html.msatery.jpg">
+</div>
+
+<div class="slide">
+	<h1>supplemental materials</h1>
+	<p style="margin-bottom:0"><a href="http://www.amazon.com/ppk-JavaScript-1-e-VOICES/dp/0321423305/ref=pd_bbs_sr_1?ie=UTF8&s=books&qid=1213149866&sr=8-1" rel="external">Amazon.com: ppk on JavaScript, 1/e (VOICES): Peter-Paul Koch: Books</a></a>
+	<img src="js-talk-data/img/ppk.on.javascript.jpg">
+	<p style="margin-bottom:0"><a href="http://www.amazon.com/JavaScript-Definitive-Guide-David-Flanagan/dp/0596101996/ref=sr_1_1?ie=UTF8&s=books&qid=1213149960&sr=1-1" rel="external">Amazon.com: JavaScript: The Definitive Guide: David Flanagan: Books</a></a>
+	<img src="js-talk-data/img/javascript.the.definitive.guide.jpg">
+</div>
+
+<div class="slide">
+	<h1>supplemental materials</h1>
+	<p style="margin-bottom:0"><a href="http://www.amazon.com/Pro-JavaScript-Techniques-John-Resig/dp/1590597273/ref=pd_bbs_sr_1?ie=UTF8&s=books&qid=1213150001&sr=1-1" rel="external">Amazon.com: Pro JavaScript Techniques (Pro): John Resig: Books</a></p>
+	<img src="js-talk-data/img/pro.javascript.techniques.jpg">
+	<p style="margin-bottom:0"><a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742/ref=pd_bbs_4?ie=UTF8&s=books&qid=1213149866&sr=8-4" rel="external">Amazon.com: JavaScript: The Good Parts: Douglas Crockford: Books</a></p>
+	<img src="js-talk-data/img/javascript.the.good.parts.jpg">
+</div>
+
+<div class="slide">
+	<h1>nodetype and its constant</h1>
+			<table>
+				<tr>
+					<th>Element type</th>
+					<th>nodeType</th>
+					<th>constant</th>
+				</tr>
+				<tr>
+					<td>Element</td>
+					<td>1</td>
+					<td>ELEMENT_NODE</td>
+				</tr>
+				<tr>
+					<td>Attribute</td>
+					<td>2</td>
+					<td>ATTRIBUTE_NODE</td>
+				</tr>
+				<tr>
+					<td>Text</td>
+					<td>3</td>
+					<td>TEXT_NODE</td>
+				</tr>
+				<tr>
+					<td>Comment</td>
+					<td>8</td>
+					<td>COMMENT_NODE</td>
+				</tr>
+				<tr>
+					<td>Document</td>
+					<td>9</td>
+					<td>DOCUMENT_NODE</td>
+				</tr>
+			</table>
+<p>Also note that they are not supported by Internet Explorer. For compatibilty with IE, you must use numeric literals directly. For example, use 1 instead of Node.ELEMENT_NODE:</p>
+
+</div>
+
+
+<div class="slide">
+    <h1>JavaScript Random Topic -  Encapsulate your code</h1>
+	<a href="http://www.digital-web.com/articles/seven_javascript_techniques/" rel="external"> Encapsulate your code</a>
+	<pre class="js" name="code">
+// global land has access to ONLY a, but cannot execute code within it
+function a() {
+    // has access to a, and b, but cannot execute code within b, c, and d
+    function b() {
+        // has access to a, b, and c, but cannot execute code within c, and d
+        function c() {
+            // has access to a, b, c, and d but cannot execute code within d
+            function d() {
+                // has access to all, and the ability to execute all
+            }
+        }
+    }
+}</pre>
+</div>
+
+<div class="slide">
+    <h1>JavaScript Random Topic -  Encapsulate your code</h1>
+	<p style="margin:0">The reason this safeguards your code is that closures give your code a closing scope that does not allow predators (or other messy engineers) to mess with it. A closure establishes a space in which any variables defined within that space are not accessible from outside that space. In fact, it is only functions (changed as of JavaScript 1.7) that can provide block scope and create closures for you.</p>
+    <pre class="js" name="code">
+(function() {
+    var a = 'foo';
+    var b = function() {
+        // do stuff...
+    };
+    var c = {
+        thunk: function() {
+	
+        },
+        baz: [false, true, false]
+    };
+})();</pre>
+</div>
+
+<div class="slide">
+	<h1>JavaScript Random Topic - Timers and Animation</h1>
+	<p style="margin-bottom:0"><code>setTimeout(), clearTimeout(), setInterval(), clearInterval()</code></p>
+	<ul>
+		<li>The <code>setTimeout()</code> method of the Window object schedules a function to run after a specified number of milliseconds elapses. <code>setTimeout()</code> returns an opaque value that can be passed to clearTimeou() to cancel the execution of the scheduled function.</li>
+		<li><code>setInterval()</code> is like <code>setTimeout()</code> except that the specified function is invoked repeatedly at intervals of the specified number of milliseconds. Like <code>setTimeout( )</code>, <code>setInterval( )</code> returns an opaque value that can be passed to clearInterval( ) to cancel any future invocations of the scheduled function. </li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>JavaScript Random Topic - Timers and Animation</h1>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/setInterval.htm" rel="external">Example</a></p>
+	<pre class="js" name="code">
+&lt;script type="text/javascript"&gt;
+	document.onclick = function(){
+		var timer = setInterval( 
+			function(){
+				document.body.innerHTML+='<p>foo</p>'
+				// this refers to window object
+				if( typeof this.i == 'undefined')
+					this.i = 1;
+				if(this.i == 5){
+					clearInterval(timer);
+					document.body.innerHTML += 'timer ' + timer + ' cleared.';
+				}
+				this.i++;
+			}, 1000)
+	}
+&lt;/script&gt;
+	</pre>
+</div>
+
+<div class="slide">
+	<h1>JavaScript Random Topic - Timers and Animation</h1>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/animation.htm" rel="external">Example</a></p>
+	<pre class="js" name="code">
+&lt;style type="text/css"&gt;
+	#p{background-color:#fff; border:1em solid #090; width:100px; text-indent:-5000px}
+&lt;/style&gt;
+&lt;div id="p"&gt;.&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+	var elem = document.getElementById('p');
+	elem.style.height = '0px';
+
+	// we're going to do a 20 frames animation that takes place over one second
+	for(var i=0; i&lt;=100; i+=5){
+		(function(){
+			var pos = i;
+			setTimeout(function(){
+				elem.style.height = (pos/100)*100 + 'px';
+			}, (pos+1)*10);
+		})()
+	}
+&lt;/script&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>Event - the events</h1>
+	<p>Event handling is the most notoriously area of browser incompatibilites.</p>
+	<ul>
+		<li>Mouse events, caused by a certain mouse action. ex:<code>mouseover, mouseout, mousedown, mouseup, click, dblclick, mousemove, mouseenter, mouseleave</code></li>
+		<li>Keyborard events, caused by a certain key action. ex:<code>keydown, keypress, keyup</code></li>
+	</ul>
+	<p><a href="http://unixpapa.com/js/key.html" rel="external">JavaScript Madness: Keyboard Events</a></p>
+	<ul>
+		<li>The keydown event occurs when the key is pressed, followed immediately by the keypress event. Then the keyup event is generated when the key is released. </li>
+		<li>In theory, the keydown and keyup events represent keys being pressed or released, while the keypress event represents a character being typed. In practice, this is not always the way it is implemented.</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>Event - the events</h1>
+	<ul>
+		<li>Interface events, which fire when something happens to the page, ex:<code>blur, focus, change, contextmenu, load, unload, readystatechange, reset, submit, resize, scroll</code></li>
+	</ul>
+</div>
+
+
+<div class="slide">
+	<h1>Event - Event simulation</h1>
+	<p>These methods simulate the occurrence of an event</p>
+	<ul>
+		<li>Window method <code>focus(), blur()</code> set or remove the focus on the form field you use them on</li>
+		<li>The <code>click()</code> method allows you to simulate a click on a form field.</li>
+		<li>The <code>submit()</code> and <code>reset()</code> methods of a form submit or reset the form. Note that when you use the <code>submit()</code> method, the <code>onsubmit</code> event handler of the form will not fire.</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>Event - Event-handler registration</h1>
+		<p style="margin-bottom:0">Event Handlers as Attributes: violate the sparation of structure and behavior</p>
+		<pre class="js" name="code">
+	&lt;a href="somewhere.html" onclick="highlightNavItem()"&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>Event - Event-handler registration</h1>
+	<p style="margin-bottom:0">The traditional model: </p>
+	<pre class="js" name="code">
+var x = document.getElementById('somewhere');
+x.onclick = highlightNavItem; 
+// note: no parentheses, the () operator executes a function </pre>
+	<p style="margin-bottom:0">pros: easy to use and works in all browsers</p>
+	<p style="margin:0">cons: overwrites the earlier value</p>
+	<pre class="js" name="code">
+x.onclick = doThis;
+x.onclick = doThat; </pre>
+	<p style="margin-bottom:0">If you want to execute both functions when user clicks on the element</p>
+	<pre class="js" name="code">
+x.onclick = function(){
+	doThis();
+	doThat();
+}</pre>
+</div>
+
+<div class="slide">
+	<h1>Event - Event-handler registration</h1>
+	<pre class="js" name="code">
+function  addLoadEvent(func)  {
+    var oldonload = window.onload;
+    if  (typeof  window.onload  !=  'function') {
+        window.onload  =  func;
+    } else {
+        window.onload = function()  {
+            if  (oldonload) {
+                oldonload();
+            }
+            func();
+        }
+    }
+}
+ 
+addLoadEvent(fn1);
+addLoadEvent(fn2);
+...
+</pre>
+
+</div>
+
+<div class="slide">
+	<h1>Event - Event-handler registration</h1>
+	<p>Both W3C and Microsoft have defined event-handler registration models that allow you to define as many event handlers as you like.</p>
+	<ul>
+		<li>W3C model
+		<p style="padding:.5em; border: 1px solid #fff"> target.<em>addEventListener</em>(type, listener, useCapture);</p>
+<pre class="js" name="code">
+			x.addEventListener('click', doThis, false);
+			x.addEventListener('click', doThat, false); </pre>
+	</ul>
+</div>
+
+
+<div class="slide">
+	<h1>Event - Event-handler registration</h1>
+	<ul>
+		<li>Microsoft model
+		<p style="padding:.5em; border: 1px solid #fff">bSuccess = object.<em>attachEvent</em>(sEvent, fpNotify)</p>
+		<pre class="js" name="code">
+x.attachEvent('onclick',doThis);
+x.attachEvent('onclick',doThat);</pre>
+		<p>note: the event name as a string, with the <em>on</em></p>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>Event - Event-handler registration</h1>
+	<pre class="js" name="code">
+function addEventHandler(node, type, f) {  
+    if (node.addEventListener) {  
+        node.addEventListener(type, f, false);   
+    } else if (node.attachEvent) {         
+        node.attachEvent("on" + type, f);   
+    } else {  
+        node["on" + type] = f;  
+    }   
+} </pre>
+	<a href="http://dev.opera.com/articles/view/using-capability-detection/" rel="external">Using capability detection - Opera Developer Community</a>
+</div>
+
+<div class="slide">
+	<h1>Event - Removing event handlers</h1>
+	<p style="margin-bottom:0">Traditional model:</p>
+	<pre class="js" name="code">
+x.onclick = null; </pre>
+	<p style="margin-bottom:0">W3C &amp; Microsoft Model</p>
+	<pre class="js" name="code">
+x.removeEventListener('click',doThis,false); // W3C
+x.detachEvent('onclick',doThis); // Microsoft </pre>
+	<p style="margin-bottom:0">... or using <code>YAHOO.util.Event.removeListener</code></p>
+</div>
+
+<div class="slide">
+	<h1>Event - Removing event handlers</h1>
+	<p style="margin-bottom:0">remove all event listeners before removing a node<a style="margin-left:.5em" href="http://javascript.crockford.com/memory/leak.html" rel="external">Memory Leaks</a></p>
+	<pre class="js" name="code">
+function purge(d) {
+    var a = d.attributes, i, l, n;
+    if (a) {
+        l = a.length;
+        for (i = 0; i &lt; l; i += 1) {
+            n = a[i].name;
+            if (typeof d[n] === 'function') { d[n] = null; }
+        }
+    }
+    a = d.childNodes;
+    if (a) {
+        l = a.length;
+        for (i = 0; i &lt; l; i += 1) { purge(d.childNodes[i]); }
+    }
+}</pre>
+	<p style="margin-bottom:0">... or using <code>YAHOO.util.Event.purgeElement</code></p>
+</div>
+
+<div class="slide">
+	<h1>Event - Bubbling and Capturing</h1>
+	<p style="margin-bottom:0">div, form, and input all have an onclick event handler. The user clicks on the input Obviously, the event handler of the form field should now fire. But what about the &lt;div&gt;'s and the &lt;form&gt;'s event handlers? Should they fire too?  </p>
+	<img src="js-talk-data/img/event.png">
+</div>
+
+<div class="slide">
+	<h1>Event - Bubbling and Capturing</h1>
+	<p style="margin-bottom:0">Event bubbling. The events fire in the order form field, form, div</p>
+	<img src="js-talk-data/img/event-bubbling.png">
+	<p style="margin-bottom:0"><a href="js-talk-data/example/event.bubbling.htm" rel="external">Example</a></p>
+	<pre class="css" name="code">
+d.addEventListener('click', function(){alert(this.id)}, false);
+p.addEventListener('click', function(){alert(this.id)}, false);
+link.addEventListener('click', function(){alert(this.id)}, false);</pre>
+</div>
+
+<div class="slide">
+	<h1>Event - Bubbling and Capturing</h1>
+	<p style="margin-bottom:0">Event capturing. The events fire in the order div, form, form field.</p>
+	<img src="js-talk-data/img/event-capturing.png">
+	<p style="margin-bottom:0"><a href="js-talk-data/example/event.capturing.htm" rel="external">Example</a></p>
+	<pre class="css" name="code">
+d.addEventListener('click', function(){alert(this.id)}, true);
+p.addEventListener('click', function(){alert(this.id)}, true);
+link.addEventListener('click', function(){alert(this.id)}, true); </pre>
+</div>
+
+<div class="slide">
+	<h1>Event - Bubbling and Capturing</h1>
+	<p style="margin-bottom:0">In the W3C event model, event capturing takes place first, followed by event bubbling.</p>
+	<img src="js-talk-data/img/capturing-and-bubbling.png">
+	<p style="margin-bottom:0"><a href="js-talk-data/example/event.bubbling.and.capturing.htm" rel="external">Example</a></p>
+	<pre class="css" name="code">
+d.addEventListener('click', function(){console.log(this)}, true);
+p.addEventListener('click', function(){console.log(this)}, true);
+link.addEventListener('click', function(){console.log(this)}, true);
+d.addEventListener('click', function(){console.log(this)}, false);
+p.addEventListener('click', function(){console.log(this)}, false);
+link.addEventListener('click', function(){console.log(this)}, false);</pre>
+</div>
+
+<div class="slide">
+    <h1>Event - Event Delegation</h1>
+    <a href="http://www.digital-web.com/articles/seven_javascript_techniques/" rel="external">Seven JavaScript Techniques You Should Be Using Today - Four: Try Event Delegation</a>
+	<p>Event delegation is a simple way to cut back on event attachment. It works by adding a listener to a container element, and then retrieving the target that fired the event, rather than attaching several listeners to the children and accessing the element object through the this object.</p>
+	<pre class="css" name="code">
+&lt;ul id="example"&gt;
+    &lt;li&gt;foo&lt;/li&gt;
+    &lt;li&gt;bar&lt;/li&gt;
+    &lt;li&gt;baz&lt;/li&gt;
+    &lt;li&gt;thunk&lt;/li&gt;
+&lt;/ul&gt; </pre>
+	<pre class="js" name="code">
+var element = document.getElementById('example');
+addListener(element, 'click', handleClick);
+function handleClick(e) {
+    var element = e.target || e.srcElement;
+    // do stuff with 'element'
+}</pre>
+</div>
+
+<div class="slide">
+	<h1>Event - Event object</h1>
+	<ul>
+		<li>In the W3C model, the event object is sent to the event-handling function as the first argument.</li>
+		<li>In the Microsoft model, the event object is always window.event.</li>
+	</ul>
+	<a href="js-talk-data/example/event.object.htm" rel="external">Example</a>
+	<pre class="js" name="code">
+document.onclick = function(e){
+	var e = e || window.event;
+	console.dir(e);
+} 
+document.onkepress = function(e){
+	var e = e || window.event;
+	console.dir(e);
+} </pre>
+</div>
+
+<div class="slide">
+	<h1>Event - Event properties</h1>
+	<ul>
+		<li>Targeting: The W3C properties are <code>currentTarget, relatedTarget, target</code>, the Microsoft properties are <code>fromElement, toElement, srcElement</code></li>
+		<li>Mouse position</li>
+	</ul>
+	<ul>
+		<li><code>keyCode</code> or <code>charCode</code> contains the code of the pressed key.</li>
+		<p style="margin-bottom:0"><a href="js-talk-data/example/keycode.htm" rel="external">example</a></p>
+		<pre class="js" name="code">
+document.onkeypress = function(e){
+	if(!e) e = window.event;
+	var code = e.keyCode || e.charCode;
+	alert(code);
+	//alert(String.fromCharCode(code));
+}</pre>
+		<li>The <code>altKey, ctrlKey, </code>and <code>shiftKey</code> properties are <code>true</code> when user press the Alt, Control, or Shift key, <code>false</code> when he doesn't.</li>
+	</ul>
+</div>
+
+<div class="slide">
+	<h1>Event - targeting</h1>
+	<ul>
+		<li>event object's <code>target</code> or <code>srcElement</code> property, which always refers to the element on which the event took place.</li>
+		<li><code>this</code> keyword, which usually (but not always) refers to the element on which you have defined the event handler.</li>
+	</ul>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/target.htm" rel="external">example</a></p>
+	<pre class="js" name="code">
+&lt;ul&gt;
+	&lt;li&gt;banana&lt;/li&gt;
+	&lt;li&gt;tomato&lt;/li&gt;
+	&lt;li&gt;orange&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+	document.onclick = function(e){
+		if(!e) e = window.event;
+		var target = e.target||e.srcElement;
+		alert(target.innerHTML + ' clicked');
+		target.style.backgroundColor = '#eee';
+	}
+&lt;/script&gt; </pre>
+</div>
+
+<div class="slide">
+	<h1>Event - cancelling default action</h1>
+	<p style="margin-bottom:0">The W3C and Microsoft models also define ways to cancel the default action. </p>
+	<ul>
+	    <li>W3C model: <code>preventDefault();</code></li>
+	    <li>Microsoft model: set the event object's <code>returnValue</code> property to false.</li>
+	    <li>traditional model: <code>return false</code>
+	</ul>
+	<a href="js-talk-data/example/preventDefault.htm" rel="external">Example</a>
+<pre class="js" name="code">
+var link = document.getElementById('link');
+link.onclick = function(e){
+    if(!e) e = window.event;
+    // W3C model
+    if(e.preventDefault)
+	e.preventDefault();
+    // microsoft Model
+    e.returnValue = false;
+    // traditional model
+    return false;
+}</pre>
+</div>
+
+<div class="slide">
+	<h1>Event - cancelling event propagation</h1>
+	<p style="margin:0">"This event should not propagate further"</p>
+	<ul>
+	    <li>W3C model: <code>stopPropagation()</code></li>
+	    <li>Microsoft model: set the event object's <code>cancelBubble</code> property to <code>true</code></li>
+	    <li>traditional model: N/A
+	</ul>
+	<pre class="js" name="code">
+function stopBubble(e) {
+    // If an event object is provided, then this is a non-IE browser
+    if ( e &amp;&amp; e.stopPropagation )
+        // and therefore it supports the W3C stopPropagation() method
+        e.stopPropagation();
+    else
+        // Otherwise, we need to use the Internet Explorer
+        // way of cancelling event bubbling
+        window.event.cancelBubble = true;
+}}}}</pre>
+	<code>YAHOO.util.Evet.stopEvent = YAHOO.util.Event.stopPrpagation + YAHOO.util.Event.preventDefault</code>
+</div>
+
+<div class="slide">
+	<h1>作業時間到，我們一起來禱告</h1>
+	<a href="js-talk-data/example/tab-module.htm" rel="external">tab module</a>
+	<ul>
+		<li>event targeting - find which tab is clicked</li>
+		<li>class toggling - remove class and add class</li>
+		<li>inline style modification - display:none and display:''</li>
+	</ul>
+	<p style="margin-bottom:0">requirement</p>
+	<ul>
+		<li>no library</li>
+		<li>work both in IE/firefox</li>
+	</ul>
+</div>
+
+<div class="slide index">
+	<span style="display:none" id="index-yui"></span>
+    <ul>
+	<li onclick="goTo(document.getElementById('index-html').parentNode.id.replace('slide',''))">HTML</li>
+	<li onclick="goTo(document.getElementById('index-dom').parentNode.id.replace('slide',''))">JavaScript - DOM</li>
+	<li onclick="goTo(document.getElementById('index-event').parentNode.id.replace('slide',''))">JavaScript - Event</li>
+	<li class="on" onclick="goTo(document.getElementById('index-yui').parentNode.id.replace('slide',''))">YAHOO User Interface</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>YUI - YAHOO User Interface Introduction</h1>
+    <ul>
+	<li><a href="http://simon.incutio.com/slides/2006/xtech/yui-notes.html" rel="external">Preparatory notes for "The Yahoo! User Interface Library" at XTech</a></li>
+	<li><a href="http://developer.yahoo.com/yui/" rel="external">YUI homepage</a></li>
+	<li><a href="http://developer.yahoo.com/yui/theater/" rel="external">YUI theater</a></li>
+	<li><a href="http://developer.yahoo.com/yui/examples/" rel="external">YUI example gallery</a></li>
+	<li><a href="http://developer.yahoo.com/yui/articles/hosting/" rel="external">Serving YUI files from Yahoo!</a></li>
+	<li><a href="http://developer.yahoo.com/yui/download/" rel="external">download YUI</a></li>
+	<li><a href="http://developer.yahoo.com/yui/docs/" rel="external">API Documentation</a></li>
+	<li><a href="http://developer.yahoo.com/yui/docs/assets/cheatsheets.zip"rel="external">YUI Cheat Sheets</a></li>
+	<li><a href="http://tech.groups.yahoo.com/group/ydn-javascript/" rel="external">YUI forum on Yahoo! group</a>
+	<li><a href="http://blog.davglass.com/2006/06/yui-code-samples/" rel="external">Davs Rants and Random Thoughts ? YUI Code Samples</a></li>
+    </ul>
+</div>
+
+<div class="slide">
+	<h1>YUI - YAHOO User Interface Introduction</h1>
+	<p style="margin-bottom:0">CSS: reset.css / base.css / fonts.css / grids.css</p>
+	<p style="margin-bottom:0">JS: divided into two logical sections: utilities and controls</p>
+	<ul>
+		<li>Utilities are reusable infrastructure librariies that handle things like events, Ajax calls, animation and drag and drop.</li>
+		<li>Controls are reusable interactive components - things like sliders, menus and calendars.</li>
+	</ul>
+</div>
+
+<div class="slide">
+    <h1>YAHOO.util.Dom</h1>
+	<pre class="js" name="code">
+&lt;script src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js"&gt;&lt;/script&gt; 
+&lt;script src="http://yui.yahooapis.com/2.5.2/build/dom/dom-min.js"&gt;&lt;/script&gt; </pre>
+    <ul>
+	<li><p style="margin-bottom:0">yui's own abstraction for <code>document.getElementById</code></p>
+	<code>YAHOO.util.Dom.get(element or string or array)</code></li>
+	<li><p style="margin-bottom:0">alias</p>
+	<pre style="padding:.5em">
+var YUD = YAHOO.util.Dom,
+$   = YUD.get;
+alert( $('foo').innerHTML ); </pre></li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>YAHOO.util.Dom.batch</h1>
+    <p style="margin-bottom:0">Runs the supplied method against each item in the Collection/Array. The method is called with the element(s) as the first argument.</p>
+    <a href="js-talk-data/example/batch.htm" rel="external">Example</a>
+    <pre class="js" name="code">
+var lis = document.getElementsByTagName('li');
+document.onclick = function(){
+    YAHOO.util.Dom.batch(lis, function(el){
+	    el.style.backgroundColor = '#eee';
+    })
+} </pre>
+</div>
+
+<div class="slide">
+    <h1>YUD.getXY / YUD.setXY</h1>
+    <ul>
+	<li><code>YUD.getXY</code>: Gets the curent position of an element based on page coordinates. display:none or elements not appended return false.</li>
+	<li><code>YUD.setXY</code>: Set the positio of an html element in page coordinates, reagrdless of how the element is positioned. display:none or elements not appended return false</li>
+    </ul>
+    <a href="js-talk-data/example/getxy.htm" rel="external">Example - tooltip</a>
+    <pre class="js" name="code">
+var YUD = YAHOO.util.Dom,
+$   = YAHOO.util.Dom.get;
+var p  = $('p');
+var xy = YUD.getXY('p');
+console.log(xy);
+p.onmouseover = function(){
+    YUD.setXY('tooltip', [xy[0]+30, xy[1]-30]);
+}
+p.onmouseout = function(){
+    YUD.setXY('tooltip', [-5000, -5000]);
+} </pre>
+</div>
+
+
+<div class="slide">
+    <h1>YUD.getElementsByClassName, YUD.getElementsBy</h1>
+    <pre class="js" class="code">
+YAHOO.util.Dom.getElementsBy(function(el) {
+    return (/^http:\/\/www\.yahoo\.com/.test(el.getAttribute('href')));
+}));</pre>
+    <p>Both getElementsByClassName and getelementsBy by deafult traverse every element in the DOm. This can lead poor performance, so the function take optional 2nd and 3rd arguments for specifying the tpyoe of elements to be checked and the root node to start checking from. Here's how you run the above query only against link elements within a div of ID content.</p>
+    <pre class="js" name="cod">
+YAHOO.util.Dom.getElementsBy(function(el) {
+    return (/^http:\/\/www\.yahoo\.com/.test(el.getAttribute('href')));
+}, 'a', 'content'));</pre>    
+</div>
+
+<div class="slide">
+    <h1>YUD - adding, removing and replaceing classes</h1>
+    <ul>
+	<li>YUD.hasClass(el, className);</li>
+	<li>YUD.addClass(el, className);</li>
+	<li>YUD.removeClass(el, className);</li>
+	<li>YUD.replaceClass(el, className);</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>YAHOO.util.Event</h1>
+    <pre class="js" name="code">
+&lt;script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js" &gt;&lt;/script&gt; 
+&lt;script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js" &gt;&lt;/script&gt;</pre>
+    <p style="margin-bottom:0">aggregated yahoo-dom-event.js</p>
+    <pre class="js" name="code">
+&lt;script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"&gt;&lt;/script&gt;</pre>
+    <p style="margin-bottom:0">basic usage of the event library looks like this:
+    <pre class="js" name="code">
+function myCallback(e){
+    alert('something was clicked'):
+}
+YAHOO.util.Event.addListener(el, 'click', myCallback);</pre>
+    <p style="margin-bottom:0">combine the above using anonymous function</p>
+    <pre class="js" name="code">
+YAHOO.util.Event.addListener(el, 'click', function(e){
+    alert('something was clicked');
+})</pre>
+</div>
+
+<div class="slide">
+    <h1>YAHOO.util.Event</h1>
+    <p style="margin-bottom:0">YAHOO.util.Event.on is an alias for addListener. You can also pass the ID of the element</p>
+    <pre class="js" name="code">
+YAHOO.util.Event.on('mylink', 'click', function(e){
+    alert('Element was clicked!')'
+}) </pre>
+    <p style="margin-bottom:0">You can also pass the array of Id of the element</p>
+    <pre class="js" name="code">
+YAHOO.util.Event.on(['mylink1', 'mylink2', 'mylink3'], 'click', function(e){
+    alert('Element was clicked!')'
+}) </pre>
+    <p style="margin-bottom:0">You can pass an object as the third argument. It will be passed to your event handling function when it is called.</p>
+    <pre class="js" name="code">
+function msgAlert(e, msg){ 
+    alert(msg);
+}
+YAHOO.util.Event.on('mydiv', 'click', msgAlert, "My div was clicked");</pre>
+</div>
+
+<div class="slide">
+    <h1>YAHOO.util.Event - delayed listener</h1>
+    <ul>
+	<li>you can't add an event handler to an element until that element has been loaded into the DOM.</li>
+	<li>The standard solution is to have event handlers added in a piece of code that is itself called when the window.onload event fires.</li>
+	<li>If a page takes a while to load, UI elements won't respond as they should until the load has completed</li>
+    </ul>
+    <p style="margin-bottom:0">The event component lets you assign event handlers by ID before the element is available</p>
+    <a href="js-talk-data/example/delayed.listener.htm" rel="external">Example</a>
+    <pre class="js" name="code">
+&lt;script type="text/javascript"&gt;
+    var myCallback = function(){alert('mydiv clicked')};
+    YAHOO.util.Event.on('mydiv', 'click', myCallback);
+&lt;/script&gt;
+
+&lt;div id="mydiv"&gt;foo&lt;/div&gt;</pre>
+</div>
+
+<div class="slide">
+    <h1>YUE.onDOMReady vs. window.onload</h1>
+    <a href="js-talk-data/example/onDOMReady.php" rel="external">Example</a>
+    <pre class="js" name="code">
+var YUE = YAHOO.util.Event;
+YUE.on(window, 'load', function(){
+    document.body.innerHTML += '<p>window.onload fired</p>';
+})
+YUE.onDOMReady(function(){
+    document.body.innerHTML += '<p>onDOMReady fired</p>';
+}) </pre>
+    <a href="http://l.yimg.com/wretch.yimg.com/photos/serv/index2/js/index.js" rel="external">http://l.yimg.com/wretch.yimg.com/photos/serv/index2/js/index.js</a>
+    <pre class="js" name="code">
+init: function(){
+  YUE.onDOMReady( this.initTab );
+  YUE.onDOMReady( this.initTKR );
+  YUE.onDOMReady( this.ddMenu );
+  YUE.onDOMReady( this.setLang );
+  YUE.onDOMReady( this.showIframe );
+  if(YAHOO.env.ua.ie) YUE.onDOMReady( this.setHomepage );
+}</pre>
+</div>
+
+<div class="slide">
+    <h1>YUE.onAvailable, YUE.onContentReady, YUE.onDOMReady</h1>
+    <ul>
+	<li><code>onAvailable</code> targets a single element and fires when that element is availalbe (when it responds to document.getElementById()) - but you can't count on the element's children having been loaded at this point.</li>
+	<li><code>onContentReady</code>: When you care about not just your target element but it's children as well, use onContentReady. This method will tell you that your target element and all of its children are present in the DOM.</li>
+	<li><code>onDOMReady</code> will let you know that the DOM is fully loaded and ready for you to modify via script.</li>
+    </ul>
+</div>
+
+
+<div class="slide">
+    <h1>YAHOO.util.Event</h1>
+    <p style="margin-bottom:0">The event library provides a number of utility functions for cross-browser event manipulation:</p>
+    <ul>
+	<li>YAHOO.util.Event.getCharCode(ev)</li>
+	<li>YAHOO.util.Event.getPageX(ev)</li>
+	<li>YAHOO.util.Event.getPageY(ev)</li>
+	<li>YAHOO.util.Event.getXY(ev)</li>
+	<li>YAHOO.util.Event.getTarget(ev)</li>
+	<li>YAHOO.util.Event.getRelatedTarget(ev)</li>
+	<li>YAHOO.util.Event.stopPropagation(ev)</li>
+	<li>YAHOO.util.Event.preventDefault(ev)</li>
+	<li>YAHOO.util.Event.stopEvent(ev)</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Connection Manager - YAHOO.util.Connect</h1>
+    <pre class="js" name="code">
+&lt;script src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js"&gt;&lt;/script&gt; 
+&lt;script src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js"&gt;&lt;/script&gt; 
+&lt;script src="http://yui.yahooapis.com/2.5.2/build/connection/connection-min.js"&gt;&lt;/script&gt;</pre>
+    <ul>
+	<li>The connection manager is a utility that enables you to make in-page HTTP requests through a simplified interface to the XMLHttpRequest object.</li>
+	<li>The Connection Manager handles cross-browser instantiation of XMLHttpRequest, negotiates the server response and uses a callback pattern to process the response data.</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h1>Connection Manager - YAHOO.util.Connect</h1>
+    <a href="js-talk-data/example/ajax.htm" rel="external">Example</a>
+    <pre class="js" name="code">
+YAHOO.util.Connect.asyncRequest('GET', 'hello-world.htm', {
+    success: function(o) {
+		console.dir(o);
+		document.body.innerHTML += o.responseText;
+    },
+    failure: function(o) {
+        alert('Request failed: ' + o.statusText);
+    }
+});</pre>
+</div>
+
+<div class="slide">
+    <h1>Connection Manager - YAHOO.util.Connect</h1>
+    <p style="margin-bottom:0">available properties for response o</p>
+    <img src="js-talk-data/img/ajax.png" />
+</div>
+
+<div class="slide">
+    <h1>Connection Manager - YAHOO.util.Connect</h1>
+    <p style="margin-bottom:0">cross-domain AJAX scripting - proxy.php</p>
+    <pre class="js" name="code">
+$id = $_GET['id'];
+$str = file_get_contents("http://www.flickr.com/photos/" . $id );
+echo $str;</pre>
+    <a href="js-talk-data/example/ajax-flickr.htm" rel="external">Example</a>
+    <pre class="js" name="code">
+var go = document.getElementById('go');
+go.onclick = function(){
+    var id = document.getElementById('user').value;
+    YAHOO.util.Connect.asyncRequest('GET', 'proxy.php?id='+id, {  
+	    success: function(o) {  
+			console.dir(o);
+			document.body.innerHTML += o.responseText;
+	    },  
+	    failure: function(o) {  
+			alert('Request failed: ' + o.statusText);  
+	    }  
+    });  
+}</pre>
+</div>
+
+<div class="slide">
+    <h1>GET - YAHOO.util.Get.script</h1>
+    <p style="margin-bottom:0">cross-site data retrieval</p>
+    <a href="http://kitty.2y.idv.tw/~chfang/cross-site-data.js" rel="external">Example (http://kitty.2y.idv.tw/~chfang/cross-site-data.js)</a>
+    <pre class="js" name="code">
+var address = {
+    'wretch': 'http://www.wretch.cc',
+    'yahoo' : 'http://tw.yahoo.com',
+    'flickr': 'http://www.flickr.com'
+} </pre>
+    <a href="js-talk-data/example/cross-site-data-retrival.htm" rel="external">Example</a>
+    <pre class="js" name="code">
+document.onclick = function(){
+    var script = document.createElement('script');
+    script.src = 'http://kitty.2y.idv.tw/~chfang/cross-site-data.js';
+    document.documentElement.appendChild(script);
+    var init = function(){
+	for(add in address){
+	    document.documentElement.innerHTML += '<li><a href="'+address[add]+'">'+add+'</a></li>'
+	}	
+    }
+    script.onload = init;
+}</pre>
+</div>
+
+<div class="slide">
+    <h1>GET - YAHOO.util.Get.script</h1>
+    ...but the onload event does not fire in IE
+	<a href="http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=f075c2b2f74fe6dbec7760d425c2f75a&user_id=79211125@N00" rel="external">http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json</a>
+	<p style="margin-bottom:0"><a href="js-talk-data/example/flickr.htm" rel="external">Example</a></p>
+	<pre class="js" name="code">
+	var jsonFlickrApi = function(o){
+		console.dir(o);
+	}
+	var init = function(){
+		if(typeof script != 'undefined')
+			return;
+		var script = document.createElement('script');
+		script.src = 'http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=f075c2b2f74fe6dbec7760d425c2f75a&user_id=79211125@N00';
+		document.documentElement.appendChild(script);
+	}
+	document.onclick = init;</pre>
+</div>
+
+
+<div class="slide">
+    <h1>GET - YAHOO.util.Get.script</h1>
+	<a href="js-talk-data/example/flickr-with-yui-get.htm" rel="external">rewrite previous example with YUI Get</a>
+	<pre class="js" name="code">
+	var jsonFlickrApi = function(o){
+		console.dir(o);
+	}
+	var init = function(){
+		YAHOO.util.Get.script('http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=f075c2b2f74fe6dbec7760d425c2f75a&user_id=79211125@N00');
+	}
+	document.onclick = init;</pre>
+	<p style="margin:0"><a href="../../project/flickr.viewer/" rel="external">flickr viewer</a></p>
+	<a href="http://www.wretch.cc/svcs/findfriend/group.php?tab=relate" rel="external">http://www.wretch.cc/svcs/findfriend/group.php?tab=relate</a>
+    <pre class="js" name="code">
+YAHOO.wretch.group.getScript = function(e, p){
+  if(typeof YAHOO.wretch.group.setHiddenValue == 'function')
+    YAHOO.wretch.group.setHiddenValue();
+  var formstr = setForm('searchform');
+  YAHOO.util.Get.script( $('searchform').action +  "?pg="+p+"&"+formstr);
+}</pre>
+
+</div>
+
+<div class="slide">
+    <h1>Animation - YAHOO.util.Anim</h1>
+    <p style="margin-bottom:0">animate an element to resize itself to 400 by 400 pixels over a one second period</p>
+    <pre class="js" name="code">
+var anim = new YAHOO.util.Anim(el, {
+    width: {to: 400},
+    height: {to: 400}
+}, 1);
+anim.animate();</pre>
+    <p style="margin-bottom:0">Let's have it fade in at the same time;</p>
+    <pre class="js" name="code">
+var anim = new YAHOO.util.Anim(el, {
+    opacity: {from: 0, to: 1}
+    width: {to: 400},
+    height: {to: 400}
+}, 1);</pre>
+    <p style="margin-bottom:0">Default units are pixels, but you can use other units as well</p>
+    <pre class="js" name="code">
+var anim = new YAHOO.util.Anim(el, {
+    width: {from: 1, to: 10, unit: 'em'}
+}, 1);</pre>
+</div>
+
+<div class="slide">
+    <h1>Animation - YAHOO.util.Anim</h1>
+    <p style="margin-bottom:0">Since animations take time to complete, the ability to subscribe to custom events is supported. vailable events are onStart, onComplete and onTween (which fires for every frame).</p>
+    <pre class="js" name="code">
+var anim = new YAHOO.util.Anim(el, {  
+    opacity: {to: 0}  
+} 1, YAHOO.util.Easing.easeOut); 
+anim.onComplete.subscribe(function() {
+    var el = this.getEl();
+    el.parentNode.removeChild(el);
+});
+anim.animate();</pre>
+    <p>As the animation progresses, an animation manager object keeps track of how much time has elapsed. If performance is poor, the framerate is dynamically reduced to ensure that everything completes in the time specified.</p>
+</div>
+
+<div class="slide">
+    <h1>Animation - YAHOO.util.Anim</h1>
+    <a href="js-talk-data/example/ticker2.html" rel="external">Example</a>
+    <ul>
+	<li>YAHOO.util.Easing.easeIn - begin slowly and accelerate</li>
+	<li>YAHOO.util.Easing.easeOut - begin quickly and decellerate</li>
+	<li>YAHOO.util.Easing.easeBoth - both</li>
+	<li>YAHOO.util.Easing.easeNone -  the default; uniform speed</li>
+	<li>YAHOO.util.Easing.backIn - start below starting value</li>
+	<li>YAHOO.util.Easing.backOut - end with bounce beyond ending value</li>
+	<li>YAHOO.util.Easing.backBoth - both</li>
+    </ul>
+</div>
+
+
+<div class="slide">
+	<h1>YAHOO Global Object</h1>
+	<a href="http://yuiblog.com/blog/2007/06/12/module-pattern/" rel="external">http://yuiblog.com/blog/2007/06/12/module-pattern/</a>
+	<p style="margin-bottom:0">1. Create a namespace object:</p>
+	<pre class="js" name="code">
+YAHOO.namespace("myProject");  </pre>
+	<p style="margin-bottom:0">2. Assign the return value of an anonymous function to your namespace object:</p>
+	<pre class="js" name="code">
+YAHOO.myProject.myModule = function () {  
+  
+ return  {  
+  myPublicProperty: "I'm accessible as YAHOO.myProject.myModule.myPublicProperty.";  
+  myPublicMethod: function () {  
+   YAHOO.log("I'm accessible as YAHOO.myProject.myModule.myPublicMethod.");  
+  }  
+ };  
+  
+}(); // the parens here cause the anonymous function to execute and return  </pre>
+</div>
+
+<div class="slide">
+	<h1>YAHOO Global Object - JavaScript Pattern Module</h1>
+	<p style="margin-bottom:0">3. Add &quot;private&quot; methods and variables in the anonymous function prior to the return statement.</p>
+	<pre name="code" class="js"> 
+YAHOO.myProject.myModule = function () {  
+ //"private" variables:  
+ var myPrivateVar = "I can be accessed only from within YAHOO.myProject.myModule.";  
+  
+ //"private" method:  
+ var myPrivateMethod = function () {  YAHOO.log("I can be accessed only from within YAHOO.myProject.myModule");  }  
+ return  {  
+  myPublicProperty: "I'm accessible as YAHOO.myProject.myModule.myPublicProperty."  
+  myPublicMethod: function () {  
+   YAHOO.log("I'm accessible as YAHOO.myProject.myModule.myPublicMethod.");  
+   //Within myProject, I can access "private" vars and methods:  
+   YAHOO.log(myPrivateVar);  
+   YAHOO.log(myPrivateMethod());  
+   //The native scope of myPublicMethod is myProject; we can  
+   //access public members using "this":  
+   YAHOO.log(this.myPublicProperty);  
+  }  
+ };  
+  
+}(); // the parens here cause the anonymous function to execute and return  </pre>
+</div>
+
+<div class="slide">
+	<h1>YAHOO Global Object - JavaScript Pattern Module</h1>
+	<a href="js-talk-data/example/module.pattern.htm" rel="external">Example</a>
+	<pre class="js" name="code">
+YAHOO.namespace("myProject");  
+YAHOO.myProject.myModule = function () {  
+ //private method:  
+ var getListItems = function () {  
+  
+  //note that we can use other private variables here, including  
+  //our "yud" shorthand to YAHOO.util.Dom:  
+  var elList = yud.get("myList");  
+  var aListItems = yud.getElementsByClassName(  
+   "draggable", //get only items with css class "draggable"  
+   "li", //only return list items  
+   elList //restrict search to children of this element  
+  );  
+  return aListItems;  
+ };  
+  
+ //the returned object here will become YAHOO.myProject.myModule:  
+ return  {  
+  
+  aDragObjects: [], //a publicly accessible place to store our DD objects  
+  
+  init: function () {  
+   //we'll defer making list items draggable until the DOM is fully loaded:  
+   yue.onDOMReady(this.makeLIsDraggable, this, true);  
+  },  
+  
+  makeLIsDraggable: function () {  
+   var aListItems = getListItems(); //these are the elements we'll make draggable  
+   for (var i=0, j=aListItems.length; i&lt;j; i++) {  
+    this.aDragObjects.push(new YAHOO.util.DD(aListItems[i]));  
+   }  
+  }  
+  
+ };  
+}(); // the parens here cause the anonymous function to execute and return  
+  
+//The above code has already executed, so we can access the init  
+//method immediately:  
+YAHOO.myProject.myModule.init();  </pre>
+</div>
+
+
+
+</div>
+
+<script>
+	dp.SyntaxHighlighter.BloggerMode();
+	dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+<script>
+var initTooltips = function(){
+  var tooltips = YAHOO.util.Dom.getElementsByClassName('tooltip');
+  if(tooltips.length<0) return;
+  if(typeof this.tooltipid == 'undefined') this.tooltipid=1000;
+  for(var i=0; i<tooltips.length ; i++){
+    tooltips[i].id = '_tooltip_' + this.tooltipid;
+    var myTooltip = new YAHOO.widget.Tooltip('mytoltip', { context: tooltips[i].id } )
+    this.tooltipid++;
+  }
+}
+YAHOO.util.Event.onDOMReady(initTooltips);
+	
+</script>
+</body>
+</html>

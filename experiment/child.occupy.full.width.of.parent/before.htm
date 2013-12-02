@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<style>
+body{padding:2em; font-family: "Lucida Grande"}
+ul{width:700px; border:5px solid #eee; padding:1em 2em; line-height:1.6; font-size:1em}
+ul li.on{background-color:#ffffcc}
+</style>
+<ul id="ul">
+    <li>Pellentesque hendrerit placerat neque.</li></li>
+    <li>Suspendisse quis pede eu purus blandit lacinia.</li>
+    <li>Nam at lorem eget arcu gravida dapibus.</li>
+    <li>Aliquam ornare enim sed tellus.</li>
+    <li>Maecenas suscipit ullamcorper augue.</li>
+</ul>
+<script src="../../library/yui/yahoo-dom-event.js"></script>
+<script>
+	var $ = YAHOO.util.Dom.get, YUD = YAHOO.util.Dom, YUE = YAHOO.util.Event;
+	var ul = $('ul');
+	var old = YUD.getFirstChild(ul);
+
+	YUE.on(ul, 'mouseover', function(e){
+		var target = YUE.getTarget(e);
+
+		YUD.addClass(target, 'on');
+		YUD.removeClass(old, 'on');
+		old = target;
+	})
+
+</script>

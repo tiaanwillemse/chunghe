@@ -1,0 +1,17 @@
+<script src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js"></script> 
+<script src="http://yui.yahooapis.com/2.5.2/build/dom/dom-min.js"></script> 
+
+<ul>
+    <li>banana</li>
+    <li>apple</li>
+    <li>orange</li>
+</ul>
+<script>
+
+    var lis = document.getElementsByTagName('li');
+    document.onclick = function(){
+	YAHOO.util.Dom.batch(lis, function(el){
+	    el.style.backgroundColor = '#eee';
+	})
+    }
+</script>

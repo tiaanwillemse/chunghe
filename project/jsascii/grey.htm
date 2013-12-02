@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Edge detection demo</title>
+	<script>
+	// https://developer.mozilla.org/en/manipulating_video_using_canvas
+	var img = new Image();
+	img.src = 'add.png';
+	img.onload = init;
+	function init() {
+		var h = img.height;
+		var w = img.width;
+
+		var canvas = document.getElementsByTagName('canvas')[0];
+		canvas.setAttribute('height', h+'px');
+		canvas.setAttribute('width', w+'px');
+		var context = canvas.getContext('2d');
+
+		// draw the image onto the canvas
+		context.drawImage(img, 0, 0);
+
+		var input = context.getImageData(0, 0, w, h);
+		
+		//var output = context.createImageData(w, h);
+		var inputdata = input.data;
+		console.log(inputdata);
+
+		//console.dir(inputdata[232]);
+		/*
+		for(var y=1; y<h-1; y+=1) {
+			for(var x=1; x<w-1; x+=1) {
+				var (var c=0; c<3; c+=1) {
+					console.
+				}
+			}
+		}*/
+		//var outputdata = output.data;
+
+		//console.log(inputdata.join(', '));
+		context.putImageData(input, 0, 0);
+
+	}
+
+	</script>
+</head>
+<body>
+<canvas></canvas>
+</body>
+</html>
+

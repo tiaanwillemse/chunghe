@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.0r4/build/reset-fonts/reset-fonts.css">
+<style>
+body{padding:50px;}
+textarea{overflow:auto; border:1px solid #ccc;}
+h2{font-size:16px; font-weight:bold; line-height:2;}
+ul{margin-left:20px; padding-left:20px;}
+ul li {list-style-type:disc;}
+b{font-weight:bold; display:block;}
+.block{margin-bottom:15px;}
+</style>
+<body>
+
+<h2>Preserve line break in textarea</h2>
+<div class="block">
+	<b>note</b>
+	<ul>
+		<li>set the textarea's value by textarea.value, not textarea.innerHTML</li>
+		<li>use br2nl before inserting a&lt;br&gt;b into textarea</li>
+	</ul>
+</div>
+<div class="block">
+<b>target text:</b> a&lt;br&gt; b&lt;br&gt; c&lt;br&gt;
+</div>
+<div class="block">
+	<b>from:</b>
+	<p id="target">a<br>b<br>c</p>
+</div>
+<div class="block">
+	<b>to:</b>
+	<textarea name="some" cols=70 rows=10 id="ta"></textarea>
+</div>
+
+<input type="button" id="btnAbrB" value="insert a&lt;br&gt;b">
+<input type="button" id="btnANewlineB" value="insert a\nb">
+<input type="button" id="btnTargetTextRaw" value="insert target text raw">
+<input type="button" id="btnTargetTextBr2nl" value="insert target text br2nl">
+
+<script>
+window.onload = function () {
+
+	var ta = document.getElementById('ta');
+	var target = document.getElementById('target');
+	var br2nl = function (str) {
+		return str.replace(/<br\s*\/?>/img, "\r");
+	}
+	document.getElementById('btnAbrB').onclick = function () {
+		ta.value = 'a<br>b';
+	}
+
+	document.getElementById('btnANewlineB').onclick = function () {
+		ta.value = 'a\nb';
+	}
+
+	document.getElementById('btnTargetTextRaw').onclick = function () {
+		ta.value = target.innerHTML;
+	}
+
+	document.getElementById('btnTargetTextBr2nl').onclick = function () {
+		ta.value = br2nl(target.innerHTML);
+	}
+}
+</script>
+</body>
+</html>

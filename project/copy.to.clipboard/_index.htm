@@ -1,0 +1,39 @@
+<textarea style="width: 30em; height:13em" id="ta">
+	<code>
+		1 && 1 equals 1
+	</code>
+</textarea><br>
+<input type="button" id="btn" value="copy texarea value to clipboard" onclick=" t = document.getElementById('ta').value; copyToClipboard(t)"></input>
+<input type="button" value="ie copy" id="ie">
+<script>
+document.getElementById('ie').onclick = function(){
+	if( document.getElementById('ta').createTextRange ){
+		var copytext = document.getElementById('ta').createTextRange();
+		copytext.execCommand('copy');
+		alert('已複製到剪貼簿');
+	}
+}
+
+
+function copyToClipboard( text ){
+  var config = {
+	'swf':  'http://chunghe.googlecode.com/svn/trunk/project/copy.to.clipboard/_clipboard.swf'
+  }
+
+  if(window.clipboardData){
+    window.clipboardData.setData('text', text);
+  }
+  else{
+    if(!document.getElementById('flashcopier')){
+      flashcopier = document.createElement('div');
+      flashcopier.id = 'flashcopier';
+      document.body.appendChild(flashcopier);
+    }
+    flashcopier.innerHTML = '<embed src="' + config.swf + '" FlashVars="clipboard='+encodeURIComponent(text)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
+  }
+  alert('已複製成功');
+}
+
+
+</script>
+</body>

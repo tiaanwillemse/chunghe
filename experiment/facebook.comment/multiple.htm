@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <style>
+    #slides, #control {width: 500px; margin: 1em auto;}
+    #slides .slide{display:none; width: 500px; text-align: center;}
+    #slides .slide.active{display:block;}
+    </style>
+  </head>
+<body>
+
+
+  <div id="control">
+    <a id="prev" href="#">&laquo; prev</a>
+    <a id="next" href="#">next &raquo;</a>
+  </div>
+  <div id="slides">
+    <div class="slide active">
+      <img src="images/1.jpg">
+      <div class="fb-comments" data-href="http://chunghe.googlecode.com/svn/trunk/experiment/facebook.comment/multiple.htm#1" data-num-posts="5" data-width="470"></div>
+    </div>
+
+    <div class="slide">
+      <img src="images/2.jpg">
+      <div class="fb-comments" data-href="http://chunghe.googlecode.com/svn/trunk/experiment/facebook.comment/multiple.htm#2" data-num-posts="5" data-width="470"></div>
+    </div>
+
+    <div class="slide">
+      <img src="images/3.jpg">
+      <div class="fb-comments" data-href="http://chunghe.googlecode.com/svn/trunk/experiment/facebook.comment/multiple.htm#3" data-num-posts="5" data-width="470"></div>
+    </div>
+
+  </div><!-- #slides -->
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=477168002316285";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+  $slides = $('#slides .slide');
+  $('#next').on('click', function(e) {
+    e.preventDefault();
+    $active = $('#slides .active');
+    $next = $active.next();
+    if($next.length) {
+      $slides.removeClass('active');
+      $next.addClass('active');
+    }
+  });
+  $('#prev').on('click', function(e) {
+    e.preventDefault();
+    $active = $('#slides .active');
+    $prev = $active.prev();
+    if($prev.length) {
+      $slides.removeClass('active');
+      $prev.addClass('active');
+    }
+  });
+</script>
+</body>
+</html>

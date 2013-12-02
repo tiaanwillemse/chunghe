@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Drag and Drop - Resizable Panel</title>
+
+<script type="text/javascript" src="../../library/yui/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../library/yui/dragdrop-min.js"></script>
+
+
+
+<style type="text/css">
+	/* reset.css */
+	/*
+html{color:#000;background:#fff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border:0;font-variant:normal;}sup {vertical-align:text-top;}sub {vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}legend{color:#000;}*/
+</style>
+<style type="text/css">
+	*{
+		margin:0pt;
+		padding:0pt;
+	}
+    #dd-panel {
+        position: relative; 
+        height: 198px; 
+        width: 197px;
+        top: 0px; 
+        left: 20px; 
+        border: 1px solid #333333;
+        background-color: #f7f7f7;
+		overflow:hidden;
+    }
+
+    #dd-resize-handle {
+        cursor: se-resize;
+        position: absolute; 
+        bottom: -1px; 
+        right: -1px; 
+        width: 20px; 
+        height: 20px;
+        background:transparent url(../../images/corner_resize.gif) no-repeat scroll right bottom;
+    }
+	body{padding: 3em}
+	li{float:left; margin-bottom: 1px; margin-top: 4px; margin-left:4px; height: 60px; width: 60px; overflow: hidden;display:inline}
+
+</style>
+
+
+
+</head>
+
+<body class=" yui-skin-sam">
+
+
+<div id="dd-panel">
+    <div id="dd-resize-handle"></div>
+	<ul id="ul"></ul>
+</div>
+
+<script type="text/javascript">
+
+YAHOO.example.DDResize = function(panelElId, handleElId, sGroup, config) {
+    YAHOO.example.DDResize.superclass.constructor.apply(this, arguments);
+    if (handleElId) {
+        this.setHandleElId(handleElId);
+    }
+};
+
+YAHOO.extend(YAHOO.example.DDResize, YAHOO.util.DragDrop, {
+
+    onMouseDown: function(e) {
+        var panel = this.getEl();
+        this.startWidth = panel.offsetWidth;
+        this.startHeight = panel.offsetHeight;
+        this.startPos = [YAHOO.util.Event.getPageX(e),
+                         YAHOO.util.Event.getPageY(e)];
+    },
+
+    onDrag: function(e) {
+        var newPos = [YAHOO.util.Event.getPageX(e),
+                      YAHOO.util.Event.getPageY(e)];
+
+        var offsetX = newPos[0] - this.startPos[0];
+        var offsetY = newPos[1] - this.startPos[1];
+
+        var newWidth = Math.max(this.startWidth + offsetX, 10);
+        var newHeight = Math.max(this.startHeight + offsetY, 10);
+
+        var panel = this.getEl();
+        panel.style.width = newWidth + "px";
+        panel.style.height = newHeight + "px";
+    }
+});
+
+(function() {
+    var dd, dd2, dd3;
+    YAHOO.util.Event.onDOMReady(function() {
+        dd = new YAHOO.example.DDResize("dd-panel", "dd-resize-handle", "panelresize");
+    });
+})();
+</script>
+<script>
+var allimg = [ 
+	'images/t1139712622.jpg',
+	'images/t1171186514.jpg',
+	'images/t1185807288.jpg',
+	'images/t1196941907.jpg',
+	'images/t1219295598.jpg',
+	'images/t1268765762.jpg',
+	'images/t1275709894.jpg',
+	'images/t1283220136.jpg',
+	'images/t1313519096.jpg',
+	'images/t1317451773.jpg',
+	'images/t1349151462.jpg',
+	'images/t1388971023.jpg',
+	'images/t1391792870.jpg',
+	'images/t1452244575.jpg',
+	'images/t1462986352.jpg',
+	'images/t1527749144.jpg',
+	'images/t1527982132.jpg',
+	'images/t1614075622.jpg',
+	'images/t1629681024.jpg',
+	'images/t1651534856.jpg',
+	'images/t1708344450.jpg',
+	'images/t1721673066.jpg',
+	'images/t1737480563.jpg',
+	'images/t1738643400.jpg',
+	'images/t1750785506.jpg',
+	'images/t1815929799.jpg',
+	'images/t1846617615.jpg',
+	'images/t1884774433.jpg',
+	'images/t1892735090.jpg',
+	'images/t1895851115.jpg',
+	'images/t1902109334.jpg'
+];
+
+/* fake console.log for IE */
+if(typeof console == 'undefined'){
+	console = {};
+	console.log = function(){};
+}
+
+/* alias */
+YUD = YAHOO.util.Dom;
+YUE = YAHOO.util.Event;
+$ = YAHOO.util.Dom.get;
+
+var ul = $('ul');
+for(var i=0; i<allimg.length; i++){
+
+	var li = document.createElement('li');
+	var img = document.createElement('img');
+	img.src = allimg[i];
+	li.appendChild(img);
+	ul.appendChild(li);
+}
+</script>
+
+
+</body>
+</html>

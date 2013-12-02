@@ -1,0 +1,151 @@
+<!doctype html>
+
+<head>
+
+   <!-- player skin -->
+   <link rel="stylesheet" type="text/css" href="skin/minimalist-orig.css" />
+
+   <!-- site specific styling -->
+   <style>
+   body { font: 12px "Myriad Pro", "Lucida Grande", sans-serif; text-align: center; padding-top: 5%; }
+   .flowplayer { overflow: hidden; width: 400px;  background-repeat:no-repeat; background-position: center center; background-color: #ccc; background-size:cover;}
+   .flowplayer.zoe .fp-ui {visibility:hidden;}
+   .memory {position: absolute;  height:500px; width: 200px; top: 100px; background: green; overflow:hidden;}
+   .memory.second {left:500px;}
+   /*
+   .flowplayer.zoe video{min-width:100%; min-height:100%;}
+   */
+   /*
+   .zoe .fp-controls, .zoe .fp-time, .zoe .fp-message{display: none;}
+   */
+   </style>
+
+   <!-- flowplayer depends on jQuery 1.7.1+ (for now) -->
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+   <!-- include flowplayer -->
+   <script src="flowplayer.js"></script>
+   <style>
+
+   </style>
+
+</head>
+
+<body>
+
+   <!-- the player -->
+   <!--div class="flowplayer" data-swf="flowplayer.swf" data-ratio="0.417">
+      <video>
+         <source type="video/mp4" src="http://stream.flowplayer.org/bauhaus/624x260.mp4"/>
+      </video>
+   </div-->
+
+   <!--div class="player no-volume no-mute" data-swf="flowplayer.swf">
+      <video preload="none" src="http://stream.flowplayer.org/bauhaus/624x260.mp4">
+   </div-->
+   <!--
+   <div class="flowplayer is-splash" data-swf="flowplayer.swf" style="background: url(http://chunghe.googlecode.com/svn/trunk/dr-evil-802.jpg) no-repeat center center;">
+      <video preload="none" src="https://dl.dropbox.com/u/15596385/187.mp4">
+   </div>
+
+   <hr>
+
+   <div class="flowplayer" data-swf="flowplayer.swf">
+      <video preload="none" src="http://stream.flowplayer.org/bauhaus/624x260.mp4">
+   </div>
+   -->
+
+   <div id="foo"></div>
+   <script>
+     $(function () {
+       $('#foo').html(
+       '<div class="memory"><div data-ratio="1.78" class="flowplayer zoe is-spalsh" style="background-image:url(https://chunghe.googlecode.com/svn/trunk/dr-evil-802.jpg)"><video><source type="video/mp4" src="http://d2kvx6dkxdrczm.cloudfront.net/26dc6877-b4af-4f46-ae85-67b7b7e0adb7/1355917810753/269.mp4?response-content-type=video/mp4&response-content-disposition=attachment;filename=269.mp4&Expires=1356277820&Signature=GPXk8tRfrpiywcLbZrS2iYk1kKsolm2Nef1xKu6FaQZYZoaOXszCcsgh~1ahjyCRj~1QNBjOy6g65KB-xdWJNv5NKThDCMYTmZMxFE0kqTu6zYsAVemsPH0g2R4Hoisx3BHm-c6-jwqMhX5ng8wA3Q0de5t5Gvg5-ypBafWQWeM_&Key-Pair-Id=APKAJHSVQMEK25WVAFJQ"></video></div></div>' +
+       '<div class="memory second"><div data-ratio="1.7647" class="flowplayer zoe is-spalsh" style="background-image:url(https://chunghe.googlecode.com/svn/trunk/dr-evil-802.jpg)"><video><source type="video/mp4" src="https://shoeboxtest.s3.amazonaws.com/7583a0d0-9f49-415e-8eaa-1793dcee7548/1355211240078/68.mp4?response-content-disposition=attachment;filename=68.mp4&&AWSAccessKeyId=AKIAIQHCMYY3CVJ5AWMA&Signature=IxY0oxk2j55bLJ8dQPDdgoRMDMs%3D&Expires=1357803245"></video></div></div>'
+       );
+
+       // initialize
+       $flowplayers = $('video').parent('.flowplayer');
+       $flowplayers.flowplayer({keyboard: false, fullscreen: false, embed: false, volume: 0, muted:true, debug: true})
+         .bind('ready', function (e, api) {
+           //api.mute();
+           console.log('ready event', 'video height', api.video.height, 'video width', api.video.width);
+           index = $flowplayers.index(e.currentTarget)
+           if (index === 0) {
+             api.toggle()
+           }
+         })
+         .bind('finish', function (e, api) {
+           console.log('finish', e, api)
+           var index = $flowplayers.index(e.currentTarget);
+           console.log('index', index);
+           var next = (index + 1) % $flowplayers.length;
+           console.log('next', next);
+           flowplayer(next).stop().play(); // flash version needs to stop first
+         })
+         .bind('error', function() {
+          console.log('error', arguments);
+         })
+     });
+
+     /*
+     var player = $(".player").flowplayer({
+       keyboard: false,
+       fullscreen: false
+     })
+     */
+   // global configuration (optional)
+/*
+   flowplayer.conf.rtmp = "rtmp://s3b78u0kbtx79q.cloudfront.net/cfx/st";
+   if (/flash/.test(location.search)) {
+      flowplayer.conf.engine = "flash";
+      flowplayer.conf.swf = "http://releases.flowplayer.org/5.2.0/flowplayer.swf";
+   }
+   flowplayer.conf.ratio = 0.417;
+
+   // bind listeners to all players on the page
+   flowplayer.conf.fullscreen = false;
+   flowplayer.conf.keyboard = false;
+
+   var $players = $('.flowplayer')
+   //$('.flowplayer:first').bind('progress', function (e, api) {
+   $('.flowplayer').bind('finish', function (e, api) {
+      console.log('finish', e, api);
+      console.log($players.index(e.currentTarget))
+      // api.toggle();  <- will repeat
+    
+   });
+    
+
+  apis = [];
+  $flowplayers = $('.flowplayer');
+  flowplayer(function(api, root) {
+
+    apis.push(api);
+
+    // api.toggle() will player video
+    console.log('api', api);
+    console.log('root', root);
+
+    // when a new video is about to be loaded
+    // api = flowplayer() <- get first player
+    // api = flowplayer(1) <- get 2nd player
+    api
+      .bind("load", function() {
+        console.info("load", api.engine);
+      })
+      .bind("ready", function() {
+        console.info("ready", api.video.duration)
+      })
+      .bind('finish', function (e) {
+        var index = $flowplayers.index(e.currentTarget)
+        var next = (index + 1) % apis.length
+        console.log('index', index, 'next', next);
+        apis[next].play()
+      });
+  });
+
+*/
+  
+
+   </script>
+</body>

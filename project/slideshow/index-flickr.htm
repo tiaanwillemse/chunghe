@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="imagetoolbar" CONTENT="no"> 
+	<style>
+html{color:#fff;background:#222;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border:0;font-variant:normal;}sup {vertical-align:text-top;}sub {vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}legend{color:#000;}
+	</style>
+	<style>
+/* for IE6 background flier bug */
+body{
+	font-family: arial,helvetica,clean,sans-serif;
+}
+#slidewrap{
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	margin-top: -250px;
+	margin-left: -250px;
+	height: 500px;
+	width: 500px;
+	background-color: #000;
+	border: 1px solid #333;
+	
+}
+.slideElement{
+	background-position: center;
+	/*background-image: url(images/73831_3266-gallery.jpg);*/
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	visibility = 'hidden';
+}
+#slideinfo{
+	height: 40px;
+	width: 500px;
+	background:#333 none repeat scroll 0%;
+	overflow: hidden;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	_bottom: -1px;
+	visibility: hidden;
+}
+#slideinfo{
+	font-size: 0.68em;
+	_font-size: 0.6636em;
+	color: #eee;
+}
+#slideinfo h2{
+	color: #f7f7f7;
+	margin: 7px 15px 1px;
+	font-weight: bold;
+}
+#slideinfo #desc{
+	margin-left: 15px;
+	display: inline; /* for IE double margin bug*/
+	float: left;
+}
+#slideinfo #operation{
+	float: right;
+}
+#slideinfo span{
+	padding: 2px 5px;
+	cursor: pointer;
+}
+#paused, #loading{
+	position: absolute;
+	top:0
+	font-family: verdana, 'sans-serif';
+	background-color: #f7f7f7;
+	font-size: .8em;
+	background:#333 none repeat scroll 0%;
+	overflow: hidden;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	padding: 5px 10px;
+}
+#paused{right: -1px; _right:0;visibility: hidden;}
+#loading{left:0;}
+
+	</style>
+</head>
+<body>
+	<div id="slidewrap">
+		<div id="paused">PAUSED</div>
+		<div id="loading">Loading</div>
+		<div id="slideinfo">
+			<h2 id="title">&nbsp;</h2>
+			<p id="desc">&nbsp;</p>
+			<p id="operation">
+				<span id="pause">pause</span>
+				<span id="resume">resume</span>
+			</p>
+		</div>
+	</div>
+<script src="../../library/yui/yahoo-dom-event.js"></script>
+<script src="../../library/yui/animation-min.js"></script>
+<script src="../../library/yui/connection-min.js"></script>
+
+<script>
+	
+/*@cc_on @*/  
+/*@if (@_win32) 
+try {
+  document.execCommand('BackgroundImageCache', false, true);
+} catch(e) {}
+/*@end @*/  
+	
+
+/* fake console.log for IE */
+if(typeof console == 'undefined'){
+	console = {};
+	console.log = function(){};
+}
+
+/* alias */
+YUD = YAHOO.util.Dom;
+YUE = YAHOO.util.Event;
+$ = YAHOO.util.Dom.get;
+
+function jsonFlickrApi(rsp) {
+	var imgs = rsp.photos.photo;
+	for(img in imgs){
+		src = ( 'http://farm'+imgs[img].farm + '.static.flickr.com/'+ imgs[img].server + '/' + imgs[img].id + '_' + imgs[img].secret  + '.jpg' );
+		slideshow.img[img] = {};
+		slideshow.img[img].src = src;
+		console.log(src);
+		slideshow.img[img].title = imgs[img].title;
+		slideshow.img[img].desc = imgs[img].title;
+	}
+
+	$('slideinfo').style.zIndex = slideshow.img.length + 100 + 1;
+	$('paused').style.zIndex = slideshow.img.length + 100 + 1;
+	for(var i=0; i<Math.min(slideshow.img.length, slideshow.config.preloadLength); i++){
+		slideshow.preload(i);
+	}
+
+}
+
+slideshow = {
+	
+	config: {
+		'timeInterval': 5,
+		'preloadLength': 5,
+		'transitionPeriod': 2
+	}
+
+	,img : [
+		{
+			/*
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/73831_3266-gallery.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 1037-gallery',
+			desc: 'description for 1037-gallery'
+			*/
+		}
+	]
+
+	,init: function(){
+
+		var json = document.getElementById('json');
+		if(json)
+			json.parentNode.removeChild(json);
+
+		var script = document.createElement('script');
+//		script.setAttribute('src', 'http://api.flickr.com/services/rest/?format=json&method=flickr.people.getPublicPhotos&api_key=e8bde2fca0855f7e712e089fd6384bcf&user_id=19347266@N07&');
+		script.setAttribute('src', 'http://api.flickr.com/services/rest/?format=json&method=flickr.people.getPublicPhotos&api_key=e8bde2fca0855f7e712e089fd6384bcf&user_id=79211125%40N00&');
+		script.setAttribute('id', 'json');
+		script.setAttribute('type', 'text/javascript');
+		document.documentElement.firstChild.appendChild(script);
+
+		/*
+		$('slideinfo').style.zIndex = slideshow.img.length + 100 + 1;
+		$('paused').style.zIndex = slideshow.img.length + 100 + 1;
+		for(var i=0; i<Math.min(slideshow.img.length, slideshow.config.preloadLength); i++){
+			slideshow.preload(i);
+		}*/
+	}
+
+	// preload slideshow.img[index]
+	,preload: function(index){ 
+
+		if(index > slideshow.img.length-1) return;
+		if($('slide'+index)) return;
+		slideshow._lastProcessedIndex = index;
+
+		var div = document.createElement('div');
+		var img = new Image();
+		div.className = 'slideElement';
+		div.style.visibility = 'hidden';
+		div.id = 'slide' + index;
+		div.style.zIndex = slideshow.img.length - index + 100;
+		$('slidewrap').appendChild(div);
+		img.src = slideshow.img[index].src;
+		
+		var handleOnload = function(e, index){
+			slideshow.img[index].loaded = true;
+			$('slide'+index).style.backgroundImage = 'url("' + slideshow.img[index].src + '")';
+					
+			slideshow._loadedCount = (typeof slideshow._loadedCount == 'undefined')? 1: slideshow._loadedCount+1;
+			if(((slideshow._loadedCount >= slideshow.config.preloadLength)||
+				(index>=slideshow.img.length-1)) && 
+				(!slideshow.checkTimer())){
+					$('loading').style.visibility = 'hidden';	
+					slideshow.setTimer();
+			}
+		}
+		var handleOnerror = function(e, index){
+			slideshow.img[index].loaded = false;
+			$('slide'+index).parentNode.removeChild($('slide'+index));
+			// if failed, give another try
+			slideshow.preload(slideshow._lastProcessedIndex+1);
+		}
+		YUE.on(img, 'load', handleOnload, index); 
+		YUE.on(img, 'error', handleOnerror, index); 
+	}
+
+	,show: function(){
+		// this function will only execute once.
+		if(typeof arguments.callee.index == 'undefined'){  // find the first loaded img
+			arguments.callee.index=0; 
+			while( !slideshow.img[arguments.callee.index].loaded ){
+				arguments.callee.index++
+			}
+			arguments.callee.firstIndex = arguments.callee.index;
+			
+			// special case for the very first image to play
+			slideshow.clearTimer();
+			var firstElem = $('slide' + arguments.callee.firstIndex);
+			YUD.setStyle( firstElem, 'opacity', 0);
+			$('title').innerHTML = slideshow.img[firstElem.id.replace(/slide/,'')].title;
+			$('desc').innerHTML = slideshow.img[firstElem.id.replace(/slide/,'')].desc;
+			firstElem.style.visibility = 'visible';
+			var anim = new YAHOO.util.Anim( firstElem, {
+				opacity: {from: 0, to: 1}
+			}, slideshow.config.transitionPeriod);
+			anim.animate();
+			setTimeout( slideshow.setTimer,  slideshow.config.timeInterval );	
+			return;
+		}
+		
+		if(slideshow._lastProcessedIndex+1<slideshow.img.length){	
+			slideshow.preload( slideshow._lastProcessedIndex + 1  ); // consume one, preload one
+		}
+
+		outElem = (typeof outElem == 'undefined')? $('slide' + arguments.callee.firstIndex): 
+							(outElem.nextSibling)?outElem.nextSibling: $('slide'+arguments.callee.firstIndex);	
+ 
+		inElem = (outElem.nextSibling)?
+					outElem.nextSibling:$('slide'+arguments.callee.firstIndex);	
+		$('title').innerHTML = slideshow.img[inElem.id.replace(/slide/,'')].title;
+		$('desc').innerHTML = slideshow.img[inElem.id.replace(/slide/,'')].desc;
+		outElem.style.visibility = inElem.style.visibility = 'visible';
+		YUD.setStyle(outElem, 'opacity', 1);
+		YUD.setStyle(inElem, 'opacity', 0);
+
+		var fadeout = new YAHOO.util.Anim( outElem, {
+			opacity: {from: 1, to: 0}
+		}, slideshow.config.transitionPeriod);
+		var fadein = new YAHOO.util.Anim( inElem, {
+			opacity: {from: 0, to: 1}
+		}, slideshow.config.transitionPeriod);
+		
+		/*
+		fadein.onTween.subscribe( function(){console.log('fadein')})
+		*/
+
+		fadeout.animate();
+		fadein.animate();
+
+	}
+
+	,checkTimer: function(){
+		if(slideshow._timer)
+			return true;
+		return false;
+	}
+
+	,setTimer: function(){
+		if(!slideshow.checkTimer()){ // return if timer has already existed
+			slideshow._timer = setInterval( function(){ slideshow.show() }, slideshow.config.timeInterval*1000)
+		}
+	}
+
+	,clearTimer: function(){
+		if(slideshow.checkTimer()){
+			clearInterval(slideshow._timer);
+			slideshow._timer = null;
+		}
+	}
+
+	,pause: function(e){
+		slideshow.clearTimer();
+		$('paused').style.visibility = 'visible';
+		YUE.stopEvent(e);
+	}
+
+	,resume: function(e){
+		slideshow.show(); // give a impage instantly for user experience
+		slideshow.setTimer();
+		$('paused').style.visibility = 'hidden';
+		YUE.stopEvent(e);
+	}
+	,hideinfo: function(e){
+		$('slideinfo').style.visibility = 'hidden';
+		YUE.stopEvent(e);
+	}
+	,showinfo: function(e){
+		$('slideinfo').style.visibility = 'visible';
+		YUE.stopEvent(e);
+	}
+}
+
+/* event listener */
+YUE.onDOMReady( slideshow.init );
+YUE.on( 'pause'     , 'click'    , slideshow.pause);
+YUE.on( 'resume'    , 'click'    , slideshow.resume); 
+YUE.on( 'slidewrap' , 'mouseover', slideshow.showinfo);
+YUE.on( 'slidewrap' , 'mouseout' , slideshow.hideinfo);
+</script>
+</body>
+</html>

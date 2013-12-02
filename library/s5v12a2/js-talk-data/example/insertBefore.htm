@@ -1,0 +1,12 @@
+
+
+<p id="first">first paragraph</p>
+<p id="second">second paragraph</p>
+<p id="third">third paragraph</p>
+<script>
+	var first = document.getElementById('first');
+	var third = document.getElementById('third');
+	document.onclick = function(){
+		first.parentNode.insertBefore(third, first);
+	}
+</script>

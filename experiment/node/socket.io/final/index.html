@@ -1,0 +1,100 @@
+<!doctype html>
+
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<style>
+  #map {height: 550px; width: 750px; background: #ccc; position: relative;}
+  .avatar {background: blue; color: #fff; position: absolute; z-index:5;}
+  .point {color: #fff; position: absolute; text-align: center; height: 15px; width: 15px; line-height: 15px; background:red; color:#fff;}
+</style>
+</head>
+<body>
+  <p>use arrow key to control your position</p>
+<div id="map"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  $(function () {
+  
+    var socket = io.connect('http://localhost:8124/');
+
+    socket.on('connect', function () {
+      var username = prompt('who are you?');
+      if (!username)
+        return false;
+      var position = [Math.random()*750, Math.random()*550];
+      socket.id = new Date().valueOf();
+      socket.emit('join', socket.id, username, position);
+    });
+
+    socket.on('join', function (o) {
+      console.log ('join', o);
+      if (!$.isArray(o)) 
+        o = [o]
+      $.each(o, function (index, tuple) {
+        var id = 'user-' + tuple.id ;
+        var $avatar = 
+          $('<div class="avatar" id="' + 'user-' + tuple.id + '">')
+            .text(tuple.username)
+            .css({ 'left' : tuple.position[0], 'top': tuple.position[1] });
+        $('#map').append($avatar);
+      });
+    });
+
+
+    function moveTo(id, position) {
+      console.log ('fn:moveto', id, position);
+      $avatar = $('#user-' + id);
+      
+      if ($avatar.length)
+        $avatar.css({'left': position[0], 'top': position[1]});
+    }
+
+    $(document.body).on('keydown', function(e) {
+      var $avatar = $('#user-' + socket.id)
+      var pos = [parseInt($avatar.css('left'), 10), parseInt($avatar.css('top'), 10)];
+      e.preventDefault();
+      var step = 5;
+    
+      switch (e.which) {
+        case 38: // top
+          pos[1] -= step;
+          break;
+        case 37: // left
+          pos[0] -= step;
+          break;
+        case 40: //donw
+          pos[1] += step;
+          break;
+        case 39: //right
+          pos[0] += step;
+          break;
+      }
+      socket.emit('move', socket.id, pos);
+      moveTo(socket.id, pos);
+    });
+
+    socket.on('move', function (id, position) {
+      moveTo(id, position);
+    });
+
+    socket.on('point', function (point, position) {
+      console.log ('point', point, position);
+      var $point = 
+        $('<div class="point">')
+          .text(point)
+          .css({ 'left' : position[0], 'top': position[1]});
+      $('#map').append($point);
+    });
+
+    socket.on('remove', function(user){
+      console.log('remove', user);
+      $('#user-' + user.id).remove();
+    });
+
+  });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+	<table>
+	  <tbody><tr align="center">
+		<td colspan="4" class="gensmall"><b>表情符號</b></td>
+	  </tr>
+	  <tr align="center" valign="middle">
+		<td><a href="javascript:emoticon(':D')"><img src="http://forum.moztw.org/images/smiles/icon_biggrin.gif" alt="Very Happy" title="Very Happy" border="0"></a></td>
+		<td><a href="javascript:emoticon(':)')"><img src="http://forum.moztw.org/images/smiles/icon_smile.gif" alt="Smile" title="Smile" border="0"></a></td>
+		<td><a href="javascript:emoticon(':(')"><img src="http://forum.moztw.org/images/smiles/icon_sad.gif" alt="Sad" title="Sad" border="0"></a></td>
+		<td><a href="javascript:emoticon(':o')"><img src="http://forum.moztw.org/images/smiles/icon_surprised.gif" alt="Surprised" title="Surprised" border="0"></a></td>
+	  </tr>
+	  <tr align="center" valign="middle">
+		<td><a href="javascript:emoticon(':shock:')"><img src="http://forum.moztw.org/images/smiles/icon_eek.gif" alt="Shocked" title="Shocked" border="0"></a></td>
+		<td><a href="javascript:emoticon(':?')"><img src="http://forum.moztw.org/images/smiles/icon_confused.gif" alt="Confused" title="Confused" border="0"></a></td>
+		<td><a href="javascript:emoticon('8-)')"><img src="http://forum.moztw.org/images/smiles/icon_cool.gif" alt="Cool" title="Cool" border="0"></a></td>
+		<td><a href="javascript:emoticon(':lol:')"><img src="http://forum.moztw.org/images/smiles/icon_lol.gif" alt="Laughing" title="Laughing" border="0"></a></td>
+	  </tr>
+	  <tr align="center" valign="middle">
+		<td><a href="javascript:emoticon(':x')"><img src="http://forum.moztw.org/images/smiles/icon_mad.gif" alt="Mad" title="Mad" border="0"></a></td>
+		<td><a href="javascript:emoticon(':P')"><img src="http://forum.moztw.org/images/smiles/icon_razz.gif" alt="Razz" title="Razz" border="0"></a></td>
+		<td><a href="javascript:emoticon(':oops:')"><img src="http://forum.moztw.org/images/smiles/icon_redface.gif" alt="Embarrassed" title="Embarrassed" border="0"></a></td>
+		<td><a href="javascript:emoticon(':cry:')"><img src="http://forum.moztw.org/images/smiles/icon_cry.gif" alt="Crying or Very sad" title="Crying or Very sad" border="0"></a></td>
+	  </tr>
+	  <tr align="center" valign="middle">
+		<td><a href="javascript:emoticon(':evil:')"><img src="http://forum.moztw.org/images/smiles/icon_evil.gif" alt="Evil or Very Mad" title="Evil or Very Mad" border="0"></a></td>
+		<td><a href="javascript:emoticon(':twisted:')"><img src="http://forum.moztw.org/images/smiles/icon_twisted.gif" alt="Twisted Evil" title="Twisted Evil" border="0"></a></td>
+		<td><a href="javascript:emoticon(':roll:')"><img src="http://forum.moztw.org/images/smiles/icon_rolleyes.gif" alt="Rolling Eyes" title="Rolling Eyes" border="0"></a></td>
+		<td><a href="javascript:emoticon(':wink:')"><img src="http://forum.moztw.org/images/smiles/icon_wink.gif" alt="Wink" title="Wink" border="0"></a></td>
+	  </tr>
+	  <tr align="center" valign="middle">
+		<td><a href="javascript:emoticon(':!:')"><img src="http://forum.moztw.org/images/smiles/icon_exclaim.gif" alt="Exclamation" title="Exclamation" border="0"></a></td>
+		<td><a href="javascript:emoticon(':?:')"><img src="http://forum.moztw.org/images/smiles/icon_question.gif" alt="Question" title="Question" border="0"></a></td>
+		<td><a href="javascript:emoticon(':idea:')"><img src="http://forum.moztw.org/images/smiles/icon_idea.gif" alt="Idea" title="Idea" border="0"></a></td>
+		<td><a href="javascript:emoticon(':arrow:')"><img src="http://forum.moztw.org/images/smiles/icon_arrow.gif" alt="Arrow" title="Arrow" border="0"></a></td>
+	  </tr>
+	  <tr align="center">
+		<td colspan="4"><span class="nav"><a href="posting.php?mode=smilies" onclick="window.open('posting.php?mode=smilies', '_phpbbsmilies', 'HEIGHT=300,resizable=yes,scrollbars=yes,WIDTH=250');return false;" target="_phpbbsmilies" class="nav">更多表情符號</a></span></td>
+	  </tr>
+  </tbody>
+ </table>
+
+
+<textarea id="ta" cols="35" rows="15" />	
+</textarea>
+<script>
+function emoticon(text) {
+  insertAtCaret(document.getElementById('ta'), " " + text + " ");
+}
+
+function insertAtCaret(obj, text) {
+   obj.focus();
+   if(document.selection) {// for IE
+      var orig = obj.value.replace(/\r\n/g, "\n");
+      var range = document.selection.createRange();
+
+      if(range.parentElement() != obj)
+         return false;
+      range.text = text;
+        range.select();
+       
+   } else if(typeof(obj.selectionStart) != 'undefined') {// for Firefox
+      var start = obj.selectionStart;
+      var end   = obj.selectionEnd;
+        var pos   = start + text.length;
+      obj.value = obj.value.substring(0, start) + text + obj.value.substring(end);
+        obj.setSelectionRange(pos, pos);
+   } else {//for Others
+        obj.value  += text;
+        obj.focus();
+    }
+}
+	
+
+</script>

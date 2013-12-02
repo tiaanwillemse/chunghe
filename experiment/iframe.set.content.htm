@@ -1,0 +1,29 @@
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" ></script>
+<style>
+body{background:#ccc}
+iframe{height:500px; width:700px; border:1px solid #fff}
+</style>
+<iframe id="ifr" allowTransparency="true" frameborder="0" border="0"></iframe>
+<script>
+window.onload = function() {
+	var iframe = document.getElementById('ifr');
+	var ua=  YAHOO.env.ua;
+	var html =  
+		'<!DOCTYPE HTML PUBLIC "-/'+'/W3C/'+'/DTD HTML 4.01/'+'/EN" "http:/'+'/www.w3.org/TR/html4/strict.dtd">' + '\n' +
+		'<html>' +
+			'<head>' +
+			'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' +
+			'</head>' +
+			'<body>' + 
+				'<div>hello world</div>' +
+			'</body>' +
+		'</html>';
+
+
+		//alert(iframe.contentWindow.document.write);
+		doc = iframe.contentWindow.document;
+		doc.open();
+		doc.write(html);
+		doc.close();
+}
+</script>

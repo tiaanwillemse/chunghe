@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title> select menu by yui menu</title>
+
+
+<link type="text/css" rel="stylesheet" href="../../library/yui/reset-min.css" />
+<script type="text/javascript" src="../../library/yui/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="../../library/yui/container_core-min.js"></script>
+<script type="text/javascript" src="../../library/yui/menu-min.js"></script>
+
+<body>
+
+
+<style>
+body{padding:5em; font-family: arial; font-size:13px}
+#select { border: 1px solid #ccc; padding:2px 4px; color:#666; width:134px; text-align:center; cursor:pointer}
+.yuimenu{border-width: 0 1px 1px 1px; border-style:solid; border-color:#ccc rgb(153,153,153) rgb(153,153,153) rgb(204,204,204)}
+.yuimenu a{text-decoration:none; color:#333}
+li.yuimenuitem{list-style-type:none;padding:0 5px; cursor:pointer;  padding:4px 8px;}
+li.yuimenuitem-selected{background-color:#d3e3fe}
+.yui-menu-shadow{display:none}
+</style>
+<!--<div id="select">--------------------</div>
+<div id="basicmenu" class="yuimenu"> 
+    <div class="bd"> 
+        <ul class="first-of-type"> 
+            <li class="yuimenuitem"><a>Yahoo! Mail</a></li> 
+            <li class="yuimenuitem"><a>Yahoo! Address Book</a></li> 
+            <li class="yuimenuitem"><a>Yahoo! Calendar</a></li> 
+            <li class="yuimenuitem"><a>Yahoo! Notepad</a></li> 
+        </ul>             
+    </div> 
+</div> -->
+
+<select style="position:absolute; left: 25em; top:5em" id="sel" name="sel">
+    <option value="mail">Yahoo! Mail</option>
+    <option value="addressbook">YAHOO! Address Book</option>
+    <option value="calendar">YAHOO! Calendar</option>
+    <option value="notepad">YAHOO! Notepad</option>
+</select>
+
+<div id="rendertarget" style="position:absolute; top:0; left:0"></div>
+
+</body>
+<script>
+
+var YUE = YAHOO.util.Event,
+    YUD = YAHOO.util.Dom,
+    $   = YAHOO.util.Dom.get;
+
+console.log(YUD.getRegion('sel'));
+function selToMenu(sel){
+    var sel = $(sel);
+    var selParent = sel.parnetNode||document.body;
+    var selId = sel.id;
+    var selRegion = YUD.getRegion('sel');
+    var selLength = selRegion.right - selRegion.left;
+    var selname = sel.name;
+    var options = sel.getElementsByTagName('option');
+    var aMenuItems = [];
+    for(var i=0; i<options.length; i++){
+	aMenuItems[i] = {text: options[i].innerHTML, url:"javascript:void(0)"};
+    }
+    console.dir(aMenuItems);
+
+    var oMenu = new YAHOO.widget.Menu(selId+'menu', {itemdata: aMenuItems, fixedcenter:false, context:[selId, 'tl', 'bl']});
+    var menuDiv = document.createElement('div');
+    menuDiv.id = selId+'toggle'
+    YUD.setStyle(menuDiv, 'width', selLength+'px');
+    menuDiv.innerHTML = 'Yahoo! Mail';
+    menuDiv.style.border = '1px solid #999';
+    menuDiv.style.cursor = 'pointer';
+    menuDiv.style.position = 'absolute';
+    menuDiv.style.top = selRegion.top + 'px';
+    menuDiv.style.left = selRegion.left + 'px';
+    //YUD.setXY(menuDiv, [ selRegion.top + 'px', selRegion.left+'px' ]);
+    //YUD.setXY(menuDiv, [selRegion.top, '500px']);
+    selParent.appendChild(menuDiv);
+
+    oMenu.subscribe('click', handleMenuClick);
+    oMenu.render('rendertarget');
+    YUD.setStyle(selId+'menu', 'width', selLength+'px');
+    sel.parentNode.removeChild(sel);
+    menuDiv.onclick = function(){
+	oMenu.show();
+    }
+    //oMenu.show();
+}
+selToMenu('sel');
+
+function handleMenuClick(p_sType, p_aArgs) { 
+    // menuitem text 
+    console.log(p_aArgs[1].cfg.getProperty('text'));
+    //$('select').innerHTML = p_aArgs[1].cfg.getProperty('text');
+    $('seltoggle').innerHTML = p_aArgs[1].cfg.getProperty('text');
+ 
+} 
+
+/*
+var oMenu = new YAHOO.widget.Menu("basicmenu", { fixedcenter: true, showdelay:0, fixedcenter:false, context:['select', 'tl', 'bl'] });
+oMenu.subscribe('click', handleMenuClick);
+oMenu.render(); 
+YUE.on('select', 'click', function(){
+    oMenu.show();
+})*/
+</script>
+</html>

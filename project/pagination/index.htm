@@ -1,0 +1,64 @@
+<head>
+	<style>
+	a{padding: 0 5px; border:1px solid #ccc; margin-right:3px; cursor: pointer}
+	a.on{background:#36c; color:#fff}
+	.more{border:none}
+	</style>
+	<script src="http://yui.yahooapis.com/combo?2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+</head>
+<body>
+<div id="pagwrap"></div>
+
+<script>
+
+var genPagination = function(total, page, perpage) {
+
+	var i, n = Math.ceil(total/perpage);
+	var max = 13, // max pags num, 9 is the minmal max
+		nSib = (max - 6 - 1)/2;
+		pag = [];
+
+	if(n<=max) {
+		for(i =1; i<=n; i++) {
+			pag[i] = i;
+		}
+	}
+	else {
+		pag[1] = '1'; pag[2] = '2'; pag[3] = '.';
+		pag[n] = n; pag[n-1] = n-1; pag[n-2] = '.';
+
+		var start = page <= max-3-nSib ? 1 : (page >= n-3-nSib ? n-max+4 : page-nSib);
+		var end   = page <= max-3-nSib ? max-3 : (page >= n-3-nSib ? n : page + nSib);
+
+		for(i=start; i<=end; i++) {
+			pag[i] = i;
+		}
+	}
+
+	// generating the html structure
+	for(i=1; i<=pag.length; i++) {
+		if(!pag[i]) continue;
+		if(pag[i] == '.')
+			pag[i] = '<a class="more">' + '...' + '</a>';
+		else if(i == page)
+			pag[i] = '<a class="on">' + pag[i] + '</a>';
+		else
+			pag[i] = '<a>' + pag[i] + '</a>';
+	}
+
+	return pag.join('');
+}
+
+YAHOO.util.Dom.get('pagwrap').innerHTML = genPagination(362, 2, 10);
+YAHOO.util.Event.on('pagwrap', 'click', function(e){
+	var target = YAHOO.util.Event.getTarget(e);
+	var p = parseInt(target.innerHTML, 10);
+	if(isNaN(p)) return;
+	html = genPagination(200, target.innerHTML, 10);
+	if(typeof html == 'string') {
+		YAHOO.util.Dom.get('pagwrap').innerHTML = genPagination(362, p, 10);
+	}
+	console.log('length', document.getElementsByTagName('a').length);
+})
+</script>
+</body>

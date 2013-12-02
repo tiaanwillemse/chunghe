@@ -1,0 +1,32 @@
+<!--
+<style>
+	*{padding:0; margin:0}
+	body{padding:5em; font-family: arial; font-size:16px; color:#999}
+	.pointer{font-size:0; border-color:#fff #fff #fff #aaa; border-width: 16px; border-style: solid; display:block; float:left}
+	.pointer:hover{border-color:#fff #fff #fff #ccc}
+	#wrapper{border-bottom:2px solid #ccc; zoom:1; padding-bottom:5px}
+	.more{font-weight:bold; height:32px; line-height:32px; margin-left:32px; position:relative; left: -10px}
+</style>
+
+<div id="wrapper">
+	<a class="pointer" href="javascript:void(0)"></a><p class="more">MORE OPTIONS</p>
+</div>
+<div>hello world</div>
+-->
+<style>
+	*{padding:0; margin:0}
+	body{padding:5em; font-family: arial; font-size:16px; color:#999}
+	.pointer{font-size:0; border-color:#fff #fff #fff #aaa; border-width: 16px; border-style: solid; display:block; float:left}
+	.pointer:hover{border-color:#fff #fff #fff #ccc}
+	#wrapper{border-bottom:2px solid #ccc; zoom:1; padding-bottom:5px}
+	.more{font-weight:bold; height:32px; line-height:32px; margin-left:32px; position:relative; left: -10px}
+
+	.open .pointer{border-color:#aaa #fff #fff #fff !important; position:relative; top:5px}
+	.open .pointer:hover{#ccc #fff #fff #fff}
+	.open .more{left:5px}
+</style>
+
+<div id="wrapper" class="open">
+	<a class="pointer" href="javascript:void(0)"></a><p class="more">MORE OPTIONS</p>
+</div>
+<div>hello world</div>

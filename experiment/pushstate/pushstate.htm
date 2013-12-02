@@ -1,0 +1,36 @@
+<!doctype HTML>
+
+<html>
+<head>
+<style>
+body{font-family:arial; font-size:15px;}
+a{color:#fff; background:green;}
+ul{list-style-type:none;}
+ul li a{float:left; padding:1em 2em; margin-right:2px;}
+</style>
+</head>
+<ul>
+    <li><a id="dashboard">Dashboard</a></li>
+    <li><a id="personalize">Personalize</a></li>
+    <li><a id="store">Store</a></li>
+</ul>
+
+<script>
+var store = document.getElementById('store');
+var dashboard = document.getElementById('dashboard');
+var personalize = document.getElementById('perso');
+
+personalize.onclick = function () {
+    var stateObj = { foo: "bar" };
+    history.pushState(stateObj, "page 2", "personalize");
+}
+dashboard.onclick = function () {
+    var stateObj = { foo: "bar" };
+    history.pushState(stateObj, "page 2", "dashboard");
+}
+store.onclick = function () {
+    var stateObj = { foo: "bar" };
+    history.pushState(stateObj, "page 2", "store");
+}
+</script>
+</html>

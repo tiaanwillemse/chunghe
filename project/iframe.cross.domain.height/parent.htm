@@ -1,0 +1,12 @@
+
+<iframe src="child.htm"></iframe>
+<script>
+	var interval = setInterval(
+		function(){
+			var hash = document.location.hash;
+			if(hash.indexOf('#h=') > -1) {
+				clearInterval(interval);
+			}
+			console.log(hash);
+		}, 500)
+</script>

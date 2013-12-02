@@ -1,0 +1,45 @@
+<!doctype html>
+
+<style>
+  #contrlos a {margin-right:20px;}
+  #controls {font-size:24px;}
+</style>
+
+
+<p>via: <a href="http://www.longtailvideo.com/html5/buffering">http://www.longtailvideo.com/html5/buffering</a></p>
+<p>via: <a href="http://www.chipwreck.de/blog/2010/03/01/html-5-video-dom-attributes-and-events/">http://www.chipwreck.de/blog/2010/03/01/html-5-video-dom-attributes-and-events/</a></p>
+
+<video id="myvideo"  height="272" width="640" id="tag" poster="http://content.bitsontherun.com/thumbs/q1fx20VZ-720.jpg" preload="none">
+<source src="http://content.bitsontherun.com/videos/q1fx20VZ-52qL9xLP.mp4" type="video/mp4">
+<source src="http://content.bitsontherun.com/videos/q1fx20VZ-27m5HpIu.webm" type="video/webm">
+<p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+<div id="contrlos">
+  <a href="#" id="toggle-play">play/pause</a>
+  <a href="#" id="play">play</a>
+  <a href="#" id="pause">pause</a>
+</div>
+<script>
+  video = document.getElementById('myvideo');
+  togglePlay = document.getElementById('toggle-play');
+  play = document.getElementById('play');
+  pause = document.getElementById('pause');
+
+  play.onclick = function (e) {
+    e.preventDefault();
+    video.play();
+  }
+  pause.onclick = function (e) {
+    e.preventDefault();
+    video.pause();
+  }
+  togglePlay.onclick = function (e) {
+    e.preventDefault();
+    if (video.paused){ 
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+  
+</script>

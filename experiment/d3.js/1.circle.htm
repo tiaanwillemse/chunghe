@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<body>
+  <style>
+    svg{background:#eee;}
+    circle{background:green;} 
+  </style>
+  <a href="http://bost.ocks.org/mike/join/">http://bost.ocks.org/mike/join/</a>
+  <pre>
+
+  </pre>
+<script src="lib/jquery-1.7.2.min.js"></script>
+<script src="lib/underscore.js"></script>
+<script src="lib/d3.v2.js"></script>
+<script>
+  const SVG_HEIGHT = 500;
+  const SVG_WIDTH = 500;
+  const NUM_CIRCLES = 100;
+  
+  function draw(data) {
+    console.log ('data', data);
+    d3.select('body')
+      .append('svg')
+        .attr('width', SVG_HEIGHT)
+        .attr('height', SVG_WIDTH)
+      .selectAll('circle')
+      .data(data.circles)
+      .enter()
+      .append('circle')
+        .attr('cx', function(d){console.log (d.x);return d.x})
+        .attr('cy', function(d){console.log(d.y);return d.y})
+        .attr('fill', function(d){console.log(d.color); return d.color})
+        .attr('r', function(d) {return d.r});
+  }
+
+  data = {circles:[]}
+
+  _(NUM_CIRCLES).times( function() {
+    cx = Math.random() * SVG_WIDTH;
+    cy = Math.random() * SVG_HEIGHT;
+    r = Math.random() * 50
+    hsl = 'hsl(' + Math.random() * 360 + ', 80%, 50%)';
+
+    data.circles.push({x: cx, y: cy, r: r, color: hsl});
+  });
+  console.log ('data', data)
+  draw(data)
+
+
+  $('pre').append('' + draw)
+</script>
+<script>
+  //d3.json("circle.json", draw);
+</script>
+</body>
+</html>

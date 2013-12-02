@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<style>
+body, input{font-family:verdana, arial, sans-serif}
+label{margin-bottom: 2px}
+label span{width:150px; float:left; text-align:right; padding-right:10px;}
+#sbtn{width: 250px; text-align:right}
+
+</style>
+</head>
+
+<body>
+
+	<form name="f">
+		<p><label><span>keyword: </span><input type="text" id="text"></label></p>
+		<p><label><span>(optional) per page: </span><input type="text" id="perpage" value="100"></label></p>
+		<p><label><span>(optional) page: </span><input type="text" id="page" value="1"></label></p>
+		<label><input name="size" type="radio" value="s">Square (_s, 75*75)</label>
+		<label><input name="size" type="radio" value="t">Thumbnail (_t, 100)</label>
+		<label><input name="size" type="radio" value="m">Small (_m, 240)</label>
+		<label><input name="size" type="radio" value="o">Medium (_o, 500)</label>
+		<label><input name="size" type="radio" value="b">Large (_b, 1024)</label>
+		<p id="sbtn"><input type="button" id="btn" value="submit"></p>
+	</form>
+	<div id="result"></div>
+
+
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/yahoo-dom-event/yahoo-dom-event.js&2.7.0/build/json/json-min.js"></script>
+<script>
+		
+	var Event = YAHOO.util.Event,
+		Lang = YAHOO.lang,
+		Dom = YAHOO.util.Dom,
+		parse = YAHOO.lang.JSON.parse;
+	
+
+	var req = 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key={key}&text={text}&per_page={perpage}&page={page}&format=json';
+	var format = "http://farm{farm}.static.flickr.com/{server}/{id}_{secret}_{size}.jpg";
+
+	var key = '0470c0df0ddf6959fcd92bfc103ceea4';	
+
+	//console.log(YAHOO.lang.substitute('hello {key}', {'key', 'test'}));
+
+	var getSizeValue = function () {
+		var radio = document.f.size;
+		for(i=0; i<radio.length; i++) {
+			if (radio[i].checked) 
+				return radio[i].value;
+		}
+		return radio[0].value;
+	};
+
+	var getRequestSrc = function () {
+		var text = Dom.get('text').value || 'flower';
+		var perpage = Dom.get('perpage').value|| 100;
+		var page = Dom.get('page').value || 1;
+		var size 
+		var src = YAHOO.lang.substitute(req, {
+			'key':key,
+			'text': text,
+			'perpage': perpage,
+			'page': page
+		});
+
+		return src;
+	};
+
+	jsonFlickrApi = function(rsp) {
+		//var r = parse(rsp);
+
+		var buf = [];
+		var photos = rsp.photos.photo;
+		for (var i=0; i<photos.length; i++) {
+			var photo = photos[i];
+
+			var farm = photo.farm;
+			var server = photo.server;
+			var secret = photo.secret;
+			var id = photo.id;
+			var size = getSizeValue();
+
+			var path = YAHOO.lang.substitute(format, {
+				'farm':farm,
+				'server':server,
+				'id': id,
+				'secret': secret,
+				'size': size
+			});
+			//buf[buf.length] = '<a target="_blank" href="' + path+'">' + path + '</a>';
+			buf[buf.length] = '<img src="' + path + '">' + path;
+		}
+		Dom.get('result').innerHTML = buf.join('<br>') ;
+	}
+
+	var sendRequest = function () {
+
+		var src = getRequestSrc();
+		var script = document.createElement('script');
+		script.src = src; 
+		document.getElementsByTagName('head')[0].appendChild(script);
+	}
+
+	var onSizeChange = function () {
+		var size = getSizeValue();
+
+		Dom.get('result').innerHTML = Dom.get('result').innerHTML.replace(/_[a-z]+\./g, '_' + size + '.');
+	
+	}
+
+	Event.on('btn', 'click', sendRequest);
+	Event.on(document.f.size, 'change', onSizeChange);
+</script>
+</body>
+</html>

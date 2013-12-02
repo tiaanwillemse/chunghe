@@ -1,0 +1,24 @@
+<script src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js"></script>   
+<script src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js"></script>   
+<script src="http://yui.yahooapis.com/2.5.2/build/connection/connection-min.js"></script> 
+
+<input id="user" type="text"> <span>( nasa )</span>
+<input id="go" type="button" value="submit">
+
+<script type="text/javascript">
+    var go = document.getElementById('go');
+    go.onclick = function(){
+	var id = document.getElementById('user').value;
+	YAHOO.util.Connect.asyncRequest('GET', 'proxy.php?id='+id, {  
+	    success: function(o) {  
+		console.dir(o);
+		document.body.innerHTML += o.responseText;
+	    },  
+	    failure: function(o) {  
+		alert('Request failed: ' + o.statusText);  
+	    }  
+	});  
+    }
+    
+</script>
+

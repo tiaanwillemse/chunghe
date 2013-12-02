@@ -1,0 +1,150 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <script src="../../library/jquery-1.7.2.js"></script>
+  <script src="../../library/underscore.js"></script>
+  <style>
+    *{padding:0;margin:0;}
+    #main{margin:20px 50px;}
+    #controller{margin-bottom:20px; padding-bottom:20px; border-bottom: 1px solid #ccc;}
+    .map{display:inline-block; vertical-align: top; margin-right: 5em;}
+    .map p {margin-bottom:5px; font-size: 16px;}
+    .map img{background:#eee;}
+    #landmarks {margin-top: 30px;}
+    #landmarks a{text-decoration: underline; margin-left: 1em;}
+  </style>
+</head>
+
+<div id="main">
+
+  <div id="controller">
+    <input type="text" id="lat" value="25.033817">
+    <input type="text" id="lon" value="121.565039">
+    <input type="button" id="go" value="go">
+    <div id="landmarks">
+      <p>try some landmarks?</p>
+      <a href="#" onclick="javascript:center(47.620946,-122.349464)">space needle, Seattle</a>
+      <a href="#" onclick="javascript:center(41.899754,12.476729)">Via del Pantheon, Italy</a>
+      <a href="#" onclick="javascript:center(27.172957,78.041681)">Taj Mahal, India</a>
+      <a href="#" onclick="javascript:center(-33.857551,151.215111)">Sydney Opera House</a>
+      <a href="#" onclick="javascript:center(25.033836,121.56501)">taipei 101</a>
+    </div>
+  </div>
+
+  <div id="openstreetmap" class="map">
+    <p>open street map</p>
+    <!--img height="500" width="500" src="http://ojw.dev.openstreetmap.org/StaticMap/?lat=25.033817&lon=121.565039&z=16&w=500&h=500&mode=Add+icon&mlat1=25.033817&mlon1=121.565039&show=1&att=none"-->
+    <img height="500" width="500" src="blank.gif">
+    <div class="controller">
+      <span>zoom level</span>
+      <input type="button" class="zoomout" value="-">
+      <input type="text" class="zoom" size="2" value="15">
+      <input type="button" class="zoomin" value="+">
+    </div>
+  </div>
+
+  <div id="googlemap" class="map">
+    <p>google map</p>
+    <!--img height="500" width="500" src="https://maps.googleapis.com/maps/api/staticmap?center=25.033817,121.565039&zoom=16&size=500x500&sensor=false&markers=color:blue|25.033817,121.565039"-->
+    <img height="500" width="500" src="blank.gif">
+    <div class="controller">
+      <span>zoom level</span>
+      <input type="button" class="zoomout" value="-">
+      <input type="text" class="zoom" size="2" value="15">
+      <input type="button" class="zoomin" value="+">
+    </div>
+  </div>
+</div>
+
+
+<script>
+/*
+http://ojw.dev.openstreetmap.org/StaticMap/?lat=#{lat}&lon=#{lon}&z=#{zoom}&w=500&h=500&mode=Add+icon&mlat1=#{lat}&mlon1=#{lon}&show=1&att=none
+https://maps.googleapis.com/maps/api/staticmap?center=#{lat},#{lon}&zoom=#{zoom}&size=500x500&sensor=false&maptype=terrain&markers=color:blue|#{lat},#{lon}
+*/
+/*
+TODO:
+1. add image loading indiation
+2. landmark -> geolocation
+*/
+  var URL = {
+    openstreetmap: 'http://ojw.dev.openstreetmap.org/StaticMap/?lat=#{lat}&lon=#{lon}&z=#{zoom}&w=500&h=500&mode=Add+icon&mlat1=#{lat}&mlon1=#{lon}&show=1&att=none',
+    googlemap: 'https://maps.googleapis.com/maps/api/staticmap?center=#{lat},#{lon}&zoom=#{zoom}&size=500x500&sensor=false&markers=color:blue|#{lat},#{lon}'
+  };
+$(function(){
+
+  $lat = $('#lat');
+  $lon = $('#lon');
+
+  function zoom (level, $map) {
+    var id = $map.attr('id');
+    var $img = $map.find('img');
+    var lat = $('#lat').val()
+    var lon = $('#lon').val()
+    var src = URL[id].replace(/#{lat}/g, lat).replace(/#{lon}/g, lon).replace('#{zoom}', level);
+    $img.attr('src', src);
+  }
+
+  $('#go').on('click', function() {
+    console.log ('go clicked');
+    _.each(['openstreetmap', 'googlemap'], function (id) {
+      console.log('id', id);
+      var $map = $('#' + id);
+      var $zoom = $map.find('.zoom');
+      var level = +$zoom.val();
+      var lat = $('#lat').val()
+      var lon = $('#lon').val()
+      var src = URL[id].replace(/#{lat}/g, lat).replace(/#{lon}/g, lon).replace('#{zoom}', level);
+      console.log ('src', src);
+      $img = $map.find('img');
+      $img.attr('src', src);
+      console.log('$zoom', $zoom);
+    });
+  });
+
+  $('.zoomin').on('click', function (e) {
+    var $map = $(e.target).closest('.map');
+    var $zoom = $map.find('.zoom');
+    newvalue = +$zoom.val() + 1;
+    $zoom.val(newvalue);
+    zoom(newvalue, $map);
+  });
+
+  $('.zoomout').on('click', function (e) {
+    var $map = $(e.target).closest('.map');
+    var $zoom = $map.find('.zoom');
+    console.log('$map', $map);
+    console.log('$zoom', $zoom);
+    newvalue = +$zoom.val() - 1;
+    console.log('newvalue', newvalue);
+    $zoom.val(newvalue);
+    zoom(newvalue, $map);
+  });
+
+
+  function center (lat, lon) {
+    $lat.val(lat);
+    $lon.val(lon);
+    $('#go').trigger('click')
+  }
+  window.center = center;
+
+  function success(position) {
+    coords = position.coords;
+    center(coords.latitude, coords.longitude);
+  }
+
+  function error() {
+    console.log('geolocation query failed!');
+  }
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+});
+
+
+</script>
+</html>

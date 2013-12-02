@@ -1,0 +1,13 @@
+
+<a id="link" href="http://www.wretch.cc">wretch</a>
+<script>
+    var link = document.getElementById('link');
+    link.onclick = function(e){
+	if(!e) e = window.event;
+	if(e.preventDefault)
+	    e.preventDefault();
+	e.returnValue = false;
+	//return false;
+    }
+    
+</script>

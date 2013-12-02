@@ -1,0 +1,35 @@
+<html>
+<head>
+<style>
+body{text-align:center;  padding: 1em .5em;font-family: arial; font-size: 1em; font-weight: bold}
+.wrapper{margin:.8em; float:left}
+.colorDiv{background-color:red; height: 3em; width:10em}
+.textdiv{height:1.5em; width: 15em; color: red; text-align:left}
+</style>
+</head>
+<body>
+	<a href="http://blog.thembid.com/index.php/2007/07/06/the-ultimate-web-20-color-list/">ThemBid.com &raquo; Blog Archive &raquo; The Ultimate Web 2.0 Color List</a><br />
+	<a href="http://chunghe.blogspot.com/2008/01/thembidcom-blog-archive-ultimate-web-20.html">Chunghe's Weblog: The Ultimate Web 2.0 Color List</a>
+
+<script>
+var color = {'wretch green':'568216', 'wretch blue': '#1A84B7','30Boxes Purple':'#5b5b95','43 Things Gold':'#C79810','43Things Mustard':'#c69d18','BaseCamp Green':'#6BBA70','BlinkList Ghost White':'#F7F7FF','BlinkList Orange':'#ff6600','BlogLines Blue':'#1393c0','BlogLines Medium Turquoise':'#4CADD4','Boing Boing Red':'#ff0000','Box.net Blue':'#277fba','CalendarHub CornFlower Blue':'#57A9FD','Chaamp Fire Brick':'#B71313','ClipMarks Dark Khaki':'#9AC65C','CoComment Blue':'#0e63fd','Confluence Green':'#99cc33','CounterSpot Pale Goldenrod':'#D6EBAD','CounterSpot Powder Blue':'#ADE3EF','CraigsList Blue':'#3775e2','CrazyEgg Green':'#8dbb01','DayLife Orange':'#ffb640','Del.icio.us Grey':'#EFEFEF','Digg Blue':'#1b5891','Digg Blue 2':'#356AA0','Digg Light Yellow':'#FFF298','DodgeBall Red':'#e24602','Drop Books Blue':'#4caae4','Ebay Yellow':'#ffcc00','Etsy Brown':'#cf5700','Etsy Vermillion':'#D15600','Eventful Purple':'#5d82ff','EyeSpot Blue':'#00bada','FaceBook Blue':'#3b5999','FeedBurner Blue':'#0170ca','Feedburner Red':'#eb003a','Feedster Green':'#98cc00','Firefox Maroon':'#bd1d01','Flickr Light Blue':'#0061DE','Flickr Pink':'#FF0084','Flock Black':'#0f0f0f','Flock Blue':'#4096EE','Frappr Red':'#a71a10','Furl Blue':'#025aa2','Furl Red':'#e84c1f','Gimme20 Hot Pink':'#FD65C2','Gmail Alice Blue':'#EFEFFF','Gmail Blue':'#C3D9FF','Gnoos Red':'#d50000','Google White':'#ffffff','Hi5 Orange':'#ef9a19','Interactive Action Yellow':'#FFFF88','Jaiku Green':'#96c63f','Judys Book Blue':'#69dbff','Karmadu Gold':'#FFC300','Kiko Light Steel Blue':'#9CB6DE','Last.fm Crimson':'#D61C39','Last.fm Red':'#d10039','Lifelog Pink':'#fe198e','Lijit Green':'#bedb8a','LinkedIn Blue':'#1a7fb3','Listable Coral':'#FF7B38','Listable Orange':'#ff7638','Live Journal Blue':'#3d5381','Ma.gnolia Creme':'#f3f3cc','Ma.gnolia Yellow':'#febf0f','Magnolia Mag.nolia':'#F9F7ED','Mashable Pink':'#f28fbf','Meebo Orange':'#ff910d','MeetUp Red':'#e51837','Microsoft Blue':'#87c1e7','Minti Green':'#009f59','Minutes In A Minute Dark Teal':'#00457B','MinutesInAMinute Steel Blue':'#2971AD','Moodmill Pastel':'#fa9b65','Mozilla Blue':'#3F4C6B','Mozilla Red':'#FF1A00','MySpace Blue':'#003399','Netscape Aqua':'#478898','NetVibes Green':'#62b857','NewsVine Green':'#006E2E','NewsVine Green 2':'#00722d','Ning Green':'#2d9500','Odeo Pink':'#ec449b','OnMyList Brown':'#5a471c','Oodle Black':'#030303','OpenID Orange':'#ff6200','Pageflakes Grey':'#d9dde9','Pandora Antique White':'#EFEBCE','Pandora Blue':'#295e92','PingOMatic Lime Green':'#28CF21','Pownce Black':'#383121','Qoop Mint':'#CDEB8B','Reddit Red':'#ff4600','Riya Green':'#6dc646','Rollyo Red':'#CC0000','RSS Orange':'#FF7400','Ruby on Rails Red':'#B02B2C','Ryze Red':'#e51905','Say so Red':'#c00000','Scouta Orange':'#f78325','SEOmoz Maroon':'#924357','Shadows Grey':'#36393D','Shiny Silver':'#EEEEEE','Shopify Green':'#87be2f','Skype Blue':'#6cd0f6','Slashdot Green':'#03646a','Slide Share Aqua':'#00a8aa','Smug Mug Green':'#89c122','Spoke Green':'#9ac80d','SpotPlex Blue':'#6b9cc9','Spurl Blue':'#6699cc','Spurl Grey':'#505050','Squidoo Blue':'#21628c','Squidoo Mustard':'#e5791e','StumbleUpon Blue':'#057db9','StumbleUpon Green':'#2acc54','Swicki Black':'#000000','Tagworld Green':'#5ebe8f','TailRank Red':'#780000','TechCrunch Green':'#008C00','Technorati Lime Green':'#4ABA00','The Broth Grey':'#7f7f7f','ThemBid Red':'#EA0101','Threadless Blue':'#003368','Twitter Blue':'#afeaee','Upcoming Yellow':'#fcbd00','Vimeo Grey':'#e7e7de','Voo2Do.com Lemon Chiffon':'#FFFFBD','Vox Red':'#d71920','Wayfaring Green':'#128f34','WikiPedia Black':'#0f0e13','Wikipedia Lavender':'#DEEBFF','WordPress Blue':'#174c89','WriteBoard Green':'#64bb69','Writely Olive':'#73880A','Writely Sandy Brown':'#F3AE48','Xanga Green':'#4db848','Yahoo Red':'#fc0234','Yelp Red':'#d11001','YouTube Red':'#ff3237','YouTube Tomato':'#FF6666','Ziki Blue':'#03a0fa','Zoomr Black':'#2e2d2e'}
+
+for(c in color){
+	wrapper = document.createElement('div');
+	wrapper.className = 'wrapper';
+	colorDiv = document.createElement('div');
+	colorDiv.className = 'colorDiv';
+	colorDiv.style.backgroundColor = color[c];
+	textDiv = document.createElement('div');
+	textDiv.className = 'textDiv';
+	textDiv.style.color = color[c];
+	textDiv.innerHTML = c + ':' + color[c];
+	textDiv.style.fontSize = '.8em';
+	textDiv.style.color = 'black';
+	wrapper.appendChild(colorDiv);
+	wrapper.appendChild(textDiv);
+	document.body.appendChild(wrapper);
+}
+</script>
+</body>
+</html>

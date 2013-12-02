@@ -1,0 +1,20 @@
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+beacon 會 block window.onload , 但是不會 block 之後的content
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<script>
+YAHOO.util.Event.on(window, 'load', function(){
+	console.log('window loaded');
+})
+YAHOO.util.Event.onDOMReady(function(){
+	console.log('dom loaded');
+})
+</script>
+
+<p>The script src tag is here</p>
+<script id="bcw" type="text/javascript">
+var src= 'http://sowrock.com/bin/sleep.cgi?type=gif&sleep=3&expires=-1&last=0&imagenum=13&t=' + new Date().valueOf();
+document.write('<img src='+src);
+</script>
+<p>content after the beacon</p>
+

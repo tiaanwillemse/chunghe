@@ -1,0 +1,16 @@
+install node
+    brew install node
+
+install npm
+    curl http://npmjs.org/install.sh | sh
+
+install jsdom
+    npm install jsdom
+
+chmod +x hn.js
+
+install cron (http://benr75.com/pages/using_crontab_mac_os_x_unix_linux)
+    - crontab -e
+    - 0 */12 * * * /Users/chunghe/dev/google.code/project/hacker-news/hn.js > /dev/null 2>&1
+      means run every 12 hours
+

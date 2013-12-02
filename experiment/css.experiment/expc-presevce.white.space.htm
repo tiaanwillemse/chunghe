@@ -1,0 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--http://webbugtrack.blogspot.com/2008/03/bug-165-dynamic-pre-population-fails-in.html-->
+<body>
+	<pre id="mypre"></pre>
+<script type="text/javascript">
+ myPreObj = document.getElementById('mypre');  
+ myPreObj.innerHTML = 'This\nWill\nFail...     no linebreaks or spaces';
+ myPreObj.innerHTML = myPreObj.innerHTML;
+</script>
+</body>

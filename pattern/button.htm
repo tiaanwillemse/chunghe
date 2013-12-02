@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<style>
+	body{font-family:arial}
+	.btn, .btn:visited{
+		color:#334455 !important;
+		cursor:pointer;
+		float:left;
+		font-size:12px;
+		margin:0 5px 5px 0;
+		outline:none;
+		text-decoration:none;
+	}
+	.btn b{
+		display:block; 
+		float:left; 
+		font-weight:normal; 
+		margin:0 3px 0 0; 
+		position:relative;
+		background: #fff url(img/button-bg.gif) repeat-x left bottom;
+		border: solid #bcc7d4;
+		border-width: 1px 0;
+	}
+	.btn b b{
+		background: none; 
+		display:block; 
+		position:relative; 
+		margin:0 -1px; 
+		border-width: 0 1px
+	}
+	.btn b b b {
+		margin:0; 
+		border-width:0; 
+		padding:2px 5px;
+	}
+	.btn:active b{background-image:none; background-color:#ccc}
+	.btn:active b b{background-color: transparent}
+	</style>
+</head>
+<body>
+	<p>button style 1</p>
+	<a class="btn"><b><b><b>OK</b></b></b></a>
+	<a class="btn"><b><b><b>Cancel</b></b></b></a>
+	<a class="btn"><b><b><b>中文測試中文測試中文測試</b></b></b></a>
+</body>
+
+</html>

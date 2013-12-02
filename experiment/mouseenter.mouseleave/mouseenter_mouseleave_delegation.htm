@@ -1,0 +1,61 @@
+<!doctype>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+	*{margin:0; padding:0}
+	ul{width:600px; margin:2em auto}
+	ul li.on{background:green}
+	ul a{text-decoration:none; color:#36c}
+	ul li {list-style-type:none; line-height:32px; zoom:1; border-bottom:2px solid #ccc}
+</style>
+	<ul id="ul">
+		<li class="135"><p><a href="http://www.wretch.cc/blog/giaji/135"><span class="title">這是心情行業校園團體分身</span></a> - <span class="date">2008-08-28 16:33:00</span></p><p class="summary">這是心情行業校園團體分身</p></li>
+		<li class="134"><p><a href="http://www.wretch.cc/blog/giaji/134"><span class="title">會記憶流行時尚嗎</span></a> - <span class="date">2008-08-20 19:33:00</span></p><p class="summary"/></li>
+		<li class="133"><p><a href="http://www.wretch.cc/blog/giaji/133"><span class="title">這是流行時尚分類</span></a> - <span class="date">2008-08-20 19:32:00</span></p><p class="summary"/></li>
+		<li class="132"><p><a href="http://www.wretch.cc/blog/giaji/132"><span class="title">aaaaaaaaaaaaa</span></a> - <span class="date">2008-08-20 19:28:00</span></p><p class="summary"/></li>
+		<li class="131"><p><a href="http://www.wretch.cc/blog/giaji/131"><span class="title">減炭小秘訣</span></a> - <span class="date">2008-08-20 12:46:00</span></p><p class="summary">儘量選擇當季當地食材食用，減少因長程運送而產生的碳排放。 自備水壺方便又解渴，如需飲用瓶裝水，也以本地生產製造為宜。</p></li>
+	</ul>
+
+<script src="http://chunghe.googlecode.com/svn/trunk/library/yui/yahoo-dom-event.js"></script>
+<script>
+	var YUE = YAHOO.util.Event,
+		YUD = YAHOO.util.Dom,
+		$	= YAHOO.util.Dom.get;
+
+	var log = function(s){
+		if(window.console)
+			console.log(arguments);
+		else
+			window.status = [].slice.call(arguments).join('_');
+	}
+
+	withinElement = function(haystack, needle) {
+		return (haystack == needle || YUD.isAncestor(haystack, needle))
+	};
+
+	YUE.on('ul', 'mouseover', function(e){
+		var target = YUE.getTarget(e);
+		var relatedTarget = YUE.getRelatedTarget(e);
+
+		// log only if relatedTarget is li or child of li
+		var li = target.tagName == 'LI' ? 
+					target : YUD.getAncestorByTagName(target, 'li');
+
+		if(li) {
+			YUD.addClass(li, 'on');
+		}
+	});
+
+	YUE.on('ul', 'mouseout', function(e) {
+	
+		var target = YUE.getTarget(e);
+		var relatedTarget = YUE.getRelatedTarget(e);
+		var li = target.tagName == 'LI' ? 
+					target : YUD.getAncestorByTagName(target, 'li');
+
+		//if(li && YUD.hasClass(li, 'on')) {
+		if(li) {
+			//console.log('mouseout', li);
+			YUD.removeClass(li, 'on');
+		}
+	});
+</script>

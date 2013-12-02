@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <meta property="fb:app_id" content="565986986787224"/>
+  <meta property="fb:admins" content="501012346"/>
+  <style>
+    #showcase {position: absolute; width: 300px; top: 10px; right: 10px; color: #777; font-size:13px;}
+    #showcase .showcase p {border-bottom: 1px solid #ccc; margin-bottom:10px; padding-bottom:10px; color: #333; font-size:14px;}
+    #showcase .showcase { padding-bottom:3em; margin-bottom: 3em;}
+    #showcase .showcase li {list-style:none; margin-bottom:5px;}
+    #events {word-wrap: break-word;}
+  </style>
+  </head>
+<body>
+<div class="fb-comments" data-href="http://chunghe.googlecode.com" data-num-posts="5" data-width="470"></div>
+
+<div id="showcase">
+  <div class="showcase">
+    <p>display commment counts &raquo;</p>
+    <fb:comments-count href=http://chunghe.googlecode.com/></fb:comments-count> awesome comments
+  </div>
+  <div class="showcase">
+    <p>listen to <code>comment.create</code> event</p>
+    <div id="events"></div>
+  </div>
+  <div class="showcase">
+    <p>display all comments &raquo;</p>
+    <div id="comments"></div>
+  </div>
+</div>
+
+<div id="fb-root"></div>
+<script src="//connect.facebook.net/en_US/all.js#xfbml=1&appId=565986986787224"></script>
+<script>
+  // get all comments in json format
+  var url = "http://chunghe.googlecode.com";
+  $.getJSON("https://graph.facebook.com/comments/?ids=" + url, function (rsp) {
+    var comments = rsp[url].comments;
+    console.log('coments', comments);
+    for (var i = 0; i < comments.data.length; i += 1) {
+      var comment = comments.data[i];
+      var from = comment.from.name
+      var time = comment.created_time;
+      $li = $('<li>').html(comments.data[i].message + ', from: ' + from + ', time:' + time);
+      $('#comments').append($li);
+    }
+  });
+</script>
+<script>
+  FB.Event.subscribe('comment.create', function (rsp) {
+    $('#events').html(JSON.stringify(rsp));
+  });
+  FB.Event.subscribe('comment.remove', function (rsp) {
+    $('#events').html(JSON.stringify(rsp));
+  });
+</script>
+</body>
+</html>

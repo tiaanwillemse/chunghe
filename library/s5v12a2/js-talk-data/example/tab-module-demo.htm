@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>亞洲天團 - 5566</title>
+<style type="text/css">
+	
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, em, img, ins, b, u, i, ol, ul, li, label, table{ margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; } body { line-height: 1; } ol, ul { list-style: none; }
+
+.tab-module{margin:5em; width:70%}
+#nav a{color:#39c}
+#nav:after{content:"."; clear:both; display:block; visibility:hidden; height:0}
+#nav{zoom:1}
+#nav li{float:left; padding:1em 2em;   -moz-border-radius: 8px 8px 0 0; background-color:#eaeaea; margin-right:4px; cursor:pointer}
+#nav li.on{background-color:#39c; }
+#nav li.on a{color:#fff}
+#nav li a{text-decoration:none; font-weight:bold}
+#content{padding:2em 1em; border-top: 2px solid #39c}
+#content label{float:left}
+#content ul{margin-left:185px; color:#444}
+#content ul li{list-style-type:disc; line-height:1.4}
+
+
+</style>
+</head>
+<body>
+<div class="tab-module">
+	<ul id="nav"><!--ul to group related items-->
+		<li class="on">
+			<a href="#tab1">5566 - 孫協志</a>
+		</li><!--tab1 to match content ids-->
+		<li><a href="#tab2">5566 - 王仁甫</a></li>
+		<li><a href="#tab3">5566 - 王紹偉</a></li><!--tab1 to match content ids-->
+		<li><a href="#tab4">5566 - 許孟哲</a></li>
+	</ul>
+	<div id="content">
+		<div id="tab1">
+			<label><img src="http://chunghe.googlecode.com/svn/trunk/library/s5v12a2/js-talk-data/img/5566-1.png"></label>
+			<ul>
+				<li>英文名：Tony Sun</li>
+				<li>綽號：鞋子、孫協</li>
+				<li>出生日期：1978.2.20</li>
+				<li>星座：雙魚座</li>
+			</ul>
+		</div>
+		<div id="tab2" style="display:none">
+			<label><img src="http://chunghe.googlecode.com/svn/trunk/library/s5v12a2/js-talk-data/img/5566-4.png"></label>
+			<ul>
+				<li>英文名: Zax Wong</li>
+				<li>綽號：王小甫、王仁</li>
+				<li>出生日期：1980.8.28</li>
+				<li>星座：處女座</li>
+			</ul>
+		</div>
+		<div id="tab3" style="display:none">
+			<label><img src="http://chunghe.googlecode.com/svn/trunk/library/s5v12a2/js-talk-data/img/5566-2.png"></label>
+			<ul>
+				<li>英文名: Sam Wong</li>
+				<li>綽號：王少爺、嬌滴滴、蝙蝠俠、地球最強男人</li>
+				<li>出生日期：1976.12.18</li>
+				<li>星座：射手座</li>
+			</ul>
+		</div>
+		<div id="tab4" style="display:none">
+			<label><img src="http://chunghe.googlecode.com/svn/trunk/library/s5v12a2/js-talk-data/img/5566-1.png"></label>
+			<ul>
+				<li>英文名: Jason Hsu</li>
+				<li>綽號：米其林、小飛象、許孟</li>
+				<li>出生日期：1985.7.27</li>
+				<li>星座：獅子座</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+  var nav = document.getElementById('nav');
+
+  // cache the previouse target 
+  // here aussum the first li, use getElementsByClassName('on') would be better.
+  var oldTarget = nav.getElementsByTagName('li')[0];
+
+  // event delegation, bind a single event handler on ul rather mutilple event handlers on li
+  nav.onclick = function(e){
+    // get event object
+    if(!e) e = window.event;
+    
+    // get event target
+    var target = e.target || e.srcElement;
+
+    // maybe <li> or <a>  
+    if(target.href) target = target.parentNode;
+
+    // return if click on the highlighting tab
+    if(target == oldTarget) return;
+
+    // highlight the target li
+    // ( don't do target.className = 'on' )
+    target.className += 'on';
+    // ( don't do oldTarget.className = 'on' )
+    if(oldTarget) oldTarget.className = oldTarget.className.replace(/on/, '');
+
+    // get the correspond content id
+    var id = target.getElementsByTagName('a')[0].getAttribute('href').substring(1);
+    var oldId = oldTarget.getElementsByTagName('a')[0].getAttribute('href').substring(1);
+
+    // toggle content div
+    document.getElementById(id).style.display = '';
+    document.getElementById(oldId).style.display = 'none';
+
+    oldTarget = target;
+  }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<div id="display"></div>
+<script src="lib.js"></script>
+<script src="script.js"></script>
+<h2>lib.js</h2>
+<pre>
+function getData() {
+  // In an actual project, this data would be retrieved from the server.
+  return {title: 'Flower Care', text: 'Flowers need water.'};
+}
+
+function getFoo () {
+  console.log('this function will not be called');
+}
+</pre>
+<h2>script.js</h2>
+<pre>
+var displayElement = document.getElementById('display');
+function displayData(parent, data) {
+  var textElement = document.createTextNode(data.text);
+  parent.appendChild(textElement);
+}
+displayData(displayElement, getData());
+</pre>

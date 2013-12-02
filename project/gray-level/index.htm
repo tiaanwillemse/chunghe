@@ -1,0 +1,53 @@
+
+
+<style>
+#d1, #d2{font-faimly:"Lucida grande"; line-height:1.4; width:475px;  background:#009900; color:#fff; padding:2em}
+#d1{float:left;}
+#d2{margin-left: 550px}
+</style>
+<input type="text" id="i" value="#009900"><input type="button" value="compute" id="c">
+<p>convert the background to corresponding gray level, and choose the appropriate font color for that</p>
+<div id="d1">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam commodo, pede eget fermentum suscipit, nisl purus commodo dolor, nec accumsan tortor turpis sit amet augue. Sed vitae arcu. In mauris. Nam ut mi. Ut congue. Vestibulum ac leo eu nisl venenatis dictum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras lacinia. Integer nec tortor non metus rhoncus hendrerit. Fusce in libero. Duis pretium felis ut enim. Aliquam blandit ipsum sit amet nisl. Sed eget nisi tincidunt felis gravida blandit. Nulla facilisi.
+
+Etiam eu libero in orci rhoncus pharetra. Praesent convallis felis id ipsum. Cras urna est, faucibus ac, rutrum et, tincidunt et, massa. Praesent ac ligula. Phasellus et tortor eleifend turpis semper malesuada. Suspendisse tortor. Vestibulum vitae pede. Suspendisse sollicitudin. Aenean viverra purus. Integer a quam sit amet ante fringilla eleifend. Donec vehicula, quam quis tempus suscipit, mauris dolor tincidunt purus, ac hendrerit leo odio eget orci. Curabitur nunc. Aliquam dui dui, ullamcorper nec, adipiscing in, vestibulum et, est. Curabitur ut turpis.
+</div>
+<div id="d2">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam commodo, pede eget fermentum suscipit, nisl purus commodo dolor, nec accumsan tortor turpis sit amet augue. Sed vitae arcu. In mauris. Nam ut mi. Ut congue. Vestibulum ac leo eu nisl venenatis dictum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras lacinia. Integer nec tortor non metus rhoncus hendrerit. Fusce in libero. Duis pretium felis ut enim. Aliquam blandit ipsum sit amet nisl. Sed eget nisi tincidunt felis gravida blandit. Nulla facilisi.
+
+Etiam eu libero in orci rhoncus pharetra. Praesent convallis felis id ipsum. Cras urna est, faucibus ac, rutrum et, tincidunt et, massa. Praesent ac ligula. Phasellus et tortor eleifend turpis semper malesuada. Suspendisse tortor. Vestibulum vitae pede. Suspendisse sollicitudin. Aenean viverra purus. Integer a quam sit amet ante fringilla eleifend. Donec vehicula, quam quis tempus suscipit, mauris dolor tincidunt purus, ac hendrerit leo odio eget orci. Curabitur nunc. Aliquam dui dui, ullamcorper nec, adipiscing in, vestibulum et, est. Curabitur ut turpis.
+</div>
+
+<script>
+
+	var grayLevel = function(backgroundColor){
+		var back = parseInt(backgroundColor.replace(/^#/, ''), 16); 
+		var r = (back & 0xff0000) >> 16;
+		var g = (back & 0x00ff00) >> 8;
+		var b = (back & 0x0000ff);
+		
+		//console.log(r, g, b);
+
+		// gray: 0 to 255
+		var gray = Math.round(0.299*r + 0.587*g + 0.114*b);
+
+		return gray;
+	}
+
+	var i = document.getElementById('i');
+	var c = document.getElementById('c');
+	var d1 = document.getElementById('d1');
+	var d2 = document.getElementById('d2');
+
+	c.onclick = function(){
+		var gray = grayLevel(i.value);
+		console.log('gray', gray);
+		d1.style.backgroundColor = i.value;
+		d2.style.backgroundColor = 'rgb(' + gray + ',' + gray + ',' + gray + ')';
+		if(gray > 128) // mid-gray
+			d2.style.color = '#000';
+		else
+			d2.style.color = '#fff';
+	}
+
+</script>

@@ -1,0 +1,63 @@
+<html>
+<head>
+<style>
+*{margin:0; padding:0}
+
+body{font-family:arial; padding:20px; line-height:2;}
+fieldset{padding:20px;}
+</style>
+</head>
+<body>
+
+<fieldset>
+<legend>in page input maxlength=10</legend>
+<input type="text" maxlength=10>
+</fieldset>
+
+<fieldset>
+<legend>in page input maxLength=10</legend>
+<input type="text" maxLength=10>
+</fieldset>
+
+<fieldset>
+<legend>create input maxlength=10 by innerHTML</legend>
+<p id="t1"></p>
+</fieldset>
+
+<fieldset id="f1">
+<legend>create input maxLength=10 by innerHTML</legend>
+<p id="t2"></p>
+</fieldset>
+
+<fieldset id="f1">
+<legend>create input maxlength=10 by DOM manipulation <span style="color:red">(FAILED)</span></legend>
+<p id="t3"></p>
+</fieldset>
+
+<fieldset id="f1">
+<legend>create input maxLength=10 by DOM manipulation</legend>
+<p id="t4"></p>
+</fieldset>
+
+<h4>conclusion</h4>
+<p>should always use input.maxLength (not input.maxlength)</p>
+<a href="http://blogs.acceleration.net/ryan/archive/2005/02/21/672.aspx">Setting Maxlength with javascript</a>
+
+</body>
+<script type="text/javascript">
+document.getElementById('t1').innerHTML = '<input type="text" maxlength="10">';
+document.getElementById('t2').innerHTML = '<input type="text" maxLength="10">';
+
+var input1 = document.createElement('input');
+input1.maxlength = '10';
+input1.type = 'text';
+document.getElementById('t3').appendChild(input1);
+
+var input2 = document.createElement('input');
+input2.maxLength = '10';
+input2.type = 'text';
+document.getElementById('t4').appendChild(input2);
+</script>
+</html>
+
+

@@ -1,0 +1,52 @@
+
+<html>
+<head>
+<style type="text/css">
+	iframe{height: 80%; width:80%;}
+	code{font-family: "courier new", monospace; background-color: #f7f7f7;}
+</style>
+
+</head>
+<body>
+<p>
+<input type="button" id="btn" value="click to reload iframe"></input>
+<code>document.getElementById('t').contentWindow.location.replace(url[index%url.length]);</code>
+</p>
+<p>
+<input type="button" id="btnold" value="click to reload iframe (add history)"></input>
+<code> document.getElementById('t').src = url[index%url.length];</code>
+<iframe id="t" name="t"></iframe>
+<script type="text/javascript">
+	/* 
+	*
+	*  try to avoid 
+	*  1. click sound 
+	*  2. history record 
+	*  for iframe reload
+	*  
+	*  */
+	iframe = function(){
+		url = [
+			'http://answers.yahoo.com',
+			'http://finance.yahoo.com',
+			'http://shopping.yahoo.com'
+		],
+		index = 0;
+		return{
+			init: function(){
+				document.getElementById('btn').onclick = this.reload;
+				document.getElementById('btnold').onclick = this.oldreload;
+			},
+			reload: function(){
+				document.getElementById('t').contentWindow.location.replace(url[index%url.length]);
+				index++;
+			},
+			oldreload: function(){
+				document.getElementById('t').src = url[index%url.length];
+			}
+		}
+	}();
+	iframe.init();
+</script>
+</body>
+</html>

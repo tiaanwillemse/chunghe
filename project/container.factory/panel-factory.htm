@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html> 
+<head>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/combo?2.6.0/build/yahoo-dom-event/yahoo-dom-event.js&2.6.0/build/element/element-beta-min.js&2.6.0/build/container/container-min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.6.0/build/container/assets/skins/sam/container.css">
+<style type="text/css">
+.yui-skin-sam .yui-panel{border:10px solid #DAD6D6}
+.yui-skin-sam .yui-panel .hd{padding:.75em 5px; font-weight:normal; font-size:15px; text-align:left; border:none; line-height:1}
+.yui-skin-sam .yui-panel .bd{border:none; padding:1em; text-align: left}
+.yui-skin-sam .yui-panel .hd, .yui-skin-sam .yui-panel .ft{background:#fff}
+.yui-skin-sam .yui-panel .ft{border:none; font-size:15px; padding: .5em 0}
+.yui-skin-sam .yui-panel .ft .button-group {text-align:center}
+.yui-skin-sam .yui-panel .ft .cancel {margin-left:10px}
+</style>
+</head>
+<body class="yui-skin-sam">
+<div id="myPanel"> 
+    <div class="hd">Panel #1 from Markup</div> 
+    <div class="bd">This is a Panel that was marked up in the document.</div> 
+    <div class="ft">End of Panel #1</div> 
+</div> 
+
+<script>
+// pass the optional cfg to overwrite the default cfg
+var Factory = function(id, args) {
+	var panel;
+	var cfg = {
+		width: '600px',
+		fixedcenter: true,
+		modal: true,
+		visible: false
+	};
+
+	var args = args || {};
+	cfg = YAHOO.lang.merge(cfg, args);
+
+	panel = new YAHOO.widget.Panel(id, cfg);
+
+	var keyEsc = new YAHOO.util.KeyListener( document, {keys:27},
+	  {
+		fn: panel.hide,
+		scope: panel,
+		correctScope: true
+	  });
+	keyEsc.enable();
+
+	return panel;
+};
+
+/*
+	* For Modules without existing markup, the appendToNode argument 
+	* is REQUIRED. If this argument is ommitted and the current element is 
+	* not present in the document, the function will return false, 
+	* indicating that the render was a failure.
+*/
+
+/* 0. rendering the existing HTML */
+var panel0 = Factory('myPanel');
+panel0.render();
+//panel0.show();
+
+
+/* 1. configure options by pass in the configure object */
+var panel1 = Factory('panel1', {'width' : '300px'});
+panel1.setBody('panel1');
+panel1.render(document.body);
+//panel1.show();
+
+/* 2. configure options via queueProperty, prior to rendering */
+var panel2 = Factory('panel2');
+panel2.cfg.queueProperty('width', '300px');
+panel2.setBody('panel2');
+panel2.render(document.body);
+//panel2.show();
+
+/* 3. configure options via setProperty, after rendering */
+var panel3 = Factory('panel3');
+panel3.setBody('panel3');
+panel3.render(document.body);
+panel3.cfg.setProperty('width', '300px');
+//panel3.show();
+
+/* modify the content after rendering : render again ! */
+var panel4 = Factory('panel4');
+//panel4.render(document.body);
+panel4.setHeader('header');
+panel4.setBody('Panel4');
+panel4.render();
+// panel4.show();
+
+/* modify the content by appendToChild */
+var headerText = document.createTextNode('panel5 header');
+var bodyText = document.createTextNode('panel5 body');
+
+var panel5 = Factory('panel5');
+panel5.render(document.body);
+panel5.appendToHeader(headerText);
+panel5.appendToBody(bodyText);
+panel5.render();
+// panel5.show();
+	
+/* set dummy head/body/ft and modify after rendering */
+var panel6 = Factory('panel6');
+panel6.setBody('');
+panel6.render(document.body)
+panel6.setBody('hello world');
+panel6.show();
+</script>
+</body>
+</html>
+

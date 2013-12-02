@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo/yahoo-min.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/dom/dom-min.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/event/event-min.js" ></script> 
+<style>
+*{padding:0; margin:0;}
+body{font-family:arial; padding:2em 2em 30em 2em; line-height:1.5; background:#f7f7f7;}
+h2{font-size:24px; font-weight:bold; margin:1.5em 0 0;}
+#warpper{width:950px;}
+.note{padding: 10px 0 10px 2em; border:1px solid #eee; background:#F9F7ED; margin:1em 0; border:1px solid #eee;}
+p.title{font-weight:bold; color:#333; margin-top:.5em}
+#foo{border:20px solid #ccc; padding:30px 50px; width:200px; text-align:center; margin-bottom:5px; background:#fff;}
+i{font-style:italic;}
+</style>
+</head>
+
+<body>
+<div id="warpper">
+<h2>Dom.Point and Region.contains, check if event occus in some div.</h2>
+<div id="foo"></div>
+<div id="output">click inside?</div>
+
+</div><!-- end: #wrapper -->
+<script>
+var Event = YAHOO.util.Event,
+    Dom   = YAHOO.util.Dom;
+
+Event.onDOMReady(function () {
+  Event.on(document.body, 'click', function(e) {
+    var xy = Event.getXY(e);
+    var point = new YAHOO.util.Point(xy);
+    var region = Dom.getRegion('foo');
+    Dom.get('output').innerHTML = 'click inside? ' + '<i>' + (region.contains(point)? 'true':'false') + '</i>';
+  });
+});
+</script>
+</body>
+</html>

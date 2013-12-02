@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style>
+html{color:#444;background:#fff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border:0;font-variant:normal;}sup {vertical-align:text-top;}sub {vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}legend{color:#000;}
+	</style>
+	<style>
+body{
+	font-family: arial, sans-serif;
+	padding: 1em 2em;
+}
+.photowrap{padding-bottom: 1em}
+.photowrap img{padding: 3px 0}
+.formDiv{margin: 5px 0}
+.title h4{
+	font-size:14px;
+	margin-bottom:0px;
+	margin-top:0px;
+	overflow:hidden;
+	width:240px;
+	font-weight:bold;
+}
+.desc, .title{width: 240px;}
+.desc{font-size: 12px;}
+.desc span, .desc i{
+	font-size: 14px;
+}
+
+.title .notset, .desc .notset{
+	font-style: italic;
+	color: #888;
+}
+.formDiv .cancelBtn, .formDiv .saveBtn{
+	padding: 0 5px;
+	background-color:#DDDDDD;
+	color:#666666;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:12px;
+	font-weight:bold;
+}
+.formDiv .saveBtn {
+	background:#0063DC none repeat scroll 0%;
+	color:#FFFFFF;
+	font-size:12px;
+	font-weight:bold;
+}
+.formDiv .titleText, .formDiv textarea{
+	padding: 3px;
+	width:240px;
+	background-color:#FFFFD3;
+	border: 1px inset #E9E9AE;
+	font-family: arial;
+	margin-bottom: 5px;
+}
+.formDiv .titleText{
+	font-size:14px;
+	font-weight:bold;
+}
+.formDiv textarea{
+	font-size:12px;
+	height:75px;
+}
+
+	</style>
+<body>
+
+	<div id="photo_2141766814" class="photowrap">
+		<div class="title">
+			<h4 id="title_2141766814" class="editable" title="Click to edit"></h4>
+			<!--<h4 id="title_2141766814" class="editable" title="Click to edit">Dr.evil</h4>-->
+			<div class="formDiv" style="display:none">
+				<form>
+					<input class="titleText" type="text" />
+					<input class="saveBtn" type="button" value="SAVE">
+					<span style="font-family:arial; font-size:12px; padding-right: 5px; padding-left: 5px">OR</span>
+					<input class="cancelBtn" type="button" value="cancel">
+				</form>
+			</div>
+		</div>
+		<img src="evil.jpg">
+		<div class="desc">
+			<div id="desc_2141766814" class="editable" title="Click to edit"></div>
+			<!--<div id="desc_2141766814" class="editable" title="Click to edit">Dr. Evil or Douglas Powers is a fictional character, played by Mike Myers, in the Austin Powers film series.</div>-->
+			
+			<div class="formDiv" style="display:none">
+				<form>
+					<textarea></textarea>
+					<input class="saveBtn" type="button" value="SAVE">
+					<span style="font-family:arial; font-size:12px; padding-right: 5px; padding-left: 5px">OR</span>
+					<input class="cancelBtn" type="button" value="cancel">
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="photo_1234567" class="photowrap">
+		<div class="title">
+			<h4 id="title_1234567" class="editable notset" title="Click to edit"></h4>
+			<!--<h4 id="title_1234567" class="editable notset" title="Click to edit">click here to add a title</h4>-->
+			<div class="formDiv" style="display:none">
+				<form>
+					<input class="titleText" type="text" />
+					<input class="saveBtn" type="button" value="SAVE">
+					<span style="font-family:arial; font-size:12px; padding-right: 5px; padding-left: 5px">OR</span>
+					<input class="cancelBtn" type="button" value="cancel">
+				</form>
+			</div>
+		</div>
+		<img src="PaulWalker.jpg">
+		<div class="desc">
+			<div id="desc_1234567" class="editable notset" title="Click to edit"></div>
+			<!--<div id="desc_1234567" class="editable notset" title="Click to edit">click here to add a description</div>-->
+			<div class="formDiv" style="display:none">
+				<form>
+					<textarea></textarea>
+					<input class="saveBtn" type="button" value="SAVE">
+					<span style="font-family:arial; font-size:12px; padding-right: 5px; padding-left: 5px">OR</span>
+					<input class="cancelBtn" type="button" value="cancel">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../library/yui/yahoo-dom-event.js"></script>
+<script src="../../library/yui/connection-min.js"></script>
+<script>
+	
+if(typeof console == 'undefined'){
+	console = {};
+	console.log = function(){};
+}
+
+YAHOO.namespace('wretch');
+YUD = YAHOO.util.Dom,
+YUE = YAHOO.util.Event,
+$ = YAHOO.util.Dom.get,
+YAHOO.wretch.editinplace = function(){
+	/*
+	* todo: auto input.select() textarea.select()
+	* */
+	var document = window.document,
+		editableElements = YUD.getElementsByClassName('editable')
+
+	var config = {
+		'clickToAddTitle' : 'click here to add a title',
+		'clickToAddDesc' : 'click here to add a description'
+	}
+	function createEditForm(e){
+		var target = YUE.getTarget(e);
+		target.style.display = 'none';
+	
+		var form = YUD.getNextSiblingBy(  target, function(el){ return el.className == 'formDiv'})
+		if(form){
+			var inputs = form.getElementsByTagName('input'),
+				textarea = form.getElementsByTagName('textarea')[0],
+				editableArea,
+				input = inputs[0],
+				saveBtn = (inputs[inputs.length-2]=='undefined')?null:inputs[inputs.length-2],
+				cancelBtn = (inputs[inputs.length-1]=='undefined')?null:inputs[inputs.length-1]
+			
+			if(form.style.display == 'none') 
+				form.style.display = '';
+
+			if(textarea){
+				textarea.value = (target.innerHTML==config.clickToAddDesc)?'':target.innerHTML;
+				editableArea = textarea;
+			}
+			else if(input){
+				input.value = (target.innerHTML==config.clickToAddTitle)?'':target.innerHTML;
+				editableArea = input;
+			}
+
+			if ((saveBtn)&&( typeof saveBtn.onclick != 'function'))	
+				YUE.on(saveBtn, 'click', handleSave,  [editableArea, target]);
+
+			if ((cancelBtn)&&( typeof cancelBtn.onclick != 'function'))	
+				YUE.on(cancelBtn, 'click', handleCancel);
+
+		}
+
+	}
+/*************************************/
+//gears_init.js
+(function() {
+  // We are already defined. Hooray!
+  if (window.google && google.gears) {
+    return;
+  }
+
+  var factory = null;
+
+  // Firefox
+  if (typeof GearsFactory != 'undefined') {
+    factory = new GearsFactory();
+  } else {
+    // IE
+    try {
+      factory = new ActiveXObject('Gears.Factory');
+    } catch (e) {
+      // Safari
+      if (navigator.mimeTypes["application/x-googlegears"]) {
+        factory = document.createElement("object");
+        factory.style.display = "none";
+        factory.width = 0;
+        factory.height = 0;
+        factory.type = "application/x-googlegears";
+        document.documentElement.appendChild(factory);
+      }
+    }
+  }
+
+  // *Do not* define any objects if Gears is not installed. This mimics the
+  // behavior of Gears defining the objects in the future.
+  if (!factory) {
+    return;
+  }
+
+  // Now set up the objects, being careful not to overwrite anything.
+  if (!window.google) {
+    window.google = {};
+  }
+
+  if (!google.gears) {
+    google.gears = {factory: factory};
+  }
+})();
+
+	var db;
+	gearsInit();
+	function gearsInit(){
+		var success = false;
+		if (window.google && google.gears) {
+		  try {
+		    db = google.gears.factory.create('beta.database', '1.0');
+		    if (db) {
+				db.open('editinplace');
+				//db.execute('drop table if exists Demo4');
+				db.execute('create table if not exists Demo4' +
+						   ' (title varchar(255), desc varchar(255), id varchar(255) )' );
+				db.execute('insert into Demo4 values (?, ?, ?)', [ 'Dr. evil', 'Dr. Evil or Douglas Powers is a fictional character, played by Mike Myers, in the Austin Powers film series.', '2141766814']);
+				db.execute('insert into Demo4 values (?, ?, ?)', [ 'click here to add a title', 'click here to add a description', '1234567']);
+
+				displayRecentPhrases();
+		    }
+
+		  } catch (ex) {
+		    setError('Could not create database: ' + ex.message);
+		  }
+		}
+	}
+	function displayRecentPhrases(e) {
+
+	  //var recentPhrases = ['', '', ''];
+		var result = [];
+
+	  // We re-throw Gears exceptions to make them play nice with certain tools.
+	  // This will be unnecessary in a future version of Gears.
+	  try {
+		var rs = db.execute('select * from Demo4');
+		while (rs.isValidRow()) {
+		  result.push(rs.field(0));
+		  result.push(rs.field(1));
+		  result.push(rs.field(2));
+		  rs.next();
+		}
+		rs.close();
+
+	  } catch (e) {
+		throw new Error(e.message);
+	  }
+	  console.log(result[2], ':', result[0] + ' | ' + result[1]);
+	  console.log(result[5], ':',result[3] + ' | '+ result[4]);
+
+	  $('desc_' + result[2]).innerHTML = result[1];
+	  $('title_' + result[2]).innerHTML = result[0];
+
+	  $('desc_' + result[5]).innerHTML = result[4];
+	  $('title_' + result[5]).innerHTML = result[3];
+      
+	  var _formDiv = YUD.getElementsByClassName('formDiv');
+	  for(var i=0; i<_formDiv.length; i++){
+	  	_formDiv[i].style.display = 'none';
+      }
+	  var _editable = YUD.getElementsByClassName('editable');
+	  for(var i=0; i<_editable.length; i++){
+	  	_editable[i].style.display = 'block';
+      }
+	}
+
+
+	function gearsHandleSubmit(param, e) {
+	  if (!google.gears.factory || !db) {
+		return;
+	  }
+
+	  var phrase = param[0].value;
+	  var id = param[1].id.replace(/^desc_|^title_/, '');
+	  var type;
+
+	if(param[1].id.indexOf('title_')==0){
+		type = 'title';
+	}
+	else if(param[1].id.indexOf('desc_')==0){
+		type = 'desc';
+	}
+	  
+	  //db.execute('update Demo4 set title="' + phrase + '" where id="' + id + '"');
+	  db.execute('update Demo4 set ' + type + '="' + phrase + '" where id="' + id + '"');
+
+
+	  // Update the UI.
+	  //elm.value = '';
+	  displayRecentPhrases(e);
+	}
+/****** end of google gears *******************************/
+
+
+	//YUE.on(saveBtn, 'click', handleSave,  editableArea, target);
+	function handleSave(e, param){
+		gearsHandleSubmit(param, e);
+	}
+
+	function handleCancel(e){
+		var target = YUE.getTarget(e),
+			form = YUD.getAncestorByClassName(target, 'formDiv');
+			editableEle =  YUD.getPreviousSiblingBy ( form, 
+					function(el){ return YUD.hasClass(el, 'editable'); }  )
+
+		if(form) form.style.display = 'none';
+		if(editableEle) editableEle.style.display = '';
+	}
+
+	function toogleEditableBgcolor(e){
+		if((typeof this.style.backgroundColor == 'undefined')||
+			(this.style.backgroundColor == ''))
+			this.style.backgroundColor = '#FFFFD3';
+		else
+			this.style.backgroundColor = '';
+		YUE.stopEvent(e);
+	}
+
+	YUE.on(editableElements, 'mouseover', toogleEditableBgcolor);
+	YUE.on(editableElements, 'mouseout', toogleEditableBgcolor);
+	YUE.on(editableElements, 'click', createEditForm);
+}()
+</script>
+</html>

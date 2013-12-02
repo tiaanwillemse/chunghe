@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<style>
+  .panel {
+    float: left;
+    height: 200px;
+    width:200px;
+    margin: 20px;
+    position: realtive;
+    color: #ddd;
+  }
+  .panel .front,
+  .panel .back {
+    float: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #ccc;
+    text-align: center;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+    height: inherit;
+    width: inherit;
+  }
+
+  .panel .front {
+    z-index: 900;
+    background: green;
+  }
+
+  .panel .back {
+    z-index: 800;
+    background: red;
+  }
+
+  /* - - - - - - - - - - - */
+
+  .panel {
+    -webkit-perspective: 600px;
+    -moz-perspective: 600px;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+  }
+
+  .panel .front,
+  .panel .back { 
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+  }
+
+
+  @-webkit-keyframes 'frontflip' {
+    0% {
+      -webkit-transform: rotateX(0);
+    }
+    100% {
+      -webkit-transform: rotateX(-360deg);
+    }
+  }
+
+  @-webkit-keyframes 'backflip' {
+    0% {
+      -webkit-transform: rotateX(180deg);
+    }
+    100% {
+      -webkit-transform: rotateX(-180deg);
+    }
+  }
+  .panel .front {
+    -webkit-animation: frontflip 4s linear 0 infinite; 
+  }
+  .panel .back {
+    -webkit-animation: backflip 4s linear 0 infinite; 
+  }
+
+
+</style>
+<body>
+
+
+  <p><input id="speed" type="range" min="0.01" max="5" step="0.01" value="4">-webkit-animation-duration: <input value="4" id="speed-val" type="text" style="width:30px;">s</p>
+  <p><input id="perspective" type="range" min="100" max="2000" step="10" value="600">-webkit-perspective: <input value="600" id="perspective-val" type="text" style="width:30px;">px;</p>
+  <div class="panel">
+    <div class="front">
+      <p>front</p>
+    </div>
+    <div class="back">
+      <p>back</p>
+    </div>
+  </div>
+  <script src="../../../library/jquery-1.7.2.js"></script>
+
+  <script>
+$(function () {
+
+  $speed = $('#speed');
+  $perspective = $('#perspective');
+
+  $speed.on('change', function() {
+    val = $(this).val();
+    $('#speed-val').val(val);
+    $('.panel .front, .panel .back').css({
+      '-webkit-animation-duration': val + 's'
+    });
+  });
+
+  $perspective.on('change', function () {
+    val = $(this).val();
+    $('#perspective-val').val(val);
+    $('.panel').css({
+      '-webkit-perspective': val + 'px'
+    })
+  });
+
+});
+
+  </script>
+
+</body>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#main{width:950px;}
+
+h2{font-family:arial}
+code{
+  border-width: 1px;
+  border-style: solid;
+  -moz-border-radius: 3px;
+  border-radius:3px;
+  border-color:#eee;
+  background:#eee;
+  padding:1px 2px;
+}
+canvas {background:#f7f7f7; border:1px solid #ccc;}
+.comment{color:#666}
+</style>
+</head>
+<body onload="draw()">
+<div id="main">
+<h2>Getting start</h2>
+<pre>
+&lt;canvas id="cv"&gt;&lt;/canvas&gt;
+var canvas = doucument.getElementById('cavnas');
+ctx = canvas.getContext('2d');
+</pre>
+<h2>Draw a Rectangle</h2>
+<pre>
+fillRect(x, y, width, height) // draws a filled rectangle
+strokeRect(x, y, width, height) // draws a rectangular outline
+clearRect(x, y, width, height) // clears the specified area and makes it fully transparent
+</pre>
+<div class="canvas-wrapper">
+<canvas id="rect1"></canvas>
+</div>
+<pre>
+ctx.fillStyle = '#F30';
+ctx.fillRect(10, 10, 50, 50);
+</pre>
+<div class="canvas-wrapper">
+<canvas id="rect2"></canvas>
+</div>
+<pre>
+ctx.fillRect(25, 25, 100, 100);
+ctx.clearRect(45, 45, 60, 60);
+ctx.strokeRect(50, 50, 50, 50);
+</pre>
+
+<h2>Drawing shapes</h2>
+<pre>
+ctx.beginPath();
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+</pre>
+<dl>
+  <dt>Unlike SVG, canvas only supports one primitive shape - rectangels. All other shapes must be created by combining one or more paths.</dt>
+  <dd>
+  1. <code>beginPath</code>: Internally, paths are stored as a list of sub-paths (lines, arcs, etc) which together form a shape. Every time this method is called, the list is reset and we can start drawing new shapes.
+  </dd>
+  <dd>
+  2. the second step is calling the methods that actually specify the paths to be drawn.
+  </dd>
+  <dd>
+  3. <code>closePath</code> (optional): This method tries to close the shape by drawing a straight line from the current point to the start. If the shape has already been closed or there's only one point in the list, this function does nothing.
+  4. The final step will be the <code>stroke</code> and/or <code>fill</code> method. Calling one of these will actually draw the shape to the canvas. <code>stroke</code> is used to draw an outline shape, while <code>fill</code> is used to paint a solid shape.
+  </dd>
+</dl>
+
+<h3>Draw a Circle</h3>
+<pre>
+arc(x, y, radius, startAngle, endAngle, anticlockwise)
+</pre>
+<div class="canvas-wrapper">
+<canvas id="circle"></canvas>
+</div>
+<pre>
+ctx.beginPath();
+ctx.arc(75, 75, 10, 0, Math.PI*2, true);
+ctx.closePath();
+ctx.fillStyle = '#36c';
+ctx.fill();
+</pre>
+
+<h3>moveTo</h3>
+<pre>
+moveTo(x, y)
+</pre>
+<div class="canvas-wrapper">
+<canvas id="moveto"></canvas>
+</div>
+<pre>
+ctx.beginPath();
+ctx.arc(75, 75, 50, 0, Math.PI*2, true); // outter circle
+ctx.moveTo(110, 75);
+ctx.arc(75, 75, 35, 0, Math.PI, false);
+ctx.moveTo(65, 65);
+ctx.arc(60, 65, 5, 0, Math.PI*2, true);
+ctx.moveTo(95, 65);
+ctx.arc(90, 65, 5, 0, Math.PI*2, true);
+ctx.stroke();
+</pre>
+<h3>lineTo</h3>
+<pre>
+lineTo(x, y)
+</pre>
+<p>For drawing straight lines we use the <code>lineTo</code> method</p>
+
+<h3>Bezier and quadratice curves</h3>
+<pre>
+quardracticCurveTo(cp1x, cp1y, x, y)
+bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+</pre>
+<!--<img src="https://developer.mozilla.org/@api/deki/files/76/=Canvas_curves.png">-->
+<p>A quadractice Bezier curve has a start and an end point and just one control point while a cubic Bezier curve uses two control points.</p>
+<h3>Rounded Rect</h3>
+<canvas id="roundrect"></canvas>
+<pre>
+function roundRect(ctx, x, y, width, height, radius) {
+  ctx.strokeStyle = 'orange';
+  ctx.beginPath();
+  ctx.moveTo(x,y+radius);  
+  ctx.lineTo(x,y+height-radius);  
+  <span class="comment">// quadraticCurveTo(cp1x, cp1y, x, y) </span>
+  <span class="comment">// cp1x and cp1y is the control point, the bottom-left corner of the rectangle</span>
+  ctx.quadraticCurveTo(x,y+height,x+radius,y+height);  
+  ctx.lineTo(x+width-radius,y+height);  
+  ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);  
+  ctx.lineTo(x+width,y+radius);  
+  ctx.quadraticCurveTo(x+width,y,x+width-radius,y);  
+  ctx.lineTo(x+radius,y);  
+  ctx.quadraticCurveTo(x,y,x,y+radius);  
+  ctx.stroke();
+}
+roundRect(ctx, 25, 25, 225, 100, 10);
+</pre>
+<h3>drawImage/toDataUrl</h3>
+<pre>
+context.drawImage(image, x, y)
+</pre>
+<p><code>image</code> is a reference to our image or canvas object, <code>x</code> and <code>y</code> from the coordinate on the target canvas where our image should be placed.</p>
+<h3>toDataUrl</h3>
+<pre>
+canvas.toDataUrl([type(optional)]);
+</pre>
+<p>The <code>toDataUrl()</code> method must, when called with no arguments, return a data: URI containing a representation of the image as a PNG file.</p>
+<p>The toDataURL(type) method (when called with one or more arguments) must return a data: URI containing a representation of the image in the format given by type. The possible values are MIME types with no parameters, for example <code>image/png</code>, <code>image/jpeg</code>, or even maybe <code>image/svg+xml</code> if the implementation actually keeps enough information to reliably render an SVG image from the canvas.</p>
+<div class="canvas-wrapper">
+<canvas id="drawimage"></canvas>
+</div>
+<pre>
+  var img = new Image();
+  img.src = '../../dr-evil-802.jpg';
+  img.onload = function () {
+	canvas.height = img.height;
+	canvas.width = img.width;
+  	ctx.drawImage(img, 0, 0);
+	console.log(canvas.toDataURL());
+  }
+</pre>
+
+<h3>getImageData/putImageData</h3>
+
+context.drawImage(img, 0, 0);
+<script>
+function draw() {
+  var canvas = document.getElementById('rect1');
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#36c';
+  ctx.fillRect(10, 10, 50, 50);
+
+  var canvas = document.getElementById('rect2');
+  var ctx = canvas.getContext('2d');
+  ctx.fillRect(25, 25, 100, 100);
+  ctx.clearRect(45, 45, 60, 60);
+  ctx.strokeRect(50, 50, 50, 50);
+
+  var canvas = document.getElementById('circle');
+  var ctx = canvas.getContext('2d');
+  ctx.beginPath();
+  ctx.arc(75, 75, 10, 0, Math.PI*2, true);
+  ctx.closePath();
+  ctx.fillStyle = '#36c';
+  ctx.fill();
+
+  var canvas = document.getElementById('moveto');
+  var ctx = canvas.getContext('2d');
+  ctx.beginPath();
+  ctx.arc(75, 75, 50, 0, Math.PI*2, true); // outter circle
+  ctx.moveTo(110, 75);
+  ctx.arc(75, 75, 35, 0, Math.PI, false);
+  ctx.moveTo(65, 65);
+  ctx.arc(60, 65, 5, 0, Math.PI*2, true);
+  ctx.moveTo(95, 65);
+  ctx.arc(90, 65, 5, 0, Math.PI*2, true);
+  ctx.stroke();
+
+  var canvas = document.getElementById('roundrect');
+  var ctx = canvas.getContext('2d');
+  function roundRect(ctx, x, y, width, height, radius) {
+    ctx.strokeStyle = 'orange';
+    ctx.beginPath();
+    ctx.moveTo(x,y+radius);  
+    ctx.lineTo(x,y+height-radius);  
+    // quadraticCurveTo(cp1x, cp1y, x, y) 
+    // cp1x and cp1y is the control point, the bottom-left corner of the rectangle
+    ctx.quadraticCurveTo(x,y+height,x+radius,y+height);  
+    ctx.lineTo(x+width-radius,y+height);  
+    ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);  
+    ctx.lineTo(x+width,y+radius);  
+    ctx.quadraticCurveTo(x+width,y,x+width-radius,y);  
+    ctx.lineTo(x+radius,y);  
+    ctx.quadraticCurveTo(x,y,x,y+radius);  
+    ctx.stroke();
+  }
+  roundRect(ctx, 25, 25, 225, 100, 10);
+
+
+  var canvas = document.getElementById('drawimage');
+  console.log(canvas);
+  var ctx = canvas.getContext('2d');
+  var img = new Image();
+  img.src = '../../dr-evil-802.jpg';
+  img.onload = function () {
+	canvas.height = img.height;
+	canvas.width = img.width;
+  	ctx.drawImage(img, 0, 0);
+	console.log(canvas.toDataURL());
+  }
+
+}
+</script>
+</div>
+</body>
+</html>

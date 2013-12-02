@@ -1,0 +1,24 @@
+
+<!doctype html>
+
+<style>
+  .to-be-changed {color: black;}
+  input[type=checkbox]:checked ~ p {color: red;}
+</style>
+
+<p>via: http://tympanus.net/codrops/2012/12/17/css-click-events/</p>
+<input type="checkbox">
+<p>I'm going to be red! It's gonna be legen... Wait for it...</p>
+<p>I'm going to be red! It's gonna be legen... Wait for it...</p>
+
+<hr style="margin:20px 0;">
+<style>
+  #second input[type=checkbox]{ display: none;}
+  label {border-radius: 5px; padding:15px; background:#999; color: #fff; cursor: pointer; margin-bottom:20px; display:inline-block;}
+</style>
+<div id="second">
+  <input type="checkbox" id="foo">
+  <label for="foo">click me!</label>
+  <p>I'm going to be red! It's gonna be legen... Wait for it...</p>
+  <p>I'm going to be red! It's gonna be legen... Wait for it...</p>
+</div>

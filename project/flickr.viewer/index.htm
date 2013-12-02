@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>flickr view</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset/reset-min.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/get/get-min.js" ></script> 
+<style type="text/css">
+body{padding:1em}
+.photo{border: 1px solid #ccc; margin: 10px}
+</style>
+<script type="text/javascript">
+var YUE = YAHOO.util.Event,
+    YUD = YAHOO.util.Dom,
+    YUG = YAHOO.util.Get,
+    $   = YAHOO.util.Dom.get;
+var apikey = 'f075c2b2f74fe6dbec7760d425c2f75a';
+
+function init(){
+    var userid = $('stxt').value;
+    YAHOO.util.Get.script("http://www.flickr.com/services/rest/?method=flickr.people.findByUsername&format=json&username=" + userid + "&api_key=" + apikey);
+}
+// get user's nsid
+YUE.on('go', 'click', init);
+
+function jsonFlickrApi(o){
+    console.dir(o);
+    if(o.stat === 'fail'){
+	alert(o.message);
+	return false;
+    }
+    if(o.user){
+	console.log(o.user.nsid);
+	//YAHOO.util.Get.script("http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=" + apikey +"&user_id=" + o.user.nsid);
+	YAHOO.util.Get.script("http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=" + apikey +"&user_id=" + o.user.nsid+"&extras=original_format");
+    }
+    if(o.photos){
+	// square image example: http://farm4.static.flickr.com/3211/2400310964_9450498311_s.jpg
+	if(o.photos.photo.length==0) alert('no public photo');
+	for(var i=0; i<o.photos.photo.length; i++){
+	    var item = o.photos.photo[i];
+	    //console.log(item);
+	    document.getElementById('photos').innerHTML += '<img class="photo" src="http://farm'+item.farm+'.static.flickr.com/'+item.server+'/'+item.id+'_'+item.secret+'_s.jpg">';
+	}
+    }
+}
+
+</script>
+</head>
+<body>
+    <form id="f"><input type="text" id="stxt"><input type="button" value="go" id="go"></form>
+    <div id="photos"></div>
+</body>
+</html>

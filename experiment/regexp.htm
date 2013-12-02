@@ -1,0 +1,28 @@
+<html>
+<input id="t" />
+<input type="button" id="b" value="highlight" />
+<ul id="u">
+	<li>JavaScript is a scripting language most often used for client-side web development. It was the originating dialect of the ECMAScript standard. It is a dynamic, weakly typed, prototype-based language with first-class functions.</li>
+	<li>Despite the name, JavaScript is essentially unrelated to the Java programming language, though both have the common C syntax, and JavaScript copies many Java names and naming conventions.</li>
+	<li>JavaScript was originally developed by Brendan Eich of Netscape under the name Mocha, later LiveScript, and finally renamed to JavaScript. The change of name from LiveScript to JavaScript roughly coincided with Netscape adding support for Java technology in its Netscape Navigator web browser.</li>
+	<li>As in most scripting languages, types are associated with values, not variables. For example, a variable x could be bound to a number, then later rebound to a string. JavaScript supports various ways to test the type of an object, including duck typing.</li>
+	<li>JavaScript uses prototypes instead of classes for defining object properties, including methods, and inheritance. It is possible to simulate many class-based features with prototypes in JavaScript.</li>
+</ul>
+<script>
+li = document.getElementById('u').getElementsByTagName('li');
+t = document.getElementById('t');
+b = document.getElementById('b');
+string.prototype.stripTags = function(){
+    return this.replace(/<\/?[^>]+>/gi, '');
+}
+b.onclick = function(){
+	var value = t.value;
+	var pattern = new RegExp(value, 'gi');
+	for(var i=0; i<li.length; i++){
+		// strip html tags.
+		li[i].innerHTML = li[i].innerHTML.stripTags;
+		li[i].innerHTML = li[i].innerHTML.replace(pattern, '<b>'+value+'</b>');
+	}
+}
+</script>
+</html>

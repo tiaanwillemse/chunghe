@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>IE7-/Win problems with absolute inside relative position</title>
+<style type="text/css">
+body {
+	color: #000;
+	background-color: #fff;
+}
+.wrapper {
+	border: 4px solid #f00;
+	margin-top: 40px;
+	padding: 10px 0;
+}
+.container {
+	position: relative;
+	background-color: #cfc;
+}
+.apbox {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	background-color: #ccf;
+}
+.wrapper p {
+	margin: 30px 0;
+}
+</style>
+<!--[if IE]><style>
+.layout, .wrapper {
+	_height: 0;
+	zoom: 1;
+}
+</style><![endif]-->
+</head>
+
+<body>
+
+<h1>IE7-/Win problems with absolute positioning inside a relative element</h1>
+<p>In the following test cases a container with green background has position:relative and includes a blue box with position:absolute, left:0, bottom:0.  All is wrapped in a box with hasLayout, red border, and 10px vertical padding.</p>
+<ol>
+<li>Case 1 is correctly rendered in IE7, but not in IE6-.</li>
+<li>In case 2 the text in the relative container is enclosed in a paragraph with vertical margins (30 px). Those correctly stick out of the container (margin collapsing), but also the absolute box moves down, which is not correct.
+<li>Case 3 is like case 2, but with hasLayout on the relative container. No more margin collapsing in IE7-/Win (wrong).</li>
+</ol>
+
+<div class="wrapper"><div class="container">
+	<strong>This is a green container with position:relative and NO hasLayout</strong><br>
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc elementum fermentum sem. Nullam nulla est, imperdiet quis, ultricies id, suscipit sit amet, odio. Morbi tincidunt dui eget justo. Morbi mi. Quisque tristique vulputate tortor. Ut tempor sapien a purus. Vivamus ultricies pellentesque purus. Mauris ultrices arcu quis nunc.
+	<div class="apbox"><strong>This is an absolutely positioned box at left:0; bottom:0</strong></div>
+</div></div>
+
+<div class="wrapper"><div class="container">
+	<p>
+	<strong>This is a green container with position:relative, NO hasLayout, and an internal p with vertical margins</strong><br>
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc elementum fermentum sem. Nullam nulla est, imperdiet quis, ultricies id, suscipit sit amet, odio. Morbi tincidunt dui eget justo. Morbi mi. Quisque tristique vulputate tortor. Ut tempor sapien a purus. Vivamus ultricies pellentesque purus. Mauris ultrices arcu quis nunc.
+	</p>
+	<div class="apbox"><strong>This is an absolutely positioned box at left:0; bottom:0</strong></div>
+</div></div>
+
+<div class="wrapper"><div class="container layout">
+	<p>
+	<strong>This is a green container with position:relative, hasLayout, and an internal p with vertical margins</strong><br>
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc elementum fermentum sem. Nullam nulla est, imperdiet quis, ultricies id, suscipit sit amet, odio. Morbi tincidunt dui eget justo. Morbi mi. Quisque tristique vulputate tortor. Ut tempor sapien a purus. Vivamus ultricies pellentesque purus. Mauris ultrices arcu quis nunc.
+	<div class="apbox"><strong>This is an absolutely positioned box at left:0; bottom:0</strong></div>
+</div></div>
+
+
+<!-- <p>Another test case with <a href="IEW_rel_abs0.html">wrong absolute positioning caused by padding</a></p> -->
+<p><a href="./">CSS tests home</a></p>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<style type="text/css">
+	body{ font-family:verdana; color:#666; font-size:.9em}
+	body, div{margin:0;  padding:0}
+	.item{float:left; width:120px; text-align:center; border: 1px solid #ccc; margin:1em; padding:.5em; cursor:pointer}
+	label{ width:90px;  height:90px; display:block; margin:0 auto; cursor:pointer}
+	.on{background-color:#cdeb8b; border: 1px solid #6dc646}
+	p{margin-left:1em}
+	#confirm{ padding:5px 10px; background-color:#6dc646; cursor:pointer; color:#fff; border:none; border:1px solid #ccc; letter-spacing:1px}
+</style>
+<body>
+<p>
+	<input id="confirm" type="button" value="確認">
+</p>
+<div class="item">
+	<label><img src="img/Cover_90_001.jpg"></label>
+	<span>artmoma</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_002.jpg"></label>
+	<span>gloria5629</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_003.jpg"></label>
+	<span>rr0623</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_004.jpg"></label>
+	<span>sunrise15016</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_005.jpg"></label>
+	<span>okyaa</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_006.jpg"></label>
+	<span>uelsmannlu</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_007.jpg"></label>
+	<span>minniemusic</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_008.jpg"></label>
+	<span>amort1</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_009.jpg"></label>
+	<span>kwanhuan</span>
+</div>
+<div class="item">
+	<label><img src="img/Cover_90_010.jpg"></label>
+	<span>wendy1721</span>
+</div>
+<script>
+	var YUD = YAHOO.util.Dom, YUE = YAHOO.util.Event;
+
+	var aItem = YUD.getElementsByClassName('item');
+	YUE.on(aItem, 'click', function(){
+		//alert(this.tagName);
+		if(this.className.indexOf('on') == -1)
+			this.className += ' on';
+		else
+			this.className = this.className.replace('on','');
+	})
+	YUE.on('confirm', 'click', function(){
+		var selItems = YUD.getElementsByClassName('on');
+		if(!selItems.length){
+			alert('nothing');
+		}
+		else{
+			window.close();
+			window.opener.render(selItems);
+		}
+	})
+</script>
+
+</body>

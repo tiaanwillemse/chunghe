@@ -1,0 +1,511 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="imagetoolbar" CONTENT="no"> 
+	<style>
+html{color:#fff;background:#000;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border:0;font-variant:normal;}sup {vertical-align:text-top;}sub {vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}legend{color:#000;}
+	</style>
+	<style>
+body{
+	font-family: arial,helvetica,clean,sans-serif;
+}
+#slidewrap{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -400px;
+	margin-left: -475px;
+	height: 800px;
+	width: 950px;
+	background-color: #000;
+	/*border: 1px solid #333;*/
+	border: 1px solid black;
+	
+}
+.slideElement{
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#slideinfo{
+	height: 40px;
+	width: 100%;
+	background:#333 none repeat scroll 0%;
+	overflow: hidden;
+	opacity:0;
+	filter:alpha(opacity=0);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+#slideinfo{
+	font-size: 0.8em;
+	color: #eee;
+	padding-bottom: 10px;
+}
+#slideinfo h2{
+	color: #f7f7f7;
+	margin: 7px 15px 1px;
+	font-weight: bold;
+}
+#slideinfo #desc{
+	margin-left: 15px;
+	display: inline; /* for IE double margin bug*/
+	float: left;
+}
+#slideinfo #operation{
+	float: right;
+}
+#slideinfo span, #slideinfo img{
+	vertical-align: middle;
+	padding: 2px 5px;
+	cursor: pointer;
+}
+#slideinfo #intervalControl{
+	margin-right: 10px;
+}
+#paused, #loading{
+	background-color: #333;
+	position: absolute;
+	top:10px;
+	font-family: Georgia, serif;
+	font-size: 1.5em;
+	letter-spacing: 1px;
+	color: #e7e7e7;
+	padding: 10px 20px;
+}
+#paused{right:10px;visibility: hidden;}
+#pauseBtn{visibility: hidden}
+#loading{left:10px;}
+#prev, #next{
+	background-color: #000;
+	color: #e7e7e7;
+	cursor: pointer;
+	font-size: 2em;
+	font-family: verdana, sans-serif;
+	position: absolute;
+	top: 40%;
+	width: 200px;
+	height: 200px;
+	border: 1px solid #000;
+	visibility:hidden;
+}
+#next{
+	right: 0;
+}
+#prev{
+	left: 0;
+}
+	</style>
+</head>
+<body>
+	<div id="paused">暫停</div>
+	<div id="loading">Loading (0%)</div>
+	<div id="slideinfo">
+		<h2 id="title">&nbsp;</h2>
+		<p id="desc">&nbsp;</p>
+		<p id="operation">
+			<span id="intervalControl">
+				<img  id="decInterval" src="slideshowminus_on.gif">
+				<span id="interval">&nbsp;</span>
+				<img id="incInterval" src="slideshowplus_on.gif">
+			</span>
+			<span id="pauseBtn">pause</span>
+			<span id="resumeBtn">resume</span>
+		</p>
+	</div>
+	<input type="button" title="上一張(熱鍵:x)" value="&laquo;" id="prev"></input>
+	<input type="button" title="下一張(熱鍵:c)" value="&raquo;" id="next"></input>
+	<div id="slidewrap">
+	</div>
+<script src="../../library/yui/yahoo-dom-event.js"></script>
+<script src="../../library/yui/animation-min.js"></script>
+
+<script>
+
+/*
+TODO: 
+Make sure that function show() won't play the div with empty img src
+extract language
+read animation examples: is there a stepping control? to from by
+tunning pause/resume UI
+rounded corner
+extract function: getNextVisiblePhoto, getPreviousVisiblePhoto based on _lastViewPhoto
+code review
+*/
+	
+/*@cc_on @*/  
+/*@if (@_win32) 
+try {
+  document.execCommand('BackgroundImageCache', false, true);
+} catch(e) {}
+/*@end @*/  
+	
+
+/* fake console.log for IE */
+if(typeof console == 'undefined'){
+	console = {};
+	console.log = function(){};
+}
+
+/* alias */
+YUD = YAHOO.util.Dom;
+YUE = YAHOO.util.Event;
+$ = YAHOO.util.Dom.get;
+
+slideshow = {
+	
+	config: {
+		'slideshowInterval': 4,
+		'intervalStepping' : 1,
+		'preloadLength': 5,
+		'transitionPeriod': 1
+	}
+
+	,img : [
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1114517902.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 1037-gallery',
+			desc: 'description for 1037-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/wallpaper_flower_in_morning_sun.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 1037-gallery',
+			desc: 'description for 1037-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/wii.png',
+			url: 'http://www.google.com',
+			title: 'title for 1037-gallery',
+			desc: 'description for 1037-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516898.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 1037-gallery',
+			desc: 'description for 1037-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516899.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 6784-gallery',
+			desc: 'description for 6784-gallery'
+		},
+
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516900.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 9172-gallery',
+			desc: 'description for 9172-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516901.jpg',
+			url: 'http://www.google.com',
+			title: 'title for 5486-gallery',
+			desc: 'description for 5486-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516902.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image1-gallery',
+			desc: 'description for image1-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516903.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image2-gallery',
+			desc: 'description for image2-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516904.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image3-gallery',
+			desc: 'description for image3-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516905.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image4-gallery',
+			desc: 'description for image4-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516906.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image5-gallery',
+			desc: 'description for image5-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516907.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image5-gallery',
+			desc: 'description for image5-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516908.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image5-gallery',
+			desc: 'description for image5-gallery'
+		},
+		{
+			src: 'http://chunghe.googlecode.com/svn/trunk/project/slideshow/images/1179516909.jpg',
+			url: 'http://www.google.com',
+			title: 'title for image5-gallery',
+			desc: 'description for image5-gallery'
+		}
+	]
+
+	,init: function(){
+		$('slideinfo').style.zIndex = slideshow.img.length + 100 + 1;
+		$('paused').style.zIndex = slideshow.img.length + 100 + 2;
+		$('loading').style.zIndex = slideshow.img.length + 100 + 3;
+		$('interval').innerHTML = slideshow.config.slideshowInterval + ' seconds';
+		slideshow._paused = false;
+		for(var i=0; i<Math.min(slideshow.img.length, slideshow.config.preloadLength); i++){
+			slideshow.preload(i);
+		}
+	}
+
+	// preload slideshow.img[index]
+	,preload: function(index){ 
+
+		if(index > slideshow.img.length-1) return;
+		if($('slide'+index)) return;
+		slideshow._lastProcessedIndex = index;
+
+		var div = document.createElement('div');
+		var img = new Image();
+		div.className = 'slideElement';
+		YUD.setStyle(div, 'opacity', 0);
+		div.id = 'slide' + index;
+		div.style.zIndex = slideshow.img.length - index + 100;
+		//we have to append div now to mantain the correct sequences.
+		$('slidewrap').appendChild(div);
+		img.src = slideshow.img[index].src;
+		
+		var handleOnload = function(e, index){
+			slideshow.img[index].loaded = true;
+			$('slide'+index).style.backgroundImage = 'url("' + slideshow.img[index].src + '")';
+					
+			slideshow._loadedCount = (typeof slideshow._loadedCount == 'undefined')? 1: slideshow._loadedCount+1;
+			if( slideshow._loadedCount <= slideshow.config.preloadLength ){
+				$('loading').innerHTML = 'Loading (' + slideshow._loadedCount*100/slideshow.config.preloadLength  + '%)';
+				if(slideshow._loadedCount == slideshow.config.preloadLength) $('loading').style.visibility = 'hidden';
+			}
+
+			if ((!slideshow._paused) && (!slideshow.checkTimer()) && 
+				(slideshow._loadedCount >= Math.min(slideshow.config.preloadLength, slideshow.img.length) )) {
+					// can't go even there's no timer, ex: in the navigation mode(a.k.a paused).
+					window.setTimeout('slideshow.setTimer(true)', 1000);
+
+			}
+		}
+		var handleOnerror = function(e, index){
+			slideshow.img[index].loaded = false;
+			$('slide'+index).parentNode.removeChild($('slide'+index));
+			// if failed, give another try
+			slideshow.preload(slideshow._lastProcessedIndex+1);
+		}
+		YUE.on(img, 'load', handleOnload, index); 
+		YUE.on(img, 'error', handleOnerror, index); 
+	}
+
+	,getNextLoadedSibling: function(node){
+		return YUD.getNextSiblingBy( node, function(el){
+			return (YUD.getStyle(el, 'backgroundImage') != 'none')
+		})
+	}
+	,getPreviousLoadedSibling: function(node){
+		return YUD.getPreviousSiblingBy(node, function(el){
+			return (YUD.getStyle(el, 'backgroundImage') != 'none')
+		})
+	}
+	,getLastLoadedChild: function(node){
+		return YUD.getLastChildBy(node, function(el){
+			return (YUD.getStyle(el, 'backgroundImage') != 'none')
+		})
+	}
+
+	,show: function(){
+		// this function will only execute once.
+		if(typeof arguments.callee.index == 'undefined'){  // find the first loaded img
+			arguments.callee.index=0; 
+			while( !slideshow.img[arguments.callee.index].loaded ){
+				arguments.callee.index++
+			}
+			slideshow._firstIndex = arguments.callee.index;
+			slideshow._lastShowImg = $('slide' + slideshow._firstIndex) ;
+			
+			// special case for the very first image to play
+			slideshow.clearTimer();
+			var firstElem = $('slide' + slideshow._firstIndex);
+			YUD.setStyle( firstElem, 'opacity', 0);
+			$('title').innerHTML = slideshow.img[firstElem.id.replace(/slide/,'')].title;
+			$('desc').innerHTML = slideshow.img[firstElem.id.replace(/slide/,'')].desc;
+			firstElem.style.visibility = 'visible';
+			var anim = new YAHOO.util.Anim( firstElem, {
+				opacity: {from: 0, to: 1}
+			}, slideshow.config.transitionPeriod);
+			anim.onComplete.subscribe(function(){$('pauseBtn').style.visibility = 'visible'})
+			anim.animate();
+			setTimeout( slideshow.setTimer,  slideshow.config.slideshowInterval );	
+			return;
+		}
+		
+		if(slideshow._lastProcessedIndex+1<slideshow.img.length){	
+			slideshow.preload( slideshow._lastProcessedIndex + 1  ); // consume one, preload one
+		}
+
+
+		outElem = slideshow._lastShowImg;
+	 	inElem = slideshow.getNextLoadedSibling(outElem);
+		if(!inElem) inElem = $('slide' + slideshow._firstIndex);
+
+		
+		$('title').innerHTML = slideshow.img[inElem.id.replace(/slide/,'')].title;
+		$('desc').innerHTML = slideshow.img[inElem.id.replace(/slide/,'')].desc;
+		slideshow._lastShowImg = inElem;
+		YUD.setStyle(outElem, 'opacity', 1);
+		YUD.setStyle(inElem, 'opacity', 0);
+
+		var fadeout = new YAHOO.util.Anim( outElem, { opacity: {from: 1, to: 0 } }, slideshow.config.transitionPeriod);
+		var fadein = new YAHOO.util.Anim( inElem, { opacity: {from: 0, to: 1} }, slideshow.config.transitionPeriod);
+		
+		fadeout.animate();
+		fadein.animate();
+
+	}
+
+	,checkTimer: function(){
+		// check if slideshow._timer is null
+		if(slideshow._timer){ 
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	,setTimer: function(asap){
+		if(!slideshow.checkTimer()){ // return if timer has already existed
+			if(asap) slideshow.show();		
+			slideshow._timer = setInterval( function(){ slideshow.show() }, slideshow.config.slideshowInterval*1000)
+		}
+	}
+
+	,clearTimer: function(){
+		clearInterval(slideshow._timer);
+		slideshow._timer = null;
+	}
+
+
+	,pause: function(e){
+		$('prev').style.visibility = 'visible';
+		$('next').style.visibility = 'visible';
+		$('paused').style.visibility = 'visible';
+		slideshow.clearTimer();
+		slideshow._paused = true;
+		if(e) YUE.stopEvent(e);
+	}
+
+	,resume: function(e){
+		// make sure there's no animation running
+		slideshow.clearTimer();
+
+		$('prev').style.visibility = 'hidden';
+		$('next').style.visibility = 'hidden';
+		$('paused').style.visibility = 'hidden';
+		setTimeout( slideshow.setTimer,  slideshow.config.slideshowInterval );	
+		slideshow._paused = false;
+		if(e) YUE.stopEvent(e);
+	}
+
+	,hideinfo: function(e){
+		YUD.setStyle('slideinfo', 'opacity', '0');
+		if(e) YUE.stopEvent(e);
+	}
+	,showinfo: function(e){
+		YUD.setStyle('slideinfo', 'opacity', '0.7');
+		if(e) YUE.stopEvent(e);
+	}
+
+	,navigation: function(e, direction){
+		//outElem = slideshow._lastShowImg;
+	 	//inElem = slideshow.getNextLoadedSibling(outElem);
+		//if(!inElem) inElem = $('slide' + slideshow._firstIndex);
+
+		if(!slideshow._lastShowImg ) return;
+		if(e) direction = YUE.getTarget(e).id;
+		YUD.setStyle(slideshow._lastShowImg, 'opacity', 0);
+
+		switch (direction){
+			case 'prev': 
+			
+				slideshow._lastShowImg = slideshow.getPreviousLoadedSibling(slideshow._lastShowImg);
+				if(!slideshow._lastShowImg) slideshow._lastShowImg = slideshow.getLastLoadedChild( $('slide' + slideshow._firstIndex).parentNode );
+				break;
+			case 'next': 
+				slideshow._lastShowImg = (slideshow.getNextLoadedSibling(slideshow._lastShowImg));
+				if(!slideshow._lastShowImg) slideshow._lastShowImg = $('slide' + slideshow._firstIndex);
+				if( slideshow._lastProcessedIndex+1<slideshow.img.length)
+					slideshow.preload( slideshow._lastProcessedIndex + 1  ); // consume one, preload one
+
+				break;
+		}
+
+		YUD.setStyle(slideshow._lastShowImg, 'opacity', 1);
+		if(slideshow._lastShowImg){
+			$('title').innerHTML = slideshow.img[slideshow._lastShowImg.id.replace(/slide/,'')].title;
+			$('desc').innerHTML = slideshow.img[slideshow._lastShowImg.id.replace(/slide/,'')].desc;
+		}
+	}
+
+	,handleKeypress: function(event){
+		var key = String.fromCharCode(event.charCode ? event.charCode : event.keyCode);
+		if(!slideshow._paused) return;
+
+		switch (key){
+			case 'c' : slideshow.navigation(null, 'next'); break;
+			case 'x' : slideshow.navigation(null, 'prev'); break;
+		}
+	}
+
+	,changeInterval: function(e){
+		var target = YUE.getTarget(e);
+		slideshow.clearTimer();
+
+		switch (target.id){
+			case 'incInterval': 
+				slideshow.config.slideshowInterval = slideshow.config.slideshowInterval + slideshow.config.intervalStepping;
+				break;
+			case 'decInterval': 
+				if(slideshow.config.slideshowInterval - slideshow.config.intervalStepping > slideshow.config.transitionPeriod)
+					slideshow.config.slideshowInterval = slideshow.config.slideshowInterval - slideshow.config.intervalStepping; 
+				break;
+		}
+
+	    $('interval').innerHTML = slideshow.config.slideshowInterval + ' seconds';	
+		if(!slideshow._paused) slideshow._timer = setInterval( function(){ slideshow.show() }, slideshow.config.slideshowInterval*1000)
+	
+	}
+}
+
+/* event listener */
+YUE.onDOMReady( slideshow.init );
+YUE.on( 'pauseBtn'      , 'click'    , slideshow.pause);
+YUE.on( 'resumeBtn'     , 'click'    , slideshow.resume); 
+YUE.on( 'slideinfo'  , 'mouseover', slideshow.showinfo);
+YUE.on( 'slideinfo'  , 'mouseout' , slideshow.hideinfo);
+YUE.on( ['prev', 'next'], 'click' , slideshow.navigation);
+YUE.on( ['incInterval', 'decInterval'], 'click' , slideshow.changeInterval);
+YUE.on(  document    , 'keypress' , slideshow.handleKeypress);
+
+</script>
+</body>
+</html>

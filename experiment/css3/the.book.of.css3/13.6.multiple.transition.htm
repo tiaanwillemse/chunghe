@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  .container{height:150px; width:183px; border: 1px solid #333; position: relative;}
+  .container .widget {height: 50px; width:50px;}
+
+  .container .widget{
+    background-color: black;
+    left: 10px;
+    position: absolute;
+    top: 90px; 
+    -webkit-transition: background-color 4s linear, left 4s ease-in-out, top 4s ease-in-out; 
+  }
+  .container:hover .widget{
+    background-color: silver;
+    left: 130px;
+    top: 10px;
+  }
+
+
+</style>
+<body>
+
+  <pre>
+  .container .widget{
+    background-color: black;
+    left: 10px;
+    position: absolute;
+    top: 90px; 
+    -webkit-transition: background-color 4s linear, left 4s ease-in-out, top 4s ease-in-out; 
+  }
+  .container:hover .widget{
+    background-color: silver;
+    left: 130px;
+    top: 10px;
+  }
+  </pre>
+  <div class="container">
+    <div class="widget"></div>
+  </div>
+
+</body>

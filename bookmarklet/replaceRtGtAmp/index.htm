@@ -1,0 +1,21 @@
+<textarea style="width: 30em; height:13em" id="textarea">
+	<code>
+		1 && 1 equals 1
+	</code>
+</textarea><br>
+<a href="javascript:
+	var ta = document.getElementById('textarea');
+	var scrollTop = ta.scrollTop;
+	var start = ta.selectionStart;
+	var end = ta.selectionEnd;
+	var s1 = ta.value.substring(0, start);
+	var s2 = ta.value.substring(start, end);
+	var s3 = ta.value.substring(end, ta.value.length);
+	
+	s2 = s2.replace(/&/g, '&amp;amp;').
+			replace(/</g, '&amp;lt;').
+			replace(/>/g, '&amp;gt;');
+	ta.value =s1+s2+s3;
+	ta.scrollTop = scrollTop;
+	
+void 0;">replaceGtRtAmp</a>

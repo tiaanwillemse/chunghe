@@ -1,0 +1,97 @@
+<!doctype html>
+
+<html>
+<head>
+<style>
+  .flex-container {
+    display: -webkit-flex;
+    display: flex;
+    background: silver;
+    width: 300px;
+    height: 240px;
+    align-items: flex-start;
+    align-items: flex-end;
+    align-items: baseline;
+    align-items: stretch;
+    align-items: center;
+  }
+  .flex-start {
+    align-items: flex-start;
+  }
+  .flex-end {
+    align-items: flex-end;
+  }
+  .baseline {
+    align-items: baseline;
+  }
+  .baseline .flex-item:nth-child(2n) {
+    font-size: 30px;
+  }
+  .stretch {
+    align-items: stretch;
+  }
+  .stretch .flex-item {
+    height: auto !important;
+  }
+  .center {
+    align-items: center;
+  }
+  .flex-item {
+    background: DeepSkyBlue;
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+  }
+  .flex-item:nth-child(2n) {
+    height: 200px;
+  }
+  .flex-item:nth-child(3n) {
+    height: 150px;
+  }
+</style>
+</head>
+<body>
+<p>align-items: flex-start | flex-end | baseline | stretch</p>
+<img src="http://bocoup.com/img/weblog/flex-align.svg">
+<p>
+the flex-start, flex-end, and center values are straightforward. stretch is also fairly simple: it causes Flex Items to be stretched out from the Cross Start to the Cross End. baseline causes Flex Items to be aligned along their baseline. Baselines are calculated based on the content of the Flex Items. 
+</p>
+
+<p>align-items: flex-start</p>
+<div class="flex-container flex-start">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>align-items: flex-end</p>
+<div class="flex-container flex-end">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>align-items: center</p>
+<div class="flex-container center">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>align-items: baseline</p>
+<div class="flex-container baseline">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+<p>align-items: stretch (height of flex-items must declared as `auto`)</p>
+<div class="flex-container stretch">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+  <div class="flex-item">item3</div>
+</div>
+
+
+</body>
+</html>

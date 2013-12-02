@@ -1,0 +1,38 @@
+<!doctype>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+	*{padding:0; margin:0}
+
+	body{font-size: 16px; font-family: "Lucida grande", sans-serif}
+
+	.md{padding:1em; width:500px; margin: 0 auto}
+	.md li{border-bottom:2px solid #ccc; line-height:36px; list-style-type: none}
+
+	/* 'coz input, .opt, .vote are all inline-elements, set display:inline-block is enough */
+	.md input, .md .opt, .md .vote{display:inline-block}
+
+	.md input {width:15px}
+	.md .opt{width:250px}
+	.md .vote{ width:100px}
+
+</style>
+
+<div class="md">
+	<ul>
+		<li>
+			<input type="radio" name="opt">
+			<span class="opt">tea</span>
+			<span class="vote">percentage</span>
+		</li>
+		<li>
+			<input type="radio" name="opt">
+			<span class="opt">coffee</span>
+			<span class="vote">percentage</span>
+		</li>
+		<li>
+			<input type="radio" name="opt">
+			<span class="opt">me</span>
+			<span class="vote">percentage</span>
+		</li>
+	</ul>
+</div>

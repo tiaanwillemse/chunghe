@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form playground</title>
+<style>
+*{padding:0; margin:0;}
+body{font-family:arial; line-height:1.6}
+fieldset{border:1px solid #ccc; padding:10px 20px; margin:20px; width:600px;}
+legend{font-size:16px; font-family:verdana; padding:5px 15px;}
+.radio, .checkbox{margin-right:5px;}
+</style>
+</head>
+<body>
+
+<fieldset>
+	<legend>textarea</legend>
+	<textarea>hello world</textarea>
+</fieldset>
+<fieldset>
+	<legend>checkbox</legend>
+	<form name="formCheckbox">
+		<input type="checkbox" name="extras" class="checkbox" value="burner">DVD Writer<br>
+		<p>
+			<input type="button" value="get value" name="btnGetValue">
+			<input type="button" value="get form(console.log)" name="btnGetForm">
+			<input type="button" value="check" name="btnCheck">
+			<input type="button" value="uncheck" name="btnUnCheck">
+		</p>
+	</form>
+	<script>
+	
+	var cb = document.formCheckbox.extras;
+
+	cb.onclick = function () {
+		console.log(this.name, this.value, this.checked);
+	}
+
+	document.formCheckbox.btnGetValue.onclick = function () {
+		//cb.checked = true;
+		alert('checked? ' + cb.checked);
+	}
+
+	document.formCheckbox.btnGetForm.onclick = function () {
+		console.log(this.form);
+	}
+	
+	// set checkbox value
+	document.formCheckbox.btnCheck.onclick = function () {
+		cb.checked = true;
+	}
+	document.formCheckbox.btnUnCheck.onclick = function () {
+		cb.checked = false;
+	}
+
+	</script>
+</fieldset>
+
+
+<fieldset>
+	<legend>radio</legend>
+	<form name="formRadio">
+		<input type="radio" name="browser" class="radio" value="ff" checked>Firefox<br>
+		<input type="radio" name="browser" class="radio" value="ie">Internet Explorer<br>
+		<input type="radio" name="browser" class="radio" value="other">Other</td></tr>
+		<p>
+			<input type="button" value="get value" name="btnGetValue">
+			<input type="button" value="get value(console.log)" name="btnGetForm">
+			<input type="button" value="check ff" name="btnCheckIe">
+			<input type="button" value="check ie" name="btnCheckFf">
+			<input type="button" value="check other" name="btnCheckOther">
+		</p>
+	</form>
+	<script>
+	// get Radio Value
+	var radios = document.formRadio.browser;
+
+	document.formRadio.btnGetForm.onclick = function () {
+		console.log(this.form);
+	}
+
+	function getCheckedRadio (r) {
+		for(var i=0, len=r.length; i<len; i++) {
+			if (radios[i].checked) {
+				return radios[i];
+			}
+		}
+		// if there's no radio checked, return first one as default
+		return radios[0];
+	}
+
+	function setCheckedRadio (r, value) {
+		for (var i=0, len=r.length; i<len; i++) {
+			if (radios[i].value === value) {
+				radios[i].checked = true;
+				break;
+			}
+		}
+	} 
+
+	// can't listen as radios.onclick = ...
+	document.formRadio.onclick = function (e) {
+		var e = e || window.event;
+		var target = e.target||e.srcElement;
+
+		if (target.name === 'browser') {
+			console.log(target.name, getCheckedRadio(radios).value, 'checked');
+		}
+	}
+
+	document.formRadio.btnGetValue.onclick = function () {
+		var r = getCheckedRadio(radios);
+		alert('name: ' + r.name  + ' value:' + r.value + ' checked');
+	}
+	document.formRadio.btnCheckIe.onclick = function () {
+		setCheckedRadio(radios, 'ff');
+	}
+	document.formRadio.btnCheckFf.onclick = function () {
+		setCheckedRadio(radios, 'ie');
+	}
+	document.formRadio.btnCheckOther.onclick = function () {
+		setCheckedRadio(radios, 'other');
+	}
+	</script>
+</fieldset>
+
+
+<fieldset>
+	<legend>select</legend>
+	<form name="formSelect">
+       <select name="color">
+         <option value="red">Red</option>
+		 <option value="green">Green</option>
+         <option value="blue">Blue</option>
+		 <option value="white">White</option>
+         <option value="violet">Violet</option>
+		 <option value="peach">Peach</option>
+       </select>
+		<p>
+			<input type="button" value="get value" name="btnGetValue">
+			<input type="button" value="get options(console.log)" name="btnGetOption">
+			<input type="button" value="get selectedIndex" name="btnGetIndex">
+			<input type="button" value="create new option" name="btnCreateNewOPtion">
+		</p>
+		<p>
+			<input type="button" value="check white" name="btnCheckWhite">
+			<input type="button" value="check green" name="btnCheckGreen">
+			<input type="button" value="check last option" name="btnCheckLastOption">
+		</p>
+		<p>
+			<input type="button" value="remove selected option" name="btnRemoveSelected">
+			<input type="button" value="remove all options" name="btnRemoveAll">
+		</p>
+	</form>
+	<script>
+
+		var select = document.formSelect.color;
+
+		select.onchange = function () {
+			console.log(this.name, this.value, 'checked');
+		}
+
+		document.formSelect.btnGetValue.onclick = function () {
+			alert(document.formSelect.color.value);
+		}
+
+		document.formSelect.btnGetOption.onclick = function () {
+			console.log(select.options);
+		}
+
+		document.formSelect.btnGetIndex.onclick = function () {
+			alert(select.selectedIndex);
+		}
+
+		document['formSelect']['btnCreateNewOPtion'].onclick = function () {
+			var val = prompt('enter the value:');
+			if (val) {
+				select[select.length] = new Option(val.toLowerCase(), val, false, true);
+			}
+		}
+
+		document.formSelect.btnCheckWhite.onclick = function () {
+			document.formSelect.color.value = 'white';
+		}
+
+		document.formSelect.btnCheckGreen.onclick = function () {
+			document.formSelect.color.value = 'green';
+		}
+
+		document.formSelect.btnCheckLastOption.onclick = function () {
+			var options = select.options;
+			options[options.length-1].selected = true;
+		}
+		
+		document.formSelect.btnRemoveSelected.onclick = function () {
+			select.options[select.selectedIndex] = null;
+		}
+		document.formSelect.btnRemoveAll.onclick = function () {
+			select.options.length = 0;
+		}
+	</script>
+</fieldset>
+
+<body>
+</html>

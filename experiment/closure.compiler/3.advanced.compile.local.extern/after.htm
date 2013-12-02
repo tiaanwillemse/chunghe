@@ -1,0 +1,18 @@
+<!doctype html>
+<div id="notes"></div>
+<script src="textops.js"></script>
+<script src="makeallnotes.compiled.js"></script>
+<h2>textops.js</h2>
+<pre>
+function textDiv(text) {
+  var divElement = document.createElement('div');
+  var textElement = document.createTextNode(text);
+  divElement.appendChild(textElement);
+  return divElement;
+}
+</pre>
+<h2>makeallnotes.compiled.js</h2>
+<p>if compile makeallnotes.js with externs declaration, this function defined in externs file won't be renamed.</p>
+<pre>
+for(var a=[{title:"Note 1",content:"Content of Note 1"},{title:"Note 2",content:"Content of Note 2"}],b=document.getElementById("notes"),c=0;c&lt;a.length;c++){var d=a[c].content,e=b,f=textDiv(a[c].title),g=textDiv(d),h=document.createElement("div");h.appendChild(f);h.appendChild(g);e.appendChild(h)};
+</pre>

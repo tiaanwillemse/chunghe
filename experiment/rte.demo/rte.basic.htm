@@ -1,0 +1,219 @@
+<!doctype>
+
+<html>
+<head>
+<style>
+.rte-toolbar span{margin-right: 5px}
+</style>
+</head>
+<body>
+<textarea id="post"></textarea>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script>
+(function() {
+
+	var Dom = YAHOO.util.Dom,
+		Event = YAHOO.util.Event;
+
+	var ua = YAHOO.env.ua,
+		isIE = ua.ie,
+		isGecko = ua.gecko;
+
+	YAHOO.RTE = function(elTextarea)  {
+		if ('string' == typeof elTextarea) {
+			elTextarea = Dom.get(elTextarea);
+		}
+		this.textarea = elTextarea;
+		this.toolbarItems = {};
+	}
+
+	YAHOO.RTE.htmlContent =  ['<!DOCTYPE HTML PUBLIC "-/','/W3C/','/DTD HTML 4.01/','/EN" "http:/','/www.w3.org/TR/html4/strict.dtd"><html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body>{CONTENT}</body></html>'].join('');
+
+	YAHOO.RTE.prototype = {
+		render: function () {
+			this._createIframeAndHideTextarea();
+			this._turnOnDesignMode();
+			this._buildToolbar();
+			this._bindToolbarEvents();
+
+			if (isIE) {
+				this._setToolbarItemUnselectable();
+			}
+		},
+
+		_createIframeAndHideTextarea: function () {
+			var iframe = document.createElement('iframe');
+			Dom.addClass(iframe, 'rte-iframe');
+			this.textarea.style.display = 'none';
+			Dom.insertBefore(iframe, this.textarea);
+			this.iframe = iframe;
+
+		},
+
+		_getWin: function () {
+			return this.iframe.contentWindow;
+		},
+
+		_getDoc: function () {
+			return this._getWin().document;
+		},
+
+		_execCommand: function (sCmd, sVal) {
+			this._getWin().focus();
+			this._getDoc().execCommand(sCmd, false, sVal);
+		
+		},
+
+		_turnOnDesignMode: function () {
+			try {
+				var _doc = this._getDoc();
+				_doc.open();
+				_doc.write(YAHOO.RTE.htmlContent.replace(/{CONTENT}/, this.textarea.value));
+				_doc.close();
+				_doc.designMode = 'on';
+			} catch (ex) {
+				
+			}
+		},
+
+		_buildToolbar: function () {
+			var toolbar = document.createElement('div');
+			Dom.addClass(toolbar, 'rte-toolbar');
+
+			var items = {
+			
+				'fontname': {
+					'Arial': 'Arial',
+					'Courier': 'Courier'
+				},
+				'fontsize': {
+					'最小': 1,
+					'較小': 2,
+					'小': 3,
+					'中': 4,
+					'大': 5,
+					'較大': 6,
+					'最大': 7
+				},
+				'bold': '加粗',
+				'italic': '斜体',
+				'underline': '底線',
+				'justifyleft': '居左',
+				'justifycenter': '居中',
+				'justifyright': '居右',
+				'createlink': '超連結',
+				'insertimage': '插圖'
+	
+			};
+
+			for (var item in items) {
+				var span = document.createElement('span');
+
+				if (item == 'fontname' || item == 'fontsize') {
+					var select = document.createElement('select');
+					Dom.addClass(select, item);
+
+					for (var i in items[item]) {
+						var option = new Option (i, items[item][i]);
+						select.options[select.options.length] = option;
+						/*
+						if (!isGecko) {
+							select.add(option);
+						} else {
+							select.appendChild(option);
+						}*/
+					}
+					span.appendChild(select);
+					this.toolbarItems[item] = select;
+				} else {
+					Dom.addClass(span, item);
+					span.innerHTML = items[item];
+					this.toolbarItems[item] = span;
+				}
+				toolbar.appendChild(span);
+			}
+
+			Dom.insertBefore(toolbar, this.iframe);
+			this.toolbar = toolbar;
+		},
+
+		_bindToolbarEvents: function () {
+
+			var self = this,
+				items = this.toolbarItems,
+				trim = YAHOO.lang.trim;
+				console.log(items);
+
+			Event.on([items['fontsize'], items['fontname']], 'change', function (e) {
+			
+				var cmd = this.className,
+					val = this.options[this.selectedIndex].value;
+				console.log(cmd, val);
+				self._execCommand(cmd, val)
+
+			});
+
+			Event.on(this.toolbar, 'click', function (e) {
+
+				var target = Event.getTarget(e),
+					cmd = target.className,
+					val = null,
+					isNeedVal = false;
+
+				if (target.tagName !== 'SPAN' && !cmd) {
+					return;
+				}
+				
+				switch (cmd) {
+					case 'createlink':
+					case 'insertimage':
+						isNeedVal = true;
+						val = prompt('請輸入網址', 'http://');
+						break;
+					case 'fontname':
+					case 'fontsize':
+						return;
+					default:
+						break;
+				}
+
+				if (isNeedVal && (!val || (trim(val) == 'http://'))) {
+					return;
+				}
+
+				this._execCommand(cmd, val);
+			
+			}, this, true)
+		
+		},
+
+		_setToolbarItemUnselectable: function () {
+			
+			function unsel(el) {
+				el.setAttribute('unselectable', 'on');
+			}
+
+			var nn,
+				els = this.toolbar.getElementsByTagName('*'),
+				len = els.length;
+
+			for (var i=0; i<len; ++i) {
+				nn = els[i].nodeName;
+
+				if (nn && nn.toLowerCase() != 'input') {
+					unsel(els[i]);
+				}
+			}
+
+
+			
+		}
+
+	}
+})();
+
+var editor = new YAHOO.RTE('post');
+editor.render();
+</script>
+</body>
+</html>

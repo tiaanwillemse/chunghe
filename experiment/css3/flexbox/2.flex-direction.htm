@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html>
+<head>
+<style>
+  .flex-container {
+    display: -webkit-flex;
+    display: flex;
+    background: silver;
+    width: 300px;
+    height: 240px;
+  }
+  .row {
+    flex-direction: row; /* default */
+  }
+  .row-reverse {
+    flex-direction: row-reverse;
+  }
+  .column {
+    flex-direction: column;
+  }
+  .column-reverse {
+    flex-direction: column-reverse;
+  }
+  .flex-item {
+    background: DeepSkyBlue;
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+  }
+</style>
+</head>
+<body>
+<p>flex-direction: row | row-reverse | column | column-reverse</p>
+<ul>
+  <li>row-reverse: The Main Start and Main End are swapped. If the writing-mode is left to right, Flex Items are now laid out right to left.
+  <li>column: The Main Axis and the Cross Axis are swapped. If the writing system is horizontal, the Flex Items are now laid out vertically.
+  <li>column-reverse: Same as column, but reversed.
+</ul>
+
+<p>flex-direction: row</p>
+<div class="flex-container row">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+</div>
+
+<p>flex-direction: row-reverse</p>
+<div class="flex-container row-reverse">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+</div>
+
+<p>flex-direction: column</p>
+<div class="flex-container column">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+</div>
+
+<p>flex-direction: column-reverse</p>
+<div class="flex-container column-reverse">
+  <div class="flex-item">item1</div>
+  <div class="flex-item">item2</div>
+</div>
+
+
+</body>
+</html>

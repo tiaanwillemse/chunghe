@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+#friend-picker{font-size:11px; font-family:arial, sans-serif; color:#666; width:405px; position:relative; background:#fff;  border:1px solid #DFE8F6}
+#friend-picker-container{border:5px solid #F8FBFC; *zoom:1}
+#friend-picker a{color:#1A84B7; text-decoration:none}
+#friend-picker img{border:none}
+#friend-picker-bd{padding-left:7px}
+#friend-picker-bd:after, #friend-picker-pagination:after{content:"."; display:block; height:0; clear:both; visibility:hidden}
+.friend-picker-cell{border:2px solid #fff; margin: 0 3px 7px 0; float:left; width:70px;height:80px;  text-align:center; overflow:hidden; cursor:pointer}
+#friend-picker #friend-picker-bd .friend-picker-cell:hover{border:2px solid #B0CCEF; -moz-border-radius:5px; border-radisu:5px}
+*html #friend-picker #friend-picker-bd .on{border:2px solid #67A7E3} 
+.friend-picker-cell p{margin:5px auto 0; width:60px; height:60px}
+label{ cursor:pointer; display: table-cell; text-align:center; vertical-align: middle; height: 60px; width: 60px; }
+label *{ vertical-align: middle; }
+/*\*//*/
+label { display: block; }
+label span { display: inline-block; height: 100%; width: 1px; }
+/**/
+label span { +display: inline-block; +height: 100%; }
+#friend-picker #friend-picker-pagination {text-align:center; margin:7px 0pt 7px -9px; clear:both; font-size:13px}
+#friend-picker #friend-picker-pagination a{ background-color:#FFFFFF; border:1px solid #CCCCCC; margin-right:4px; outline-color:invert; outline-style:none; outline-width:medium; padding:2px 7px; text-align:center; }
+#friend-picker #friend-picker-pagination a.more{border:none}
+#friend-picker #friend-picker-pagination a.on{ background-color:#fff; border-color:#fff}
+#friend-picker #friend-picker-closebtn{ text-decoration:none}
+#loading{position:absolute; top:4px; right:25px; display:none}
+#friend-picker #friend-picker-hd{ text-align:right; background-color:#F8FBFC; height:18px}
+#friend-picker #friend-picker-hd #friend-picker-selectbox{position:relative; float:left; background-color:#fff; text-align:left; padding: 3px 20px 0 10px; color:#333; cursor:pointer}
+#friend-picker #friend-picker-hd .on{background-color:#666 !important; color:#efefef !important}
+#friend-picker #friend-picker-hd .on .toggle{border-color:#efefef #666 #666 #666 !important}
+#friend-picker #friend-picker-hd .toggle{height:0; width:0; line-height:0; border-width:4px; border-style:solid; border-color:#b0b0b0 #fff #fff #fff; position:absolute; top:7px; right:4px}
+#friend-picker #friend-picker-hd ul#ddmenu{padding:0 10px 0 10px; margin:0; position:absolute; top:18px; left:0; background-color:#666; border:1px solid #ccc; width:200px; overflow:hidden; color:#efefef; visibility:hidden}
+#friend-picker #friend-picker-hd ul#ddmenu li{list-style-type:none; white-space:nowrap; padding:1px 0}
+#friend-picker #friend-picker-hd ul#ddmenu li.hover{background-color:#fff; margin:0 -10px; color:#666; text-indent:9px; display:block}
+
+</style>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yahoo-dom-event/yahoo-dom-event.js&2.5.2/build/get/get-min.js"></script>
+<script>
+var friendgroup = {'-1': '- 列出所有類別 -', '0':'預設類別', '1': '國中同學~都還滿有趣的其實...XD', '2':'高中同學~大家都變很正耶!', '3':'總歸來說，這應該是親戚家人的分類!', '4':'總歸來說，這應該是親戚家人的分類!', '5':'同事~大家都很照顧我!!'}
+</script>
+</head>
+<body>
+	<div id="friend-picker">		
+		<div id="friend-picker-container">
+			<div id="friend-picker-hd">
+				<div id="friend-picker-selectbox">
+					<div>列出所有類別</div>
+					<div class="togglewrap"><div class="toggle"></div></div>
+					<ul id="ddmenu">
+						<li alt="0">預設類別</li><li alt="1">國中同學~都還滿有趣的其實...XD</li><li alt="2">高中同學~大家都變很正耶!</li><li alt="3">總歸來說，這應該是親戚家人的分類!</li><li alt="5">同事~大家都很照顧我!!</li>
+					</ul>
+				</div>
+				<div id="loading">Loading ...</div>
+				<a id="friend-picker-closebtn" href="###"><img height="15" width="15" src="img/icon_close.gif"></a>
+			</div>
+			<div id="friend-picker-pagination"></div>
+			<div id="friend-picker-bd"></div>
+		</div><!-- end of div#friend-picker-container -->
+	</div><!-- end of div#friend-picker-->
+<script type="text/javascript">
+if( typeof friendPicker == 'undefined') 
+friendPicker = {
+	config : {
+		perpage: 10
+	},
+	
+	genbd: function(oUser, total){
+		var innerhtml = '';
+		if(oUser===null) innerhtml = '你還沒有朋友喔!';
+		for(var i in oUser){
+			innerhtml += 
+				 ['<div class="friend-picker-cell">', '<p>', '<label>', '<span>', '</span>', '<img src="', oUser[i].coversrc ,'">' ,'</label>', '<span>', oUser[i].id, '</span>', '</p>', '</div>'].join(' ');
+
+		}
+		document.getElementById('friend-picker-bd').innerHTML = innerhtml;
+	},
+
+	genft: function(total, cIndex){
+		var innerhtml = '';
+
+		// no need for "...", just display all paginations
+		if(total/this.config.perpage<=12){
+			for(var i=0; i<Math.ceil(total/this.config.perpage); i++){
+				if(cIndex==i+1) innerhtml += '<a class="on">' + (i+1) + '</a>';
+				else innerhtml += '<a href="###">'+(i+1)+ '</a>';
+			}
+		}
+		// total=500, 10 perpage, 50 pages, cIndex=1
+		// '1' 2 3 4 5 6 7 8 9 10 ... 49 50
+		// total=500, 10 perpage, 50 pages, cIndex=7
+		// 1 2 3 4 5 6 '7' 8 9 10 ... 49 50
+		else if(cIndex<=7){
+			for(var i=0; i<Math.max(cIndex+3, 10); i++){
+				if(cIndex==i+1) innerhtml += '<a class="on">'+(i+1)+'</a>';
+				else innerhtml += '<a href="###">' + (i+1) + '</a>';
+			}
+			innerhtml += '<a class="more">...</a>';
+			innerhtml += '<a href="###">' + Math.ceil(total/this.config.perpage-1)+ '</a>';
+			innerhtml += '<a href="###">' + Math.ceil(total/this.config.perpage) + '</a>';
+		}
+		// total=500, 10 perpage, 50 pages, cIndex=45 
+		// 1 2 ... 43 44 '45' 46 47 48 49 50
+		// total=500, 10 perpage, 50 pages, cIndex=50
+		// 1 2 ... 43 44 45 46 47 48 49 '50'
+		else if(cIndex>=total/this.config.perpage-5){
+			innerhtml += '<a href="###">1</a>'; 
+			innerhtml += '<a href="###">2</a>'; 
+			innerhtml += '<a class="more">...</a>';
+			
+			for(var i=Math.min(cIndex-3, Math.ceil(total/this.config.perpage)-8); i<total/this.config.perpage; i++){
+				if(i+1==cIndex) innerhtml += '<a class="on">' + (i+1) + '</a>';
+				else innerhtml += '<a href="###">' + (i+1) + '</a>';
+			}
+		}
+		// total=500, 10 perpage, 50 pages, cIndex=8
+		// 1 2 ... 6 7 8 9 10 ... 49 50
+		// total=500, 10 perpage, 50 pages, cIndex=44
+		// 1 2 ... 42 43 44 45 46 ... 49 50
+		else{
+			innerhtml += '<a href="###">1</a>'; 
+			innerhtml += '<a href="###">2</a>'; 
+			innerhtml += '<a class="more">...</a>';
+			for(var i=cIndex-3; i<cIndex+2; i++){
+				if(cIndex==i+1) innerhtml += '<a class="on">' + (i+1) + '</a>';
+				else innerhtml += '<a href="###">' +(i+1)+ '</a>';
+			}
+			innerhtml += '<a class="more">...</a>';
+			innerhtml += '<a href="###">' + Math.ceil(total/this.config.perpage-1)+ '</a>';
+			innerhtml += '<a href="###">' + Math.ceil(total/this.config.perpage) + '</a>';
+		}
+
+		//innerhtml += '</p>';
+		document.getElementById('friend-picker-pagination').innerHTML = innerhtml;
+		
+	},
+	disableSelection: function(el){
+		el.onselectstart = function() {
+			return false;
+		};
+		el.unselectable = "on";
+		el.style.MozUserSelect = "none";
+	},
+
+	showPage: function(oUser, total, cIndex){
+		this.genbd(oUser, total);
+		this.genft(total, cIndex);
+		document.getElementById('loading').style.display = 'none';
+
+		// disable selection for selectbox and ddmenu
+		this.disableSelection(document.getElementById('friend-picker-selectbox').getElementsByTagName('div')[0]);
+		YAHOO.util.Dom.batch( document.getElementById('friend-picker-selectbox').getElementsByTagName('li'), this.disableSelection );
+
+		var cells = document.getElementById('friend-picker-bd').getElementsByTagName('div');
+		for(var i=0; i<cells.length; i++){
+			
+			//cells[i].onclick = function(){console.log(console.log(this.getElementsByTagName('span')[0]))}
+			cells[i].onclick = function(){
+				//console.dir(this.getElementsByTagName('span')[1].innerHTML);
+				console.log(YAHOO.lang.trim(this.getElementsByTagName('span')[1].innerHTML));
+			}
+
+			if(document.attachEvent){
+				cells[i].attachEvent('onmouseenter', function(){ YAHOO.util.Dom.addClass(window.event.srcElement, 'on')});
+				cells[i].attachEvent('onmouseleave', function(){ YAHOO.util.Dom.removeClass(window.event.srcElement, 'on')});
+			}
+		}
+	}
+};
+
+
+
+/*
+friendPicker.showPage(
+	[
+		{id:'v80715v',coversrc:'../../images/cover/Cover_60_4.jpg'},
+		{id:'justohjiy072',coversrc:'../../images/cover/Cover_60_3.jpg'},
+		{id:'rv1001',coversrc:'../../images/cover/Cover_60_2.jpg'},
+		{id:'badday',coversrc:'../../images/cover/Cover_60_1.jpg'},
+		{id:'almee724',coversrc:'http://cover.wretch.cc/906/a/almee724/files/Cover_60.jpg?57'},
+		{id:'georgelee',coversrc:'http://cover.wretch.cc/520/g/georgelee/files/Cover_60.jpg?1'},
+		{id:'mib7256364',coversrc:'http://cover.wretch.cc/422/m/mib7256364/files/Cover_60.jpg?13'},
+		{id:'jj97ekv7',coversrc:'http://cover.wretch.cc/419/j/jj97ekv7/files/Cover_60.jpg?33'},
+		{id:'inspire1129',coversrc:'http://cover.wretch.cc/517/i/inspire1129/files/Cover_60.jpg?16'},
+		{id:'bobo0717tw',coversrc:'http://cover.wretch.cc/821/b/bobo0717tw/files/Cover_60.jpg?10'},
+	], 500, 44)*/
+	</script>
+
+<script>
+var reqUrl = 'http://ajax.wretch.cc/friend/get_friends.php?p=1&callback=friendPicker.showPage&id=loveegg';
+YAHOO.util.Get.script(reqUrl);
+
+YAHOO.util.Event.on('friend-picker', 'click', function(e){
+	var target = YAHOO.util.Event.getTarget(e);
+	var ddmenu = document.getElementById('ddmenu');
+	var group = document.getElementById('friend-picker-selectbox').getElementsByTagName('div')[0].getAttribute('alt');
+
+	// click on the pagination
+	if( (target.getAttribute('href')) &&	
+		(target.parentNode) && 
+		(target.parentNode.id) && 
+		(target.parentNode.id=='friend-picker-pagination')){
+			document.getElementById('loading').style.display = 'block';
+			if(group)
+				YAHOO.util.Get.script('http://ajax.wretch.cc/friend/get_friends.php?p=' + target.innerHTML + '&callback=friendPicker.showPage&id=loveegg&group=' + group);
+			else
+				YAHOO.util.Get.script('http://ajax.wretch.cc/friend/get_friends.php?p=' + target.innerHTML + '&callback=friendPicker.showPage&id=loveegg');
+	}
+
+	// click on the selectbox
+	if(( target.parentNode.id == 'friend-picker-selectbox' ) || (target.className == 'togglewrap') || (target.className == 'toggle') || (target.id == 'friend-picker-selectbox')){
+		if( ddmenu.style.visibility == 'visible'){
+			ddmenu.style.visibility = 'hidden';
+			YAHOO.util.Dom.removeClass('friend-picker-selectbox', 'on');
+		}
+		else{
+			ddmenu.style.visibility = 'visible';
+			YAHOO.util.Dom.addClass('friend-picker-selectbox', 'on');
+		}		
+	}
+
+	// click on the ddmenu
+	if( target.parentNode.id == 'ddmenu' ){
+		YAHOO.util.Get.script('http://ajax.wretch.cc/friend/get_friends.php?p=1&callback=friendPicker.showPage&id=loveegg&group='+target.getAttribute('alt'));
+		document.getElementById('friend-picker-selectbox').getElementsByTagName('div')[0].innerHTML = target.innerHTML;
+		document.getElementById('friend-picker-selectbox').getElementsByTagName('div')[0].setAttribute('alt', target.getAttribute('alt'));
+		ddmenu.style.visibility = 'hidden';
+		YAHOO.util.Dom.removeClass('friend-picker-selectbox', 'on');
+	}
+})
+
+
+YAHOO.util.Event.on('friend-picker', 'mouseover', function(e){
+	var target = YAHOO.util.Event.getTarget(e);
+
+	if(target.parentNode.id == 'ddmenu'){
+		YAHOO.util.Dom.addClass(target, 'hover');
+	}
+
+})
+
+
+
+
+YAHOO.util.Event.on('friend-picker', 'mouseout', function(e){
+	var target = YAHOO.util.Event.getTarget(e);
+
+	if(target.parentNode.id == 'ddmenu'){
+		YAHOO.util.Dom.removeClass(target, 'hover');
+	}
+})
+</script>
+
+</body>
+</html>

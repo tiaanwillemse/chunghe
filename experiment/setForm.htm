@@ -1,0 +1,139 @@
+﻿
+<form id="f">
+	<input type="radio" name="sex" id="genderm" value="1" /><label for="genderm" class="reset">男</label>
+	<input type="radio" name="sex" id="genderf" value="2" /><label for="genderf" class="reset">女</label>
+	<input type="radio" name="sex" id="genderu" value="0" /><label for="genderu" class="reset">保留</label>
+	<input type="hidden" name="hiddenInput" value="you can't see me">
+	<select name="zodiac" id="zodiac">
+	  <option value=0>請選擇</option>
+	  <option>白羊座</option>
+	  <option>金牛座</option>
+	  <option>雙子座</option>
+	  <option>巨蟹座</option>
+	  <option>獅子座</option>
+	  <option>處女座</option>
+	  <option>天秤座</option>
+	  <option>天蠍座</option>
+	  <option>射手座</option>
+	  <option>摩羯座</option>
+	  <option>水瓶座</option>
+	  <option>雙魚座</option>
+	</select>
+	<select name="career" id="career">
+	  <option>請選擇</option>
+	  <option>農漁牧</option>
+	  <option>政府機關</option>
+	  <option>軍警</option>
+	  <option>教育/研究</option>
+	  <option>經商</option>
+	  <option>建築/營造</option>
+	  <option>製造/供應商</option>
+	  <option>金融/保險</option>
+	  <option>房地產</option>
+	  <option>資訊</option>
+	  <option>服務</option>
+	  <option>學生</option>
+	  <option>家管</option>
+	  <option>醫療</option>
+	  <option>法律相關行業</option>
+	  <option>流通/零售</option>
+	  <option>交通/運輸/旅遊</option>
+	  <option>娛樂/出版</option>
+	  <option>傳播/行銷</option>
+	  <option>藝術</option>
+	  <option>其他</option>
+	  <option>待業中</option>
+	  <option>不拘</option>
+	</select>
+	
+	<input type="text" name="height" value="102">
+	<input type="text" name="weight" value="22">
+	<input type="button" id="submit" value="submit" name="submit">
+</form>
+<script>
+
+
+function setForm(formId){		
+	var oForm;
+	if(typeof formId == 'string'){
+		// Determine if the argument is a form id or a form name.
+		// Note form name usage is deprecated, but supported
+		// here for backward compatibility.
+		oForm = (document.getElementById(formId) || document.forms[formId]);
+	}
+	else if(typeof formId == 'object'){
+		// Treat argument as an HTML form object.
+		oForm = formId;
+	}
+	else{
+		return;
+	}
+	var sFormData = '';
+	for (var i=0; i<oForm.elements.length; i++){
+		oElement = oForm.elements[i];
+		oDisabled = oElement.disabled;
+		oName = oElement.name;
+		oValue = oElement.value;
+
+		// Do not submit fields that are disabled or
+		// do not have a name attribute value.
+		if(!oDisabled && oName)
+		{
+			switch(oElement.type)
+			{
+				case 'select-one':
+				case 'select-multiple':
+					for(var j=0; j<oElement.options.length; j++){
+						if(oElement.options[j].selected){
+							if(window.ActiveXObject){
+								sFormData += encodeURIComponent(oName) + '=' + encodeURIComponent(oElement.options[j].attributes['value'].specified?oElement.options[j].value:oElement.options[j].text) + '&';
+							}
+							else{
+								sFormData += encodeURIComponent(oName) + '=' + encodeURIComponent(oElement.options[j].hasAttribute('value')?oElement.options[j].value:oElement.options[j].text) + '&';
+							}
+						}
+					}
+					break;
+				case 'radio':
+				case 'checkbox':
+					if(oElement.checked){
+						sFormData += encodeURIComponent(oName) + '=' + encodeURIComponent(oValue) + '&';
+					}
+					break;
+				case 'file':
+					// stub case as XMLHttpRequest will only send the file path as a string.
+				case undefined:
+					// stub case for fieldset element which returns undefined.
+				case 'reset':
+					// stub case for input type reset button.
+				case 'button':
+					// stub case for input type button elements.
+					break;
+				case 'submit':
+					if(hasSubmit === false){
+						if(this._hasSubmitListener && this._submitElementValue){
+							sFormData += this._submitElementValue + '&';
+						}
+						else{
+							sFormData += encodeURIComponent(oName) + '=' + encodeURIComponent(oValue) + '&';
+						}
+
+						hasSubmit = true;
+					}
+					break;
+				default:
+					sFormData += encodeURIComponent(oName) + '=' + encodeURIComponent(oValue) + '&';
+			}
+		}
+	}
+	
+	sFormData = sFormData.substr(0, sFormData.length - 1);
+	return sFormData;
+
+}
+document.getElementById('submit').onclick = function(){
+var str  = setForm('f');
+	alert(str);
+}
+
+</script>

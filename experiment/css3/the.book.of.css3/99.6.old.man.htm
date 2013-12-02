@@ -1,0 +1,41 @@
+
+
+<style>
+  .char{
+    position: relative;
+    width: 32px;
+    height: 48px;
+    background: url(old-man.png) no-repeat;
+    animation: walk-down 0.65s infinite;
+    -webkit-animation: walk-up .65s infinite;
+  }
+
+  @-webkit-keyframes walk-up {
+    0%, 32.99% {background-position: -64px -144px;}
+    33%, 65.9% {background-position: -32px -144px;}
+    66%, 100% {background-position: 0 -144px;}
+  }
+
+  @-webkit-keyframes walk-down {
+    0%, 32.99% { background-position: -64px 0; }
+    33%, 65.99% { background-position: -32px 0; }
+    66%, 100% { background-position: 0 0; }
+  }
+
+  @-webkit-keyframes walk-left {
+    0%, 32.99% { background-position: -64px -48px; }
+    33%, 65.99% { background-position: -32px -48px; }
+    66%, 100% { background-position: 0 -48px; }
+  }
+
+  @-webkit-keyframes walk-right {
+    0%, 32.99% { background-position: -64px -96px; }
+    33%, 65.99% { background-position: -32px -96px; }
+    66%, 100% { background-position: 0 -96px; }
+  }
+</style>
+
+<p>via: <a href="http://dabblet.com/gist/2076449">http://dabblet.com/gist/2076449</a></p>
+
+
+<div class="char"></div>

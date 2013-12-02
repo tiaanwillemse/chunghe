@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css">
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css">
+	<style>
+	#doc{width: 850px; text-align:center; margin:100px auto;}
+	#doc .imgw{height:350px; width:350px; background:#eee; border:2px solid #aaa; margin:0 auto;}
+	#doc .tool a{height:31px; width:31px; display:inline-block; margin:10px 5px; padding:5px;}
+	#rotatec{background:url(assets/rotatec.png) no-repeat center center; border:2px outset #ccc}
+	#rotatecc{background:url(assets/rotatecc.png) no-repeat center center; border: 2px outset #ccc }
+
+	.r90deg{
+		-moz-transform:rotate(90deg); 
+		-o-transform:rotate(90deg); 
+		-webkit-transform:rotate(90deg); 
+		filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+	}
+	.r180deg{
+		-moz-transform:rotate(180deg); 
+		-o-transform:rotate(180deg); 
+		-webkit-transform:rotate(180deg); 
+		filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+	}
+	.r270deg{
+		-moz-transform:rotate(270deg); 
+		-o-transform:rotate(270deg); 
+		-webkit-transform:rotate(270deg); 
+		filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+	</style>
+</head>
+<body>
+	<h2>Image Transform by CSS</h2>
+	<p><b>Cons: unable to support Opera and Firefox 3.0</b></p>
+	<pre>
+-moz-transform: rotate(270deg);-webkit-transform: rotate(270deg); 
+-o-transform: rotate(270deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+-ms-filter:"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+	</pre>
+	<ul>
+		<li><a href="https://developer.mozilla.org/en/CSS/-moz-transform">https://developer.mozilla.org/en/CSS/-moz-transform</a></li>
+	</ul>
+	<div id="doc">
+		<div class="imgw r90deg" style="background: url(assets/yoda.png) center center no-repeat;"></div>
+		<div class="tool">
+			<a href="###" id="rotatec"></a>
+			<a href="###" id="rotatecc"></a>
+		</div>
+	</div>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.2r1/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<script>
+var Dom = YAHOO.util.Dom,
+	Event = YAHOO.util.Event,
+	isString = YAHOO.lang.isString;
+
+var c = Dom.get('rotatec'),
+	cc = Dom.get('rotatecc'),
+	imgw = Dom.getElementsByClassName('imgw', null, 'doc')[0];
+
+/*
+ * el : target element,
+ * d: rotation degree, [0, 90, 180, 270]
+ * (optional) c: clockwise or counter clockwise
+ * */
+var rotate = function (el, d, c) {
+
+	if (isString(d)) {
+		d = parseInt(d, 10);
+	}
+
+	if (!el || isNaN(d)) {
+		return;
+	}
+
+	var degree = parseInt(el.getAttribute('degree') || '0', 10);   //current degree
+	
+	var next = (typeof c == 'string' && c == 'cc') ? 
+			(degree+360-90)%360 : (degree+360+90)%360;
+
+	el.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (next/90) +')';
+	el.setAttribute('degree', next);
+};
+
+Event.on(c, 'click', function(e) {
+	Event.stopEvent(e);
+	rotate(imgw, 90, 'c');
+});
+
+Event.on(cc, 'click', function(e) {
+	Event.stopEvent(e);
+	rotate(imgw, 90, 'cc');
+});
+</script>
+</body>
+</html>

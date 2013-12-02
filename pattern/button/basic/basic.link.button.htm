@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset/reset-min.css">
+<style type="text/css">
+
+  .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    }
+
+.clearfix {display: inline-block;}  /* for IE/Mac */
+
+</style>
+
+<style>
+body{padding: 5em 1em; font-size:13px; font-family:arial}
+
+div{margin-bottom:1em}
+/*
+#b1 input{ border:1px solid #ccc; background:#36c; color:#fff; cursor:pointer}
+#b2 input{ border:1px solid #ccc; background:#36c; color:#fff; cursor:pointer; width:150px; height:50px}
+#b3 input{  cursor:pointer; width:150px; height:50px}
+*/
+#b1 a{ border:1px solid #ccc; float:left; height:24px; width:24px; text-align:center; line-height:24px; margin-right:.4em}
+
+
+#b2 table{table-layout:fixed}
+#b2 table td{height:24px; width:24px; border:1px solid #ccc; text-align:center}
+/* no margin-right for td? */
+</style>
+</head>
+<body>
+	<div id="b0">
+		<p>no style at all</p>
+		<a>1</a><a>2</a><a>3</a><a>4</a><a>11</a>
+		<p style="clear:both"></p>
+	</div>
+	<div id="b1">
+		<p>use height:24px width:24px, text-align:center, line-height:24px</p>
+		<a>1</a><a>2</a><a>3</a><a>4</a><a>11</a>
+		<p style="clear:both"></p>
+	</div>
+	<div id="b2">
+		<table>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>11</td>
+			</tr>
+		</table>
+	</div>
+	<style>
+	#b3 .pagi{background:#ccc}
+	#b3 a{padding:3px 5px; background:#fff; border:1px solid #ccc; background:green}
+	</style>
+	<div id="b3">
+		<p>使用padding來做pagination: without line-heigth:32px</p>
+		<p class="pagi">
+			<a>1</a><a>2</a><a>3</a><a>4</a><a>11</a>
+		</p>
+	</div>
+	<style>
+	#b4 .pagi{background:#ccc}
+	#b4 a{padding:3px 5px; background:#fff; border:1px solid #ccc; background:green; line-height:32px}
+	</style>
+	<div id="b4">
+		<p>使用padding來做pagination:設line-height可以把container撐起來</p>
+		<p class="pagi">
+			<a>1</a><a>2</a><a>3</a><a>4</a><a>11</a>
+		</p>
+	</div>
+
+	<style>
+	#b5 .pagi {background:#ccc}
+	#b5 .pagi a{border:1px solid #ccc; float:left; height:24px; width:24px; text-align:center; line-height:24px; margin-right:.4em; background:#fff}
+	</style>
+	<div id="b5">
+		<p>如何讓pagination撐開container的高度: 用float</p>
+		<p class="pagi clearfix">
+			<a>1</a><a>2</a><a>3</a><a>4</a><a>11</a>
+		</p>
+	</div>
+</body>
+</html>

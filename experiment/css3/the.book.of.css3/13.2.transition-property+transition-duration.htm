@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<style>
+  .container{margin: 50px; width: 200px; height: 200px;}
+  .note {width: 700px; margin-left:50px;}
+
+  /* - - - - - - - - - */
+
+  .container1 {background: green; width:200px; -webkit-transition-property: background-color; -webkit-transition-duration: 2s;}
+  .container1:hover{background: red; width:250px;}
+
+  .container2 {background: green; width:200px; -webkit-transition-duration: 2s;}
+  .container2:hover{background: red; width:250px;}
+
+</style>
+<body>
+
+<pre>
+  .container {background: green; width:200px; -webkit-transition-property: background-color; -webkit-transition-duration: 2s;}
+  .container:hover{background: red; width:250px;}
+</pre>
+<div class="container container1"></div>
+<p class="note">no specify transition-property will animate on all properties</p>
+<p class="note">transtion-duration is the only one required to create a transition</p>
+<p class="note">default value of transition-duration is 0, means no animation</p>
+<pre>
+  .container2 {background: green; width:200px; -webkit-transition-duration: 2s;}
+  .container2:hover{background: red; width:250px;}
+</pre>
+<div class="container container2"></div>
+  

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset/reset-min.css">
+<script src="http://yui.yahooapis.com/combo?2.5.2/build/yuiloader-dom-event/yuiloader-dom-event.js"></script>
+<style>
+html{padding:2em}
+</style>
+<img src="../../images/blank.gif" id="blank">
+<img src="yoda.png" id="target">
+<script>
+window.onload = function(){
+	var YUD = YAHOO.util.Dom, $ = YAHOO.util.Dom.get, YUE = YAHOO.util.Event;
+	var target = $('target');
+	var blank = $('blank');
+
+	var xy = YUD.getXY('target');
+
+	blank.style.position = 'absolute';
+	blank.style.height = target.clientHeight + 'px';
+	blank.style.width  = target.clientWidth  + 'px';
+
+	blank.style.top  = xy[0] + 'px';
+	blank.style.left = xy[1] + 'px'; 
+}
+	
+</script>

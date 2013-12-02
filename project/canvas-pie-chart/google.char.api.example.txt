@@ -1,0 +1,2 @@
+http://chart.apis.google.com/chart?cht=p3&chd=t:60,40&chs=250x100&chl=Hello|World
+http://experiment.bcse.info/chart/canvas_polar_chart.htm

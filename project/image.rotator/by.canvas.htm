@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css">
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css">
+	<script src="assets/excanvas.js"></script>
+	<style>
+	#doc{width: 850px; text-align:center; margin:50px auto;}
+	#doc .imgw{height:350px; width:350px; background:#eee; border:2px solid #aaa; margin:0 auto;}
+	#doc .tool a{height:31px; width:31px; display:inline-block; margin:10px 5px; padding:5px;}
+	#rotatec{background:url(assets/rotatec.png) no-repeat center center; border:2px outset #ccc}
+	#rotatecc{background:url(assets/rotatecc.png) no-repeat center center; border: 2px outset #ccc }
+canvas{background:#ddd}
+	</style>
+</head>
+<body>
+	<div id="doc">
+		<!--<div class="imgw r90deg" style="background: url(assets/yoda.png) center center no-repeat;"></div>-->
+		<div class="tool">
+			<a href="###" id="rotatec"></a>
+			<a href="###" id="rotatecc"></a>
+		</div>
+	</div>
+
+<script src="../../library/yui/yahoo-dom-event.js"></script>
+
+<script>
+
+
+
+
+	var Dom = YAHOO.util.Dom,
+		Event = YAHOO.util.Event,
+		Lang	= YAHOO.lang;
+	
+	Rotator = function (el, userConfig) {
+		
+		if (el) {
+			this.init(el, userConfig);
+		} else {
+
+		}
+	}
+
+	Rotator.prototype = {
+
+		init: function(el, userConfig) {
+
+			if (Lang.isString (el)) {
+				el = Dom.get(el);
+			}
+			this.element = el;
+
+			this.cfg = {};
+
+			for (var i in userConfig) {
+				if (Lang.hasOwnProperty(userConfig, i)) {
+					this.cfg[i] = userConfig[i];
+				}
+			}
+
+			var self = this;
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext('2d');
+			canvas.setAttribute('height', this.cfg.height);
+			canvas.setAttribute('width', this.cfg.width);
+
+			var img = new Image();
+			img.onload = function () {
+				ctx.translate(Math.round(self.cfg.height/2), Math.round(self.cfg.width/2));
+				ctx.drawImage(img, -1*Math.round(img.width/2), -1*Math.round(img.height/2));
+			}
+			img.src = this.cfg.src;
+			this.img = img;
+			this.ctx = ctx;
+
+			el.appendChild(canvas);
+		},
+
+		rotateCW: function() {
+
+			var height = this.cfg.height;
+			var width  = this.cfg.width;
+			var ctx = this.ctx;
+
+			ctx.rotate(Math.PI/2);
+			
+			// clear canvas before draw
+			ctx.clearRect(-1*Math.round(width/2), -1*Math.round(height/2), width, height);
+			ctx.drawImage(this.img, -1*Math.round(this.img.width/2), -1*Math.round(this.img.height/2));
+		},
+
+		rotateCCW: function () {
+			var height = this.cfg.height;
+			var width  = this.cfg.width;
+			var ctx = this.ctx;
+
+			ctx.rotate(-1*Math.PI/2);
+			
+			// clear canvas before draw
+			ctx.clearRect(-1*Math.round(width/2), -1*Math.round(height/2), width, height);
+			ctx.drawImage(this.img, -1*Math.round(this.img.width/2), -1*Math.round(this.img.height/2));
+		},
+
+		/*
+		 * TODO : examine the destroy function
+		 * */
+		destroy: function() {
+			var parent;
+			if (this.element) {
+				Event.purgeElement(this.element, true);
+				parent = this.element.parentNode;
+			}
+			if (parent) {
+				parent.removeChild(this.element);
+			}
+			this.element = null;
+			this.ctx = null;
+			this.cfg = null;
+		}
+
+	}
+
+	window.onload = function() {
+
+		var cr = new Rotator('doc', {
+			src: 'https://developer.mozilla.org/skins/mozilla/Fox3/img/mdc-logo.png',
+			height: 350,
+			width: 350,
+		});
+
+		Event.on('rotatec', 'click', cr.rotateCW, cr, true);
+		Event.on('rotatecc', 'click', cr.rotateCCW, cr, true);
+	}
+
+</script>
+</body>
+</html>

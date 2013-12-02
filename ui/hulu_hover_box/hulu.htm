@@ -1,0 +1,85 @@
+<style>
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td{margin:0; padding:0}
+div.browse-tab-container{margin-top: 26px;}
+div.browse-tab-container ul{margin-left: 250px;text-align: left;}
+div.browse-top{padding-top: 2em;position: relative;}
+div.browse-top h2{width: 50%;}
+div.browse-top div.has-full-container{margin-bottom: 1em;padding-right: 10px;position: absolute;right: 0;text-align: right;top: 26px;width: 35%;}
+div.info_hover_box{position: absolute;z-index: 500;}
+div.info_hover_box div.gra-top-left,div.info_hover_box div.gra-top-right,div.info_hover_box div.gra-bottom-left,div.info_hover_box div.gra-bottom-right{_background-image: none;background-image: url(images/shw-corners.png);background-position: -1px -1px;background-repeat: no-repeat;height: 12px;left: 0;position: absolute;top: 0;width: 12px;}
+div.info_hover_box div.gra-top-right{background-position: -14px -1px;}
+div.info_hover_box div.gra-bottom-left{background-position: -1px -14px;}
+div.info_hover_box div.gra-bottom-right{background-position: -14px -14px;}
+div.info_hover_box div.content{background: #f4f4f4 repeat-x scroll left top;border: solid 1px #666;left: 21px;overflow: hidden;padding: 16px;position: relative;top: 0;}
+div.info_hover_box.type_show div.content,div.info_hover_box.type_video div.content{width: 340px;}
+div.info_hover_box.type_user div.content{width: 180px;}
+div.info_hover_box div.content hr{background-color: #DDD;color: #DDD;height: 1px;margin: 5px 0 10px 0;}
+div.info_hover_box div.pointer{_background-image: url(images/pointer.gif?2);background-image: url(images/pointer.png?2);background-position: -1px -1px;background-repeat: no-repeat;height: 21px;position: absolute;width: 21px;z-index: 300;}
+div.info_hover_box div.gra-v-right,div.info_hover_box div.gra-v-left{_background-image: none;background-image: url(images/shw-1px-left.png);background-repeat: repeat-y;height: auto;left: 0;position: absolute;top: 0;width: 12px;}
+div.info_hover_box div.gra-v-right{_background-image: none;background-image: url(images/shw-1px-right.png);}
+div.info_hover_box div.gra-h{_background-image: none;background-image: url(images/shw-1px-bottom.png);background-repeat: repeat-x;bottom: -12px;height: 12px;left: 0;position: absolute;}
+div.info_hover_box.type_show div.gra-h,div.info_hover_box.type_video div.gra-h{width: 358px;}
+div.info_hover_box.type_user div.gra-h{width: 198px;}
+div.synopsis-container div.gra-h{width: 460px;}
+div.info_hover_box.mid-left div.pointer{background-position: -23px -23px;left: auto;right: -20px;top: 50%;}
+ul.t-preview div.mid-left div.pointer{background-position: -68px -23px;}
+div.info_hover_box.mid-left div.content{left: 0;top: 21px;}
+div.info_hover_box.mid-left div.gra-top-left{left: -12px;top: 21px;}
+div.info_hover_box.mid-left div.gra-top-right{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.mid-left div.gra-bottom-right{bottom: -32px;left: auto;right: 0;top: auto;}
+div.info_hover_box.mid-left div.gra-bottom-left{bottom: -32px;left: -12px;top: auto;}
+div.info_hover_box.mid-left div.gra-h{bottom: -32px;left: 0;}
+div.info_hover_box.mid-left div.gra-v-right{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.mid-left div.gra-v-left{bottom: -20px;left: -12px;top: 32px;}
+div.info_hover_box.mid-right div.pointer{background-position: -1px -23px;top: 50%;}
+ul.t-preview div.mid-right div.pointer{background-position: -45px -23px;}
+ul.t-preview div.mid-right div.synopsis,div.info_hover_box.mid-right div.content{left: 20px;top: 21px;}
+div.info_hover_box.mid-right div.gra-top-left{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.mid-right div.gra-top-right{left: auto;right: -32px;top: 20px;}
+div.info_hover_box.mid-right div.gra-bottom-right{bottom: -32px;left: auto;right: -32px;top: auto;}
+div.info_hover_box.mid-right div.gra-bottom-left{bottom: -32px;left: 20px;top: auto;}
+div.info_hover_box.mid-right div.gra-h{bottom: -32px;left: 32px;}
+div.info_hover_box.mid-right div.gra-v-right{bottom: -20px;left: auto;right: -32px;top: 32px;}
+div.info_hover_box.mid-right div.gra-v-left{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.bottom-left div.pointer{background-position: -23px -45px;bottom: 0;left: auto;right: -20px;top: auto;}
+ul.t-preview div.bottom-left div.pointer{background-position: -68px -45px;}
+ul.t-preview div.bottom-left div.synopsis,div.info_hover_box.bottom-left div.content{left: 0;top: 0;}
+div.info_hover_box.bottom-left div.gra-top-left,div.info_hover_box.top-left div.gra-top-left{left: -12px;top: 0;}
+div.info_hover_box.bottom-left div.gra-top-right,div.info_hover_box.top-left div.gra-top-right{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.bottom-left div.gra-bottom-right,div.info_hover_box.top-left div.gra-bottom-right{bottom: -12px;left: auto;right: 0;top: auto;}
+div.info_hover_box.bottom-left div.gra-bottom-left,div.info_hover_box.top-left div.gra-bottom-left{bottom: -12px;left: -12px;top: auto;}
+div.info_hover_box.bottom-left div.gra-h,div.info_hover_box.top-left div.gra-h{bottom: -12px;left: 0;}
+div.info_hover_box.bottom-left div.gra-v-right,div.info_hover_box.top-left div.gra-v-right{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.bottom-left div.gra-v-left,div.info_hover_box.top-left div.gra-v-left{bottom: 0;height: auto;left: -12px;top: 12px;}
+div.info_hover_box.bottom-right div.pointer{background-position: -1px -45px;bottom: 0;left: 0;top: auto;}
+ul.t-preview div.bottom-right div.pointer{background-position: -45px -45px;}
+ul.t-preview div.bottom-right div.synopsis,div.info_hover_box.bottom-right div.content{left: 20px;top: 0;}
+div.info_hover_box.bottom-right div.gra-top-left,div.info_hover_box.top-right div.gra-top-left{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.bottom-right div.gra-top-right,div.info_hover_box.top-right div.gra-top-right{left: auto;right: -32px;top: 0;}
+div.info_hover_box.bottom-right div.gra-bottom-right,div.info_hover_box.top-right div.gra-bottom-right{bottom: -12px;left: auto;right: -32px;top: auto;}
+div.info_hover_box.bottom-right div.gra-bottom-left,div.info_hover_box.top-right div.gra-bottom-left{bottom: -12px;left: 20px;top: auto;}
+div.info_hover_box.bottom-right div.gra-h,div.info_hover_box.top-right div.gra-h{bottom: -12px;left: 32px;}
+div.info_hover_box.bottom-right div.gra-v-right,div.info_hover_box.top-right div.gra-v-right{bottom: 0;left: auto;right: -32px;top: 12px;}
+div.info_hover_box.bottom-right div.gra-v-left,div.info_hover_box.top-right div.gra-v-left{height: 0;left: 50px;top: 50px;width: 0;}
+div.info_hover_box.top-left div.pointer{background-position: -23px -1px;left: auto;right: -20px;top: 0;}
+ul.t-preview div.top-left div.pointer{background-position: -67px -1px;}
+ul.t-preview div.top-left div.synopsis,div.info_hover_box.top-left div.content{left: 0;top: 0;}
+div.info_hover_box.top-right div.pointer{background-position: -1px -1px;left: 0;top: 0;}
+ul.t-preview div.top-right div.pointer{background-position: -45px -1px;}
+ul.t-preview div.top-right div.synopsis,div.info_hover_box.top-right div.content{left: 20px;top: 0;}
+div.info_hover_box div.content{font-size: 12px;padding: 10px 14px;text-align: left;}
+div.info_hover_box div.content p{font-size: 12px;margin: 5px 0 0 0;padding: 0;}
+div.info_hover_box div.content div.line{background-color: #fff;border-top: solid 1px #cfcfcf;clear: both;height: 1px;line-height: 1px;margin: 5px 0 0 0;padding: 0;width: 100%;}
+div.info_hover_box div.content img.thumb{border: 1px solid #eee;float: right;margin: 0 0 5px 8px;}
+div.info_hover_box div.content img.cc{vertical-align: bottom;vertical-align: middle;}
+div.info_hover_box.type_user img.avatar{height: 48px;padding-right: 8px;width: 54px;}
+
+</style>
+<div style="left: 1101px; top: 482px;" class="info_hover_box type_video mid-right" id="info_hover">
+    <div class="pointer"> </div>
+    <div class="content"><b>Presidential Press Conferences:</b> Presidential News Conference Mar 24, 2009<br/>Event (59:49)<br/>Air date: 03/24/2009 ?|? Rated: Not Rated<br/>Avg. user rating: <img height="11" border="0" width="11" alt="Rating star" src="images/rating_empty.gif"/><img height="11" border="0" width="11" alt="Rating star" src="images/rating_empty.gif"/><img height="11" border="0" width="11" alt="Rating star" src="images/rating_empty.gif"/><img height="11" border="0" width="11" alt="Rating star" src="images/rating_empty.gif"/><img height="11" border="0" width="11" alt="Rating star" src="images/rating_empty.gif"/><br/><div class="line"><span/></div><p>President Obama addresses the nation.</p></div>
+    <div class="gra-top-left"> </div><div class="gra-top-right"> </div>
+    <div class="gra-bottom-left"> </div><div class="gra-bottom-right"> </div>
+    <div class="gra-h"> </div><div class="gra-v-left"> </div><div class="gra-v-right"> </div>
+  </div>
+

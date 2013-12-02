@@ -1,0 +1,17 @@
+
+<script type="text/javascript">
+	document.onclick = function(){
+		var timer = setInterval( 
+			function(){
+				document.body.innerHTML+='<p>foo</p>'
+				// this refers to window object
+				if( typeof this.i == 'undefined')
+					this.i = 1;
+				if(this.i == 5){
+					clearInterval(timer);
+					document.body.innerHTML += 'timer ' + timer + ' cleared.';
+				}
+				this.i++;
+			}, 1000)
+	}
+</script>

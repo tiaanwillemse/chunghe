@@ -1,0 +1,191 @@
+<!doctype HTML>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>gallery for mobile device</title>
+  <!-- link href="styles/normalize.css" rel="stylesheet" type="text/css" -->
+  <link href="styles/style.css" rel="stylesheet" type="text/css">
+  <link href="styles/main.css" rel="stylesheet" type="text/css">
+  <script src="scripts/zepto.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+  <script src="scripts/tap.js"></script>
+  <script src="http://cubiq.org/dropbox/SwipeView/src/swipeview.js"></script>
+</head>
+<body>
+  <!--video preload='none'>
+     <source type="video/mp4"   src="http://stream.flowplayer.org/bauhaus/624x260.mp4"/>
+  </video-->
+  <!-- reference
+  1. backbone-ize
+  https://github.com/alexgibson/checklist/blob/master/js/main.js
+  2. responsive touch  button
+  http://cheeaun.com/blog/2012/03/how-i-built-hacker-news-mobile-web-app#the-feel
+  -->
+
+  <div id="main">
+    <div id="layer-mosaic">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div id="layer-slideshow">
+      <a id="close-slideshow" class="close">x</a>
+      <div id="wrapper"></div>
+    </div>
+  </div>
+
+  <script>
+    // prvent mobile browser from jumping
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false); 
+    /*
+
+    AppRouter = Backbone.Router.extend({
+    
+      routes: {
+        '': 'defaultRoute',
+        'slideshow': 'slideshow'
+      },
+
+      defaultRoute: function () {
+      
+      
+      },
+
+      slideshow: function() {
+        
+      }
+    })
+
+    router = new AppRouter({collection: items, appView: appView});
+    Backbone.history.start();
+    */
+
+    // 
+    var tapLayerSlideshow  = new Tap('layer-slideshow')
+    document.querySelector('#layer-slideshow .close').addEventListener('tap', function () {
+      $(document.body).removeClass('slideshow-enable');
+    }, false)
+
+    var tapLayerMosaic = new Tap('layer-mosaic');
+    document.querySelector('#layer-mosaic').addEventListener('tap', function (e) {
+
+      var target = e.target || e.srcElement;
+      if (target.tagName === 'LI') {
+        $(document.body).addClass('slideshow-enable');
+      }
+    }, false)
+
+
+
+    var gallery, el, i, page,
+      slides = [
+        {
+          type: 'photo',
+          src: 'images/pic01.jpg',
+          width: 300,
+          height: 213,
+          desc: 'Piazza del Duomo, Florence, Italy'
+        },
+        {
+          type: 'video',
+          src: 'http://stream.flowplayer.org/bauhaus/624x260.mp4',
+          width: 624,
+          height: 260,
+          desc: 'a sample video test'
+        },
+        {
+          type: 'photo',
+          src: 'images/pic02.jpg',
+          width: 300,
+          height: 164,
+          desc: 'Tuscan Landscape'
+        },
+        {
+          type: 'photo',
+          src: 'images/pic03.jpg',
+          width: 300,
+          height: 213,
+          desc: 'Colosseo, Rome, Italy'
+        },
+        {
+          type: 'photo',
+          src: 'images/pic04.jpg',
+          width: 147,
+          height: 220,
+          desc: 'Somewhere near Chinatown, San Francisco'
+        },
+        {
+          type: 'photo',
+          src: 'images/pic05.jpg',
+          width: 300,
+          height: 213,
+          desc: 'Medieval guard tower, Asciano, Siena, Italy'
+        },
+        {
+          src: 'images/pic06.jpg',
+          width: 165,
+          height: 220,
+          desc: 'Leaning tower, Pisa, Italy'
+        }
+      ];
+
+    gallery = new SwipeView('#wrapper', { numberOfPages: slides.length });
+    console.log('gallery', gallery);
+
+    // Load initial data
+    for (i=0; i<3; i++) {
+      page = i==0 ? slides.length-1 : i-1;
+      el = document.createElement('img');
+      el.className = 'loading';
+      el.src = slides[page].src;
+      el.width = slides[page].width;
+      el.height = slides[page].height;
+      el.onload = function () { this.className = ''; }
+      gallery.masterPages[i].appendChild(el);
+
+      el = document.createElement('span');
+      el.innerHTML = slides[page].desc;
+      gallery.masterPages[i].appendChild(el)
+    }
+
+    gallery.onFlip(function () {
+      var el, upcoming, i;
+
+      for (i=0; i<3; i++) {
+        upcoming = gallery.masterPages[i].dataset.upcomingPageIndex;
+
+        if (upcoming != gallery.masterPages[i].dataset.pageIndex) {
+          el = gallery.masterPages[i].querySelector('img');
+          el.className = 'loading';
+          el.src = slides[upcoming].src;
+          el.width = slides[upcoming].width;
+          el.height = slides[upcoming].height;
+
+          el = gallery.masterPages[i].querySelector('span');
+          el.innerHTML = slides[upcoming].desc;
+        }
+      }
+    });
+
+    gallery.onMoveOut(function () {
+      gallery.masterPages[gallery.currentMasterPage].className = gallery.masterPages[gallery.currentMasterPage].className.replace(/(^|\s)swipeview-active(\s|$)/, '');
+    });
+
+    gallery.onMoveIn(function () {
+      var className = gallery.masterPages[gallery.currentMasterPage].className;
+      /(^|\s)swipeview-active(\s|$)/.test(className) || (gallery.masterPages[gallery.currentMasterPage].className = !className ? 'swipeview-active' : className + ' swipeview-active');
+    });
+
+  </script>
+</body>
+</html>

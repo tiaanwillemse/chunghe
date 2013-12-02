@@ -1,0 +1,60 @@
+
+<script>
+ // 畫蝴蝶結
+ function drawBowtie(ctx, fillStyle) {
+ 
+   ctx.fillStyle = "rgba(200,200,200,0.3)"; // 把「填滿樣式」設為灰色，0.3 透度
+   ctx.fillRect(-30, -30, 60, 60);          // 畫一個填色的方形
+ 
+   ctx.fillStyle = fillStyle;  // 設定填色
+
+   ctx.globalAlpha = 1.0;    // 全域透度
+   ctx.beginPath();          // 開始路徑
+   ctx.moveTo(25, 25);       // （起點）移到 25, 25
+   ctx.lineTo(-25, -25);     // 做直線到 -25, -25
+   ctx.lineTo(25, -25);      // 做直線到 25, -25
+   ctx.lineTo(-25, 25);      // 做直線到 -25, 25
+   ctx.closePath();          // 關閉路徑
+   ctx.fill();               // 填色
+ }
+var canvas = null;
+function draw(){
+
+
+	canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+  // Create gradients
+  var lingrad = ctx.createLinearGradient(0,0,0,250);
+  lingrad.addColorStop(0, '#000');
+  lingrad.addColorStop(1, '#fff');
+
+  // assign gradients to fill and stroke styles
+  ctx.fillStyle = lingrad;
+  
+  // draw shapes
+  ctx.fillRect(10,10,250,250);
+
+
+
+}
+/*
+ *
+	Canvas.Element.prototype.canvasTo = function(format) {
+		this.renderAll(true);
+		if (format == 'jpeg' || format == 'png') {
+			return this._oElement.toDataURL('image/'+format);
+		}
+	};
+ *
+ * */
+function convertTo(format) {
+	//var imgdata = canvas.toDataURL("image/" + format, "");
+	var imgdata = canvas.toDataURL('image/' + format);
+	window.open(imgdata, "_blank");
+}
+</script>
+<body onload="draw()">
+	<canvas style="border:1px solid #ccc" id="canvas" width="300" height="300"></canvas>
+	<button onclick="convertTo('png')">convert to png</button>
+	<button onclick="convertTo('jpeg')">convert to jpeg</button>
+</body>

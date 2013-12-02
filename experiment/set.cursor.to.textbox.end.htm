@@ -1,0 +1,9 @@
+<textarea id="ta">@foo </textarea>
+<script type="text/javascript">
+document.onclick = function(){
+	var ta = document.getElementById('ta');
+	ta.focus();
+	
+	ta.value = ta.value;
+}
+</script>

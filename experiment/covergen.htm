@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN' 'http://www.w3.org/tr/html4/strict.dtd'>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+#cover{border:none; padding:0; margin:0; background:#FE5656; color:#fff; font-weight:bolder; font-size:45px; font-family:"標楷體"; height:85px; width:90px; letter-spacing: -5px; line-height:0.9; padding-top:5px; overflow:hidden} 
+#cover150{border:none; padding:0; margin:0; background:#FE5656; color:#fff; font-weight:bolder; font-size:75px; font-family:"標楷體"; height:140px; width:150px; letter-spacing: -5px; line-height:0.9; padding-top:10px; overflow:hidden} 
+#cover150s{border:none; padding:0; margin:0; background:#FE5656; color:#fff; font-weight:bolder; font-size:155px; font-family:"標楷體"; height:150px; width:150px; text-indent:-5px;line-height:0.9; padding-top:10px; overflow:hidden} 
+
+
+input{margin-bottom:2em; }
+#suggestMenu{padding:0; margin:0; font-size:13px; font-family:arial, sans-serif; position:absolute; z-index:10;  background-color:#fff; top:30px}
+#suggestMenu {border:1px solid #ccc; width:200px}
+#suggestMenu ul {padding: 5px }
+#suggestMenu ul li { cursor: default; letter-spacing:1px; padding: 0 5px; line-height:1.6; list-style:none; width:100%}
+#suggestMenu ul li.on{background-color:#ffffcc} 
+#suggestMenu ul li span{color:#ff8947}
+
+</style>
+</head>
+<body>
+<input type="text" id="srchtext"  autocomplete="off"><input type="button" value="送出" id="submit">
+<div id="suggestMenu" style="visibility:hidden"></div>
+<p style="margin-top:2em; margin-bottom:0">90*90</p>
+<div id="cover">蜜絲佛陀</div>
+<p style="margin-top:2em; margin-bottom:0">150*150</p>
+<div id="cover150">蜜絲佛陀</div>
+<p style="margin-top:2em; margin-bottom:0">150*150</p>
+<div id="cover150s">蜜</div>
+<script>
+var cover = document.getElementById('cover');
+var cover150 = document.getElementById('cover150');
+var cover150s = document.getElementById('cover150s');
+var text = document.getElementById('srchtext');
+document.getElementById('submit').onclick = function(){
+	cover150s.innerHTML = cover150.innerHTML = cover.innerHTML = text.value;
+}
+
+</script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yuiloader-dom-event/yuiloader-dom-event.js"></script>
+<script type="text/javascript">
+	
+	YAHOO.namespace('wretch.widget');
+	YAHOO.wretch.widget.searchSuggest = function(){
+
+		var YUD = YAHOO.util.Dom, 
+			YUE = YAHOO.util.Event, 
+			$ = YAHOO.util.Dom.get;
+		var srchtext  = $('srchtext');
+		var menu  = $('suggestMenu'); 
+		var tmp = '';
+
+		var text = function(s){
+			if(text) return s.innerText ? s.innerText : s.textContent;
+		};
+
+		var monitorInput = function(){
+			if( YAHOO.lang.trim(tmp) != YAHOO.lang.trim(srchtext.value)){
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				script.src = 'http://tw.sug.search.yahoo.com/ac/ac_search.php?of=js&prop=web&query=' + encodeURIComponent($('srchtext').value);
+				document.getElementsByTagName('head')[0].appendChild(script);
+				tmp = srchtext.value;
+			}	
+		};
+
+		return{
+			fxsearch : function(a, b, c){
+				var key = a[0];
+				var rsp = a[1];
+				if(rsp.length>0){
+					var str = '<ul>';
+					for(var i=0; i<rsp.length; i++){
+						str += '<li>'+ rsp[i].replace(key, '<span>' + key + '</span>') +'</li>';
+					}
+					str += '</ul>';
+					menu.innerHTML = str;
+					if(menu.style.visibility=='hidden')
+						menu.style.visibility = 'visible';
+				}
+				else{
+					menu.style.visibility = 'hidden';
+				}
+			},
+
+			init : function(){
+
+				YUE.on(srchtext, 'focus', function(){
+					this.timer = setInterval(monitorInput, 500);
+				}, this, true);
+
+				YUE.on(srchtext, 'blur', function(){
+					if(this.timer){
+						clearInterval(this.timer);
+					}
+				}, this, true);
+
+				YUE.on(menu, 'click', function(e){
+					var target = YUE.getTarget(e);
+					srchtext.value = target.innerText?target.innerText:target.textContent;
+					menu.style.visibility = 'hidden';
+				}, this, true);
+
+				YUE.on(menu, 'mouseover', function(e){
+					var target = YUE.getTarget(e);
+					
+					if(target.tagName == 'LI'){
+						// clear eleOn, may heighlight by keypress
+						YUD.removeClass(this.eleOn, 'on');
+						YUD.addClass(target, 'on');
+						this.eleOn = target;
+					}
+				}, this, true);
+
+				YUE.on(menu, 'mouseout', function(e){
+					var target = YUE.getTarget(e);
+
+					if(target.tagName == 'LI'){
+						YUD.removeClass(target, 'on');
+					}
+				}, this, true);
+
+				YUE.on(document, 'click', function(e){
+					var target = YUE.getTarget(e);
+
+					if( YUD.isAncestor(target, menu.id) ){
+						menu.style.visibility = 'hidden';
+					}
+				}, this, true);
+
+			}// end of init
+		
+		}
+	}()
+	fxsearch = YAHOO.wretch.widget.searchSuggest.fxsearch;
+	YAHOO.wretch.widget.searchSuggest.init();
+
+</script>
+
+</body>
+</html>

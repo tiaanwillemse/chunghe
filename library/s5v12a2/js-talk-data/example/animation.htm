@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<style type="text/css">
+	#p{background-color:#fff; border:1em solid #090; width:100px; text-indent:-5000px}
+</style>
+<div id="p">.</div>
+<script type="text/javascript">
+	var elem = document.getElementById('p');
+	elem.style.height = '0px';
+
+	// we're going to do a 20 frames animation that takes place over one second
+	for(var i=0; i<=100; i+=5){
+		(function(){
+			var pos = i;
+			setTimeout(function(){
+				elem.style.height = (pos/100)*100 + 'px';
+			}, (pos+1)*10);
+		})()
+	}
+</script>

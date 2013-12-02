@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Canvas getImageData, putImageData Demos</title>
+	<script>
+	var img = new Image();
+	img.src = 'sample.jpg';
+	img.onload = init;
+	function init() {
+		var h = img.height;
+		var w = img.width;
+
+		var canvas = document.getElementsByTagName('canvas')[0];
+		canvas.width = img.width;
+		canvas.height = img.height;
+		var context = canvas.getContext('2d');
+
+		// draw the image onto the canvas
+		context.drawImage(img, 0, 0);
+
+		var image = context.getImageData(0, 0, w, h);
+		
+		//var output = context.createpix(w, h);
+		var pix = image.data;
+
+		// pix[i] : R, pix[i+1] : G, pix[i+2] : B, pix[i+3] : Alpha channel
+		var i, r, g, b, n=pix.length;
+		for (i=0;  i<n; i+=4) {
+			pix[i+1] = pix[i+2] = pix[i];
+			r = pix[i];
+			g = pix[i+1];
+			b = pix[i+2];
+
+			// compute the gray value based on RGB
+			pix[i] = pix[i+1] = pix[i+2] = Math.round(0.299*r + 0.587*g + 0.114*b);
+		}
+
+		context.putImageData(image, 0, 0);
+
+	}
+
+	</script>
+</head>
+<body>
+	<ul>
+		<li>https://developer.mozilla.org/en/manipulating_video_using_canvas</li>
+		<li>http://dev.opera.com/articles/view/html-5-canvas-the-basics/</li>
+	</ul>
+	<img src="sample.jpg">
+	<canvas></canvas>
+</body>
+</html>
+

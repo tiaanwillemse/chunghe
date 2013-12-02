@@ -1,0 +1,32 @@
+
+<div id="output"></div>
+<form id="sendform">
+  <input type="text" id="data" size="100">
+  <input type="button" id="sendtext" value="send text">
+</form>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:8124');
+
+  socket.on('connect', function () {
+    socket.emit('addme', prompt('who are you?'));
+  });
+
+  socket.on('chat', function (username, data) {
+    var p  = document.createElement('p');
+    p.innerHTML = username+ ': ' + data; 
+    document.getElementById('output').appendChild(p);
+  });
+  
+  window.onload = function () {
+    function sendText (e) {
+      e.preventDefault();
+      var text = document.getElementById('data').value;
+      document.getElementById('data').value = ''; 
+      socket.emit('sendchat', text);
+    }
+    document.getElementById('sendtext').onclick = 
+    document.getElementById('sendform').onsubmit = sendText;
+  }
+
+</script>

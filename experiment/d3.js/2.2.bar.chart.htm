@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<body>
+  <style>
+    a{display:block;}
+    svg{background:#eee;}
+    circle{background:green;} 
+    pre {border: 1px solid #ccc; background:#efefef; float:left; padding: 1em;}
+    .bar{
+      border: 1px solid #000;
+      background: DarkRed;
+      color: #fff;
+      padding: 5px;
+      margin-bottom:2px;
+      font-size: 12px;
+      text-align: right;
+    }
+  </style>
+  <a href="http://bost.ocks.org/mike/join/">http://bost.ocks.org/mike/join/</a>
+  <pre></pre>
+  <div style="clear:both"></div>
+<script src="lib/jquery-1.7.2.min.js"></script>
+<script src="lib/underscore.js"></script>
+<script src="lib/d3.v2.js"></script>
+<script>
+  const SVG_HEIGHT = 500;
+  const SVG_WIDTH = 500;
+  const NUM_CIRCLES = 100;
+  
+  function draw(data) {
+    console.log ('data', data);
+    d3.select('body')
+      .append('div')
+        .attr('class', 'chart')
+      .selectAll('.bar')
+      .data(data.cash)
+      .enter()
+      .append('div')
+        .attr('class', 'bar')
+        .style('width', function (d){return d.count/100 + 'px'})
+        .text(function(d) {return Math.round(d.count)})
+  }
+
+
+  $('pre').append('' + draw)
+</script>
+<script>
+  d3.json('data/plaza_traffic.json', draw);
+</script>
+</body>
+</html>

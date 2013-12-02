@@ -1,0 +1,49 @@
+<!doctype html>
+
+<style>
+  .progress {background: #000; height: 24px; width: 480px; position: relative;}
+  .progress .buffer {left: 20%; width:50%; height: 100%; width: 0; background: #eee; position: absolute; -webkit-transition-duration: 0.25s; }
+  .progress .bar {height: 50%; width: 0; background:red; position: absolute; -webkit-transition-duration: 0.25s;  z-index:100;}
+</style>
+
+
+<p>via: <a href="http://www.longtailvideo.com/html5/buffering">http://www.longtailvideo.com/html5/buffering</a></p>
+<p>via: <a href="http://www.chipwreck.de/blog/2010/03/01/html-5-video-dom-attributes-and-events/">http://www.chipwreck.de/blog/2010/03/01/html-5-video-dom-attributes-and-events/</a></p>
+
+<video autoplay="autoplay" height="272" width="640" id="tag" poster="http://content.bitsontherun.com/thumbs/q1fx20VZ-720.jpg" preload="none" controls>
+  <source src="http://content.bitsontherun.com/videos/q1fx20VZ-52qL9xLP.mp4" type="video/mp4">
+  <source src="http://content.bitsontherun.com/videos/q1fx20VZ-27m5HpIu.webm" type="video/webm">
+  <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+<div class="progress"><div class="buffer"></div><div class="bar"></div></div>
+<div>
+  <p>progress event: Browser loads data, if buffer all loaded, progress event wont fire, can use timeupdate event for progress bar, progresss event for buffer bar</p>
+  <p>suspend event: Browser does not load data, waiting</p>
+</div>
+<script>
+  video = document.getElementsByTagName('video')[0];
+  
+  //video.volume=0;
+  elProgress = document.querySelector('.progress')
+  elBar = document.querySelector('.progress .bar');
+  video.addEventListener('progress', function (state) {
+      console.log ('[progress event]', state, 'duration', video.duration, 'currentTime', video.currentTime, 'startTime', video.startTime);
+      progressPercentage = 100 * video.currentTime/video.duration;
+      elBar.style.width = progressPercentage + '%';
+
+      if (video.buffered.length) {
+        console.log('[progress event] buffer length: ', video.buffered.length);
+        for (var i = 0; i < video.buffered.length; i += 1) {
+          if (! document.getElementById('buffer' + i)) {
+            elBuffer = document.createElement('buffer');
+            elBuffer.id = 'buffer' + i;
+            elBuffer.className = 'buffer';
+            elBuffer.style.left = 100 * video.buffered.start(i) / video.duration + '%';
+            elProgress.appendChild(elBuffer);
+          }
+          document.getElementById('buffer' + i).style.width = 100 * ((video.buffered.end(i) - video.buffered.start(i)) / video.duration) + '%';
+          console.log ('buffered: start', video.buffered.start(i), 'to', video.buffered.end(i));
+        }
+      }
+  });
+</script>

@@ -1,0 +1,17 @@
+
+<h1 onclick = "window.open('./list.htm', '', 'width=640,height=480,toolbar=no,status=no,resizable=yes,scrollbars=yes')">開始選圖</h1>
+<div id="foo"></div>
+<script>
+	var render = function(items){
+		//console.dir(items);
+		//window.ttt = items;
+		for(var i=0; i<items.length; i++){
+			//console.log(items[i].getElementsByTagName('span')[0].innerHTML);
+			var id = items[i].getElementsByTagName('span')[0].innerHTML;
+			var src = items[i].getElementsByTagName('img')[0].src;
+			document.getElementById('foo').innerHTML += '<p>'+id+'</p>';
+			document.getElementById('foo').innerHTML += '<img src="'+src+'">';
+		}
+
+	}
+</script>

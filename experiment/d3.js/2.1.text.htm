@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<body>
+  <style>
+    a{display:block;}
+    svg{background:#eee;}
+    circle{background:green;} 
+    pre {border: 1px solid #ccc; background:#efefef; float:left; padding: 1em;}
+  </style>
+  <a href="http://bost.ocks.org/mike/join/">http://bost.ocks.org/mike/join/</a>
+  <pre></pre>
+  <div style="clear:both"></div>
+<script src="lib/jquery-1.7.2.min.js"></script>
+<script src="lib/underscore.js"></script>
+<script src="lib/d3.v2.js"></script>
+<script>
+  const SVG_HEIGHT = 500;
+  const SVG_WIDTH = 500;
+  const NUM_CIRCLES = 100;
+  
+  function draw(data) {
+    console.log ('data', data);
+    d3.select('body')
+      .append('ul')
+      .selectAll('li')
+      .data(data)
+      .enter()
+      .append('li')
+        .text(function(d) {
+          console.log ('d', d);
+          return d.name + ": " + d.status;
+        })
+  }
+
+
+  $('pre').append('' + draw)
+</script>
+<script>
+  d3.json("data/service_status.json", draw);
+</script>
+</body>
+</html>

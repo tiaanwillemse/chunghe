@@ -1,0 +1,111 @@
+<html>
+<head>
+	<title>canvas pie chart</title>
+	<!--[if IE]><script type="text/javascript" src="../../library/excanvas.js"></script><![endif]-->
+	<script type="text/javascript">
+function draw(canvas, percent) {
+
+  if(typeof canvas == 'string')
+	  canvas = document.getElementById(canvas);
+
+  // workaroudn for ie when percent == 0 or percent == 100
+  if(percent<=0) percent = 0.01;
+  if(percent>=100) percent = 99.99;
+
+  //var canvas = document.getElementById("cv");
+  if (canvas.getContext) {
+	var x = canvas.clientWidth/2;
+	var y = canvas.clientHeight/2;
+	var r = x<y?x-5:y-5;
+	var ctx = canvas.getContext("2d");
+
+	ctx.lineJoin = 'round';
+	ctx.lineCap = 'round';
+
+	// draw a outter white circle
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.fillStyle = '#fff';
+	var startAngle = 0;
+	var endAngle   = (Math.PI)*2; 
+	ctx.arc(x, y, r+5, startAngle, endAngle, false);
+	ctx.fill();
+
+	// draw the dark color partition	
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.fillStyle = 'rgb(255, 153, 0)';
+	var startAngle = (Math.PI/180)*(-90);
+	var endAngle = (Math.PI/180)*(-90 + 360/(100/percent));
+	ctx.arc(x, y, r, startAngle, endAngle, false);
+	ctx.fill();
+
+	// draw the light color partition
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.fillStyle = 'rgb(255, 235, 204)';
+	startAngle = (Math.PI/180)*(-90 + 360/(100/percent));
+	endAngle = (Math.PI/180)*270;
+	ctx.arc(x, y, r, startAngle, endAngle, false);
+	ctx.fill();
+
+	// draw the white line to (x, 0)
+	ctx.strokeStyle = "rgba(255, 255, 255, 1)"; //線條顏色
+	ctx.lineWidth = 5;
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x, 0);
+	ctx.stroke();
+
+	// draw the second white line
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x+r*Math.cos( Math.PI/2 - percent*Math.PI/50  ), y-r*Math.sin(  Math.PI/2 - percent*Math.PI/50));
+	ctx.stroke();
+
+
+
+  }
+}
+
+	</script>
+	<style>div canvas{margin:.5em}</style>
+</head>
+<body onload="draw('cv', 67);" style="background-color:#f3f3cc">
+	<canvas id="cv" width="220" height="220"></canvas>
+	<div>
+	    <canvas id="c0" width="120" height="120"></canvas>
+	    <canvas id="c5" width="120" height="120"></canvas>
+	    <canvas id="c10" width="120" height="120"></canvas>
+	    <canvas id="c15" width="120" height="120"></canvas>
+	    <canvas id="c20" width="120" height="120"></canvas>
+	    <canvas id="c25" width="120" height="120"></canvas>
+	    <canvas id="c30" width="120" height="120"></canvas>
+	    <canvas id="c35" width="120" height="120"></canvas>
+	    <canvas id="c40" width="120" height="120"></canvas>
+	    <canvas id="c45" width="120" height="120"></canvas>
+	    <canvas id="c50" width="120" height="120"></canvas>
+	    <canvas id="c55" width="120" height="120"></canvas>
+	    <canvas id="c60" width="120" height="120"></canvas>
+	    <canvas id="c65" width="120" height="120"></canvas>
+	    <canvas id="c70" width="120" height="120"></canvas>
+	    <canvas id="c75" width="120" height="120"></canvas>
+	    <canvas id="c80" width="120" height="120"></canvas>
+	    <canvas id="c85" width="120" height="120"></canvas>
+	    <canvas id="c90" width="120" height="120"></canvas>
+	    <canvas id="c95" width="120" height="120"></canvas>
+	    <canvas id="c100" width="120" height="120"></canvas>
+	</div>
+</body>
+<script>
+window.onload = function(){
+    draw('cv', 78);
+    for(var i=0; i<=100; i++){
+	if(i%5==0){
+	    draw('c'+i, i);
+	}
+    }
+}
+</script>
+
+</html>

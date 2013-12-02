@@ -1,0 +1,14 @@
+
+# install node and jquery
+brew install node
+npm install -g jsdom
+
+# install mutagen to edit id3 tag
+easy_install pip
+sudo pip install mutagen
+
+# go
+chmod +x xiami.js
+./xiami.js http://url.to.album
+
+

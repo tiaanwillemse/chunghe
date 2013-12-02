@@ -1,0 +1,8 @@
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js" ></script>   
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js" ></script>
+<script type="text/javascript">
+    var myCallback = function(){alert('mydiv clicked')};
+    YAHOO.util.Event.on('mydiv', 'click', myCallback);
+</script>
+
+<div id="mydiv">foo</div>

@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<style>
+
+  body{font-family:arial;}
+  h2{font-size:18px; font-weight:normal;}
+	#test1, #test1-fixed{margin-bottom:5em}
+  #test1-fixed{
+    letter-spacing: -0.31em; /* webkit: collapse white-space between units */  
+    *letter-spacing: normal; /* reset IE < 8 */  
+    word-spacing: -0.43em; /* IE < 8 && gecko: collapse white-space between units */  
+  }
+	.inline-block {display:inline-block; height:15px; width:15px;}
+	.c1{background:red}
+	.c2{background:green}
+	.c3{background:blue}
+</style>
+
+<div id="test1">
+	<span class="inline-block c1"></span>
+	<span class="inline-block c2"></span>
+	<span class="inline-block c3"></span>
+</div>
+<h2>fixed with smaller word-spacing and letter spacing</h2>
+<div id="test1-fixed">
+	<span class="inline-block c1"></span>
+	<span class="inline-block c2"></span>
+	<span class="inline-block c3"></span>
+</div>
+<h2>fixed by comment out spaces</h2>
+<div id="test2">
+	<span class="inline-block c1"></span><!--
+	--><span class="inline-block c2"></span><!--
+	--><span class="inline-block c3"></span>
+</div>

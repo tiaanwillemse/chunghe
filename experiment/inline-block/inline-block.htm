@@ -1,0 +1,23 @@
+<style>
+	.first{border:1px solid #cc0000}
+	.second{border:1px solid #00cc00}
+</style>
+http://www.quirksmode.org/css/display.html#inlineblock
+<div class="first">
+	display: block<br/>
+	Let's add some content to see how the block behaves.
+	<div style="display: inline-block; width: 10em;" class="second">
+		display: inline-block; width: 10em<br/>Let's add some content to see how the block behaves.
+	</div>
+	Let's add some content to see how the block behaves.
+	Let's add some content to see how the block behaves.
+	<span style="width: 10em; zoom:1, display:inline;" class="second">
+		<code>span</code> (and not <code>div</code>) with display: inline-block; width: 10em<br/>Let's add some content to see how the block behaves.
+	</span>
+	Let's add some content to see how the block behaves.
+	Let's add some content to see how the block behaves.
+	<span style="display: inline-block; width: 10em;" class="second">
+		<code>span</code> (and not <code>div</code>) with display: inline-block; width: 10em<br/>Let's add some content to see how the block behaves.
+	</span>
+	Let's add some content to see how the block behaves.
+</div>

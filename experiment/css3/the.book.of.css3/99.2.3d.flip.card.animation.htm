@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<style>
+  .panel {
+    float: left;
+    height: 200px;
+    width:200px;
+    margin: 20px;
+    position: realtive;
+    color: #ddd;
+  }
+  .panel .front,
+  .panel .back {
+    float: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #ccc;
+    text-align: center;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+    height: inherit;
+    width: inherit;
+  }
+
+  .panel .front {
+    z-index: 900;
+    background: green;
+  }
+
+  .panel .back {
+    z-index: 800;
+    background: red;
+  }
+
+  /* - - - - - - - - - - - */
+
+  .panel {
+    -webkit-perspective: 600px;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .panel .front,
+  .panel .back { 
+    -webkit-backface-visibility: hidden;
+  }
+
+
+  @-webkit-keyframes 'frontflip' {
+    0% {
+      -webkit-transform: rotateX(0);
+    }
+    100% {
+      -webkit-transform: rotateX(-360deg);
+    }
+  }
+
+  @-webkit-keyframes 'backflip' {
+    0% {
+      -webkit-transform: rotateX(180deg);
+    }
+    100% {
+      -webkit-transform: rotateX(-180deg);
+    }
+  }
+  .panel .front {
+    -webkit-animation: frontflip 4s linear 0 infinite; 
+  }
+  .panel .back {
+    -webkit-animation: backflip 4s linear 0 infinite; 
+  }
+
+
+</style>
+<body>
+
+  <pre>
+
+  .panel {
+    -webkit-perspective: 600px;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .panel .front,
+  .panel .back { 
+    -webkit-backface-visibility: hidden;
+  }
+
+
+  @-webkit-keyframes 'frontflip' {
+    0% {
+      -webkit-transform: rotateX(0);
+    }
+    100% {
+      -webkit-transform: rotateX(-360deg);
+    }
+  }
+
+  @-webkit-keyframes 'backflip' {
+    0% {
+      -webkit-transform: rotateX(180deg);
+    }
+    100% {
+      -webkit-transform: rotateX(-180deg);
+    }
+  }
+  .panel .front {
+    -webkit-animation: frontflip 4s linear 0 infinite; 
+  }
+  .panel .back {
+    -webkit-animation: backflip 4s linear 0 infinite; 
+  }
+  </pre>
+
+  <div class="panel">
+    <div class="front">
+      <p>front</p>
+    </div>
+    <div class="back">
+      <p>back</p>
+    </div>
+  </div>
+
+</body>

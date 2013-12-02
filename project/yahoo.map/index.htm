@@ -1,0 +1,93 @@
+<html>  
+<head>  
+<script type="text/javascript"  src="http://tw.api.maps.yahoo.com/ajaxymap?v=3.8&appid=YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H"></script>  
+<style type="text/css">  
+#map{  
+margin: 1em 0;
+height: 75%;  
+width: 100%;  
+}  
+#lat, #lon{border:1px solid #ccc; padding:3px; margin-left:.5em}
+</style>  
+</head>  
+<body>  
+<input id="loc" type="text" style="width:500px; border:1px solid #ccc; padding:3px">
+<div id="map"></div>  
+<p><label>latitude</label><span id="lat"></span></p>
+<p><label>longitude</label><span id="lon"></span></p>
+  
+<script type="text/javascript" language="javascript">  
+    //初始化Yahoo Map API  
+    var map = new YMap(document.getElementById('map'),YAHOO_MAP_SAT,new YSize(900,450));  
+    var addr = '台北市羅斯福路2段100號';
+	var loc = document.getElementById('loc');
+Array.prototype.inArray = function (value) {
+	var i;
+	for (i=0; i < this.length; i++) {
+		if (this[i] === value) {
+			return true;
+		}
+	}
+	return false;
+};
+
+	value = ['縣', '市', '鄉', '鎮', '市', '區', '路', '街', '村', '里', '路', '段', '號', '巷', '弄']
+	loc.onkeyup = function(){
+		//console.log(loc.value);
+		//if(loc[loc.length-1])
+		//if(loc.value[loc.length-1] ==)
+		var l = loc.value[loc.value.length-1];
+		if(value.inArray(l)){
+			map.drawZoomAndCenter(loc.value, 2);  
+			setTimeout(function(){console.log(map.getCenterLatLon());}, 0);
+		}
+	}
+
+      
+    //加入地圖顯示型態的按鈕  
+    map.addTypeControl();  
+      
+    //設定地圖顯示型態共有三種(YAHOO_MAP_SAT(衛星空照), YAHOO_MAP_HYB(衛星及道路混合), YAHOO_MAP_REG(一般))  
+    map.setMapType(YAHOO_MAP_REG);  
+      
+    //加入放大/縮小的按鈕  
+    map.addZoomLong();  
+      
+    //方向控制  
+    map.addPanControl();  
+      
+    //設定位置及縮放大小　（注意：數字越大越遠)  
+    //map.drawZoomAndCenter(addr, 2);  
+
+
+//console.dir(map);
+//setTimeout(function(){console.log(map.getCenterLatLon());}, 0);
+/*
+console.dir(getCenterGeoPoint);
+console.dir(getCenterLatLon);
+*/
+console.log(map.getCenterLatLon());
+/*
+	var mapCoordCenter = map.convertLatLonXY(map.getCenterLatLon());  
+	console.log(mapCoordCenter);
+  */
+
+	YEvent.Capture(map, EventsList.MouseClick, reportPosition);  
+
+	function reportPosition(_e, _c){  
+		/*
+		var mapCoordCenter = map.convertLatLonXY(map.getCenterLatLon());  
+		YLog.initPos(mapCoordCenter); //call initPos to set the starting location  
+		*/
+		document.getElementById('lat').innerHTML = _c.Lat;
+		document.getElementById('lon').innerHTML = _c.Lon;
+
+		var currentGeoPoint = new YGeoPoint(_c.Lat, _c.Lon);
+		map.addMarker(currentGeoPoint);
+
+	}  
+
+</script>  
+</body>  
+</html>  
+

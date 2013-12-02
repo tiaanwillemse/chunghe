@@ -1,0 +1,11 @@
+
+<div id="output"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost');
+  socket.on('counter_update', function (data) {
+    console.log(data.counter);
+    socket.emit('echo', {back: data.counter})
+    document.getElementById('output').innerHTML = data.counter;
+  });
+</script>

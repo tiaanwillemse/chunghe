@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style>
+  .container{margin: 50px; width: 950px; height: 20px; position: relative; background:silver;}
+  .container span{position:absolute; left:0; width:50px; height:20px; background:green; display: block;}
+  .note {width: 700px; margin-left:50px;}
+
+  /* - - - - - - - - - */
+  .container1 span{-webkit-transition-duration: 2s; -webkit-transition-timing-function: ease;}
+  .container1:hover span{left:900px;}
+
+  .container2 span{-webkit-transition-duration: 2s; -webkit-transition-timing-function: linear;}
+  .container2:hover span{left:900px;}
+
+  .container3 span{-webkit-transition-duration: 2s; -webkit-transition-timing-function: ease-in;}
+  .container3:hover span{left:900px;}
+
+  .container4 span{-webkit-transition-duration: 2s; -webkit-transition-timing-function: ease-out;}
+  .container4:hover span{left:900px;}
+
+  .container5 span{-webkit-transition-duration: 2s; -webkit-transition-timing-function: ease-in-out;}
+  .container5:hover span{left:900px;}
+</style>
+<body>
+
+<p class="note">
+E { transition-timing-function: keyword; }<br>
+keyworld =  ease | linear | ease-in | ease-out  | ease-in-out
+</p>
+<a href="http://www.netzgesta.de/dev/cubic-bezier-timing-function.html">cubic Bézier curves online tool</a>
+<pre>-webkit-transition-timing-function:ease</pre>
+<p>starts slowly, accelerates quickly, and slows down again at the end</p>
+<div class="container container1"><span></span></div>
+<pre>-webkit-transition-timing-function:linear</pre>
+<p>The linear value progresses steadily from the start of the transition to the end, with no variation in speed. </p>
+<div class="container container2"><span></span></div>
+<pre>-webkit-transition-timing-function:ease-in</pre>
+<p>With the ease-in value, the animation begins slowly and then speeds up toward the end</p>
+<div class="container container3"><span></span></div>
+<pre>-webkit-transition-timing-function:ease-out</pre>
+<div class="container container4"><span></span></div>
+<pre>-webkit-transition-timing-function:ease-in-out</pre>
+<p>ease-in-out starts slowly, speeds up through the middle, and then slows down again at the end, similar to but less dramatic than the ease value.</p>
+<div class="container container5"><span></span></div>
+</body>

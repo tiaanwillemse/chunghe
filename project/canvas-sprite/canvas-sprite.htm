@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/dragdrop/dragdrop-min.js" ></script> 
+<style>
+*{padding:0;margin:0;}
+#container{margin:2em;}
+canvas{background:#f7f7f7 url(_grid.png);}
+#dd-panel{
+  width:300px;
+  height:300px;
+  position:relative;
+}
+#dd-resize-handle{
+  cursor:se-resize;
+  position:absolute;
+  bottom:-1px; 
+  right:-1px;
+  width:20px;
+  height:20px;
+  background:transparent url(http://chunghe.googlecode.com/svn/trunk/images/corner_resize.gif) no-repeat scroll right bottom;
+}
+#queue{border:1px solid #ccc; width:300px; min-height:100px; margin-bottom:5px;}
+#sidebar{position:relative; z-index:10;}
+#dd-panel img{position:absolute; top:0; left:0;}
+</style>
+</head>
+<body onload="init()">
+http://thejit.org/Jit/Examples/Hypertree/example1.html
+
+<div id="container">
+  <div id="sidebar">
+    <div id="queue">
+      <img id="tr" src="tr.png">
+      <img id="tl" src="tl.png">
+      <img id="b" src="b.png">
+      <img id="bl" src="bl.png">
+      <img id="br" src="br.png">
+    </div>
+    <p>
+    <input type="button" id="savepng" value="save as png">
+    <input type="button" id="savejpg" value="save as jpg">
+    <a id="goodluck">good luck</a>
+    </p>
+  </div>
+  <div id="main">
+    <div id="dd-panel">
+      <div id="dd-resize-handle"></div>
+      <canvas height="300" width="300" id="ctn"></canvas>
+    </div><!-- #dd-panel -->
+  </div><!-- #main -->
+</div><!-- #container -->
+
+<script>
+function init() {
+  var Event = YAHOO.util.Event,
+      Dom = YAHOO.util.Dom;
+
+  var canvas = document.getElementsByTagName('canvas')[0];
+  var ctx = canvas.getContext('2d');
+  var images = document.getElementsByTagName('img');
+  var panel = Dom.get('dd-panel');
+  var panelXY = Dom.getXY(panel);
+  var lastEl; 
+  var pos = {}; // pos array keeps tracks of position of each image
+
+  YAHOO.util.DDResize = function(panelElId, handleElId, sGroup, config) {
+      YAHOO.util.DDResize.superclass.constructor.apply(this, arguments);
+      if (handleElId) {
+          this.setHandleElId(handleElId);
+      }
+  };
+
+  // use the DDProxy, don't change canvas height/width during onDrag
+  YAHOO.extend(YAHOO.util.DDResize, YAHOO.util.DragDrop, {
+
+      onMouseDown: function(e) {
+          var panel = this.getEl();
+          this.startWidth = panel.offsetWidth;
+          this.startHeight = panel.offsetHeight;
+          this.startPos = [Event.getPageX(e),
+                           Event.getPageY(e)];
+      },
+
+      onDrag: function(e) {
+          var newPos = [YAHOO.util.Event.getPageX(e),
+                        YAHOO.util.Event.getPageY(e)];
+
+          var offsetX = newPos[0] - this.startPos[0];
+          var offsetY = newPos[1] - this.startPos[1];
+
+          var newWidth = Math.max(this.startWidth + offsetX, 10);
+          var newHeight = Math.max(this.startHeight + offsetY, 10);
+
+          var panel = this.getEl();
+          panel.style.width = newWidth + "px";
+          panel.style.height = newHeight + "px";
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+      }
+  });
+
+  new YAHOO.util.DDResize('dd-panel', 'dd-resize-handle', 'panelresize');
+
+/*
+
+  YAHOO.util.DDFoo = function (id, sGroup, config) {
+    YAHOO.util.DDFoo.superclass.constructor.apply(this, arguments);
+    this.initFoo(id, sGroup, config);
+  }
+
+  YAHOO.extend(YAHOO.util.DDFoo, YAHOO.util.DDProxy, {
+  
+    initFoo: function() {
+    
+    },
+
+    onDragDrop: function (e, id) {
+    
+      if (YAHOO.util.DDM.isLegalTarget())
+    }
+  })
+  new YAHOO.util.DDTarget('dd-panel'); // make dd-panel as drop target
+*/
+  YAHOO.util.DDSprite = function (id, sGroup, config) {
+    YAHOO.util.DDSprite.superclass.constructor.apply(this, arguments); 
+    this.initSprite(id, sGroup, config);
+  };
+
+  YAHOO.extend(YAHOO.util.DDSprite, YAHOO.util.DD, { 
+    initSprite: function (id, sGroup, config) {
+    
+    },
+
+    onMouseDown: function () {
+        lastEl = this.getEl();
+    },
+
+    startDrag: function () {
+      console.log('startDrag');
+    },
+
+    // id : dd-target's id
+    onDragDrop: function (e, id) {
+      
+      var el = this.getEl(); //drag el
+      var xy = Dom.getXY(el);
+
+      Dom.get(id).appendChild(el);
+
+      if (id == 'dd-panel') {
+        el.style.position = 'absolute';
+        el.style.left = xy[0] - panelXY[0] + 'px';
+        el.style.top = xy[1] - panelXY[1] + 'px';
+      }
+
+    },
+
+    endDrag: function(e) { 
+    } 
+  });
+  new YAHOO.util.DDSprite('tr');
+  new YAHOO.util.DDSprite('tl');
+  new YAHOO.util.DDSprite('b');
+  new YAHOO.util.DDSprite('bl');
+  new YAHOO.util.DDSprite('br');
+  new YAHOO.util.DDTarget('dd-panel');
+  new YAHOO.util.DDTarget('queue');
+
+  Event.on(document, 'mousedown', function () {
+    lastEl = null;
+  })
+
+  Event.on(document, 'keydown', function (e) {
+      if (!lastEl) return;
+      var charCode = +Event.getCharCode(e);
+
+      switch(charCode) {
+      case 37: //left
+        lastEl.style.left = parseInt(Dom.getStyle(lastEl, 'left')) - 1 + 'px';
+        break;
+      case 39: //right
+        lastEl.style.left = parseInt(Dom.getStyle(lastEl, 'left')) + 1 + 'px';
+        break;
+      case 38: 
+        lastEl.style.top = parseInt(Dom.getStyle(lastEl, 'top')) - 1 + 'px';
+        break;
+      case 40:
+        lastEl.style.top = parseInt(Dom.getStyle(lastEl, 'top')) + 1 + 'px';
+        break;
+      case 46: //del
+        Dom.get('queue').appendChild(lastEl);
+        break;
+      }
+
+    }
+  );
+
+
+  var top = 0;
+  Event.on('goodluck', 'click', function () {
+    var images = panel.getElementsByTagName('img');
+
+    for (var i=0, len = images.length; i<len; i += 1) {
+      var img = images[i];
+      img.style.position = 'absolute';
+      img.style.left = 0;
+      img.style.top = top + 'px';
+      top += Math.ceil(img.height/20) * 20;
+      console.log(top);
+    }
+  });
+
+  var convertTo = function (format) {
+    var imgdata = canvas.toDataURL('image/' + format);
+    window.open(imgdata, "_blank");
+  }
+
+  Event.on('savepng', 'click', function () {
+    var images = panel.getElementsByTagName('img');
+
+    for (var i=0, len = images.length; i<len; i += 1) {
+      var img = images[i];
+      var xy = Dom.getXY(img);
+
+      img.style.visibility = 'hidden';
+      ctx.drawImage(img, xy[0] - panelXY[0], xy[1] - panelXY[1],  img.width, img.height);
+    }
+    convertTo('png');
+  });
+}
+</script>
+</body>
+</html>

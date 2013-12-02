@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<style>
+  .panel {
+    float: left;
+    height: 200px;
+    width:200px;
+    margin: 20px;
+    position: realtive;
+    color: #ddd;
+  }
+  .panel .front,
+  .panel .back {
+    float: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #ccc;
+    text-align: center;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+    height: inherit;
+    width: inherit;
+  }
+
+  .panel .front {
+    z-index: 900;
+    background: green;
+  }
+
+  .panel .back {
+    z-index: 800;
+    background: red;
+  }
+
+  /* - - - - - - - - - - - */
+
+  .panel {
+    -webkit-perspective: 600px;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  /* ----- flip180 ---- */
+  #flip180 .panel .front,
+  #flip180 .panel .back { 
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all .4s ease-in-out;
+  }
+
+  #flip180 .panel .front {
+    -webkit-transform: rotateY(0);
+  }
+  #flip180 .panel .back {
+    -webkit-transform: rotateY(180deg);
+  }
+
+  #flip180 .panel:hover .front{
+    -webkit-transform: rotateY(-180deg);
+  }
+  #flip180 .panel:hover .back{
+    -webkit-transform: rotateY(0);
+  }
+
+  /* ----- flip360 ---- */
+  #flip360 .panel .front,
+  #flip360 .panel .back { 
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all .8s ease-in-out;
+  }
+
+  #flip360 .panel .front {
+    -webkit-transform: rotateY(0);
+  }
+  #flip360 .panel .back {
+    -webkit-transform: rotateY(180deg);
+  }
+
+  #flip360 .panel:hover .front{
+    -webkit-transform: rotateY(-360deg);
+  }
+  #flip360 .panel:hover .back{
+    -webkit-transform: rotateY(-180deg);
+  }
+
+
+</style>
+<body>
+
+
+  <a href="http://css3playground.com/flip-card.php">css3 // 3d flip cards</a>
+  <pre>
+  /* - - - - - - - - - - - */
+
+  .panel {
+    -webkit-perspective: 600px;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  /* ----- flip180 ---- */
+  #flip180 .panel .front,
+  #flip180 .panel .back { 
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all .4s ease-in-out;
+  }
+
+  #flip180 .panel .front {
+    -webkit-transform: rotateY(0);
+  }
+  #flip180 .panel .back {
+    -webkit-transform: rotateY(180deg);
+  }
+
+  #flip180 .panel:hover .front{
+    -webkit-transform: rotateY(-180deg);
+  }
+  #flip180 .panel:hover .back{
+    -webkit-transform: rotateY(0);
+  }
+
+
+  </pre>
+  <div id="flip180">
+    <div class="panel">
+      <div class="front">
+        <p>front</p>
+      </div>
+      <div class="back">
+        <p>back</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="clear:both"></div>
+
+<pre>
+  /* - - - - - - - - - - - */
+
+  .panel {
+    -webkit-perspective: 600px;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  /* ----- flip360 ---- */
+  #flip360 .panel .front,
+  #flip360 .panel .back { 
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all .8s ease-in-out;
+  }
+
+  #flip360 .panel .front {
+    -webkit-transform: rotateY(0);
+  }
+  #flip360 .panel .back {
+    -webkit-transform: rotateY(180deg);
+  }
+
+  #flip360 .panel:hover .front{
+    -webkit-transform: rotateY(-360deg);
+  }
+  #flip360 .panel:hover .back{
+    -webkit-transform: rotateY(-180deg);
+  }
+</pre>
+  <div id="flip360">
+    <div class="panel">
+      <div class="front">
+        <p>front</p>
+      </div>
+      <div class="back">
+        <p>back</p>
+      </div>
+    </div>
+  </div>
+</body>

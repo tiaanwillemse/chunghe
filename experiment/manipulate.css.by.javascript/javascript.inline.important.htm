@@ -1,0 +1,16 @@
+<style>
+#foo{background:red !important; height:300px; width:200px;}
+</style>
+<div id="foo"></div>
+
+<script>
+
+var ss = document.styleSheets[0];
+var rules = ss.cssRules?ss.cssRules:ss.rules;
+
+if(typeof ss.insertRule != 'undefined')
+	ss.insertRule("#foo{background:blue !important}", rules.length);
+else if(typeof ss.addRule != 'undefined')
+	ss.addRule('#foo', 'background:blue !important', rules.length);
+
+</script>

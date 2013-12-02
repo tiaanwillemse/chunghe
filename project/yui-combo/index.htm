@@ -1,0 +1,126 @@
+<style>
+	body{margin:0; padding:2em}
+	p{margin:0; padding:0}
+	.col{width:15%; float:left}
+
+</style>
+<div id="container">
+<div class="col">
+	<p><input name="item" type="checkbox">animation<p>
+	<p><input name="item" type="checkbox">autocomplete<p>
+	<p><input name="item" type="checkbox">button<p>
+	<p><input name="item" type="checkbox">calendar<p>
+	<p><input name="item" type="checkbox">carousel<p>
+	<p><input name="item" type="checkbox">charts<p>
+	<p><input name="item" type="checkbox">colorpicker<p>
+	<p><input name="item" type="checkbox">connection<p>
+	<p><input name="item" type="checkbox">container<p>
+	<p><input name="item" type="checkbox">cookie<p>
+	<p><input name="item" type="checkbox">datasource<p>
+	<p><input name="item" type="checkbox">datatable<p>
+	<p><input name="item" type="checkbox">dom<p>
+</div>
+<div class="col">
+	<p><input name="item" type="checkbox">dragdrop<p>
+	<p><input name="item" type="checkbox">editor<p>
+	<p><input name="item" type="checkbox">element<p>
+	<p><input name="item" type="checkbox">event<p>
+	<p><input name="item" type="checkbox">get<p>
+	<p><input name="item" type="checkbox">history<p>
+	<p><input name="item" type="checkbox">imagecropper<p>
+	<p><input name="item" type="checkbox">imageloader<p>
+	<p><input name="item" type="checkbox">json<p>
+	<p><input name="item" type="checkbox">layout<p>
+	<p><input name="item" type="checkbox">logger<p>
+	<p><input name="item" type="checkbox">menu<p>
+	<p><input name="item" type="checkbox">paginator<p>
+	<p><input name="item" type="checkbox">profiler<p>
+</div>
+<div class="col">
+	<p><input name="item" type="checkbox">profilerviewer<p>
+	<p><input name="item" type="checkbox">resize<p>
+	<p><input name="item" type="checkbox">selector<p>
+	<p><input name="item" type="checkbox">slider<p>
+	<p><input name="item" type="checkbox">tabview<p>
+	<p><input name="item" type="checkbox">treeview<p>
+	<p><input name="item" type="checkbox">uploader<p>
+	<p><input name="item" type="checkbox">utilities<p>
+	<p><input name="item" type="checkbox">yahoo<p>
+	<p><input name="item" type="checkbox">yahoo-dom-event<p>
+	<p><input name="item" type="checkbox">yuiloader<p>
+	<p><input name="item" type="checkbox">yuiloader-dom-event<p>
+	<p><input name="item" type="checkbox">yuitest<p>
+</div>
+<div class="col">
+	<p><input name="item" type="checkbox">base<p>
+	<p><input name="item" type="checkbox">fonts<p>
+	<p><input name="item" type="checkbox">grids<p>
+	<p><input name="item" type="checkbox">reset<p>
+	<p><input name="item" type="checkbox">reset-fonts<p>
+	<p><input name="item" type="checkbox">reset-fonts-grids<p>
+</div>
+<p style="clear:both; padding-top:1em; width:800px"><input id="output" style="width:100%" ></p>
+<a id="link" target="_blank" style="font-size:.8em"></a>
+</div>
+
+<script>
+
+var components = {
+	aggr : ['utilities', 'yahoo-dom-event', 'yuiloader-dom-event'],
+	beta : ['carousel', 'element', 'imagecropper', 'profilerviewer', 'selector'],
+	expr : ['charts', 'uploader']
+}
+
+
+var base = 'http://yui.yahooapis.com/combo?';
+var version = '2.6.0';
+
+Array.prototype.inArray = function (value) {
+	var i;
+	for (i=0; i < this.length; i++) {
+		if (this[i] === value) {
+			return true;
+		}
+	}
+	return false;
+};
+
+
+var buildComponentStr = function(c){
+	var base = version + '/build/' + c + '/' + c;
+	if(components.aggr.inArray(c))
+		return base + '.js'; 
+	if(components.beta.inArray(c))
+		return base + '-beta-min.js'; 
+	if(components.expr.inArray(c))
+		return base + '-experimental-min.js';
+	return base + '-min.js';
+	//return version + '/build/' + c + '/' + c + '-min.js';
+}
+var init = function(){
+	var output = document.getElementById('output');
+	var link = document.getElementById('link');
+	output.value = base;
+	output.onclick = function(){
+		this.select();
+	}
+
+	var aItem = document.getElementsByTagName('input');
+	var container = document.getElementById('container');
+	for(var i=0; i<aItem.length; i++){
+		aItem[i].onchange = function(){
+			if(this.checked){
+				if((output.value[output.value.length-1] != '&') && (output.value[output.value.length-1] != '?'))
+					output.value += '&';
+				output.value += buildComponentStr(this.nextSibling.data);
+			}
+			else{
+				output.value = output.value.replace(buildComponentStr(this.nextSibling.data), '').replace(/&$/,'');
+			}
+			link.href = link.innerHTML = output.value;
+		}
+
+	}
+}
+window.onload = init;
+</script>

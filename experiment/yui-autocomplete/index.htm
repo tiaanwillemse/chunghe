@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>yui autocomplete test</title>
+<link rel="stylesheet" type="text/css" href="http://alpha.dev.wretch.cc/photos/user/css/reset-min.css">
+<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/2.5.1/build/autocomplete/assets/skins/sam/autocomplete.css">
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.1/build/autocomplete/autocomplete-min.js"></script>
+</head>
+<body class="yui-skin-sam">
+<p>type "和" or "和平"</p>
+<div id="myAutoComplete">
+    <input id="myInput" type="text">
+    <div id="myContainer"></div>
+</div>
+<script type="text/javascript">
+
+var myArray1 = ["和", "和平", "和平高", "和平高中"];
+var myDataSource = new YAHOO.widget.DS_JSArray(myArray1);
+var myAutoComp = new YAHOO.widget.AutoComplete("myInput","myContainer", myDataSource);
+
+</script>
+</body>
+</html>
+
+

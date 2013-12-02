@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DD_roundies Demo</title>
+<script src="DD_roundies_0.0.2a.js"></script>
+<style>
+
+*{padding:0; margin:0;}
+body{font-family:arial}
+#container{width:750px; margin: 0 auto;}
+
+body, #d1 .col, #d2 .col{padding: 2em;}
+#d1{background:#36c;  color:#fff}
+#d2{border:3px solid #AAA;}
+#d1, #d2{margin-bottom:30px;}
+
+#d3, #d4, #d3r, #d4r{width:50px; height:50px; padding:20px; margin: 0 10px 10px 0; }
+#d3, #d3r{background: #96c63f; float:left;}
+#d4, #d4r{border: 3px solid #96c63f; float:right;}
+</style>
+</head>
+<body>
+
+<div id="container">
+	<div id="d1">
+	<div class="col">
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu ante nec tortor tincidunt sollicitudin sit amet ac augue. Fusce venenatis sodales augue sit amet vehicula. Phasellus laoreet tristique justo ut commodo. Nunc a tempor nulla. Ut non sapien mauris, at posuere tortor. Fusce scelerisque euismod nulla, ut lobortis leo dignissim vitae. Quisque scelerisque, dolor sit amet lacinia cursus, mi diam interdum mi, ac consequat lacus est ac neque. Mauris dapibus consequat hendrerit. Ut ut nulla sit amet nibh lacinia vestibulum. Aenean quis pretium lacus. Integer at nibh nulla. Donec at metus turpis. Integer ultrices urna ut ipsum interdum viverra. Curabitur mattis tempus ipsum, id pulvinar velit consequat vel. Sed imperdiet lacinia consequat. Aliquam ac mi at lorem adipiscing bibendum ac id risus. Praesent venenatis ultrices mi id elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris sit amet massa felis. </div></div>
+	<div id="d2">
+	<div class="col">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu ante nec tortor tincidunt sollicitudin sit amet ac augue. Fusce venenatis sodales augue sit amet vehicula. Phasellus laoreet tristique justo ut commodo. Nunc a tempor nulla. Ut non sapien mauris, at posuere tortor. Fusce scelerisque euismod nulla, ut lobortis leo dignissim vitae. Quisque scelerisque, dolor sit amet lacinia cursus, mi diam interdum mi, ac consequat lacus est ac neque. Mauris dapibus consequat hendrerit. Ut ut nulla sit amet nibh lacinia vestibulum. Aenean quis pretium lacus. Integer at nibh nulla. Donec at metus turpis. Integer ultrices urna ut ipsum interdum viverra. Curabitur mattis tempus ipsum, id pulvinar velit consequat vel. Sed imperdiet lacinia consequat. Aliquam ac mi at lorem adipiscing bibendum ac id risus. Praesent venenatis ultrices mi id elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris sit amet massa felis. </div>
+	</div>
+
+	<div id="d3"></div>
+	<div id="d3r"></div>
+
+	<div id="d4"></div>
+	<div id="d4r"></div>
+</div>
+
+
+<script>
+DD_roundies.addRule('#d1', '10px', true);
+DD_roundies.addRule('#d2', '10px', true);
+DD_roundies.addRule('#d3r', '10px', true);
+DD_roundies.addRule('#d4r', '10px', true);
+</script>
+</body>
+</html>

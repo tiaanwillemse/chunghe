@@ -1,0 +1,25 @@
+<style type="text/css">
+    body{ padding: 5em }
+    #tooltip{border:2px solid yellow; background-color:#fff298; color:#666; padding:5px}
+    #p{ border-bottom: 1px dashed #333; cursor:pointer}
+</style>
+<script src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js"></script> 
+<script src="http://yui.yahooapis.com/2.5.2/build/dom/dom-min.js"></script> 
+
+<span id="tooltip" style="position:absolute; top:-5000px; left:-5000px">hello world</span>
+<span id="p">show tooltip</span>
+
+<script tyle="text/javascript">
+    var YUD = YAHOO.util.Dom,
+	$   = YAHOO.util.Dom.get;
+    var p  = $('p');
+    var tooltip = $('tooltip');
+    var xy = YUD.getXY('p');
+    console.log(xy);
+    p.onmouseover = function(){
+	YUD.setXY('tooltip', [xy[0]+30, xy[1]-30]);
+    }
+    p.onmouseout = function(){
+	YUD.setXY('tooltip', [-5000, -5000]);
+    }
+</script>

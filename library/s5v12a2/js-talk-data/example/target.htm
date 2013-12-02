@@ -1,0 +1,17 @@
+
+<style>
+	li{list-style-type:none}
+</style>
+<ul>
+	<li>banana</li>
+	<li>tomato</li>
+	<li>orange</li>
+</ul>
+<script>
+	document.onclick = function(e){
+		if(!e) e = window.event;
+		var target = e.target||e.srcElement;
+		alert(target.innerHTML + ' clicked');
+		target.style.backgroundColor = '#eee';
+	}
+</script>

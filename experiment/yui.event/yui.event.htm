@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo/yahoo-min.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/dom/dom-min.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/event/event-min.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/selector/selector-min.js" ></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/event-mouseenter/event-mouseenter-min.js" ></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/event-delegate/event-delegate-min.js" ></script>
+<style>
+*{padding:0; margin:0;}
+body{font-family:arial; padding:2em; line-height:1.5;}
+blockquote{color:#666; padding-left:1em; font-style:italic; font-family:georgia;}
+#warpper{width:950px;}
+.note{padding: 10px 0 10px 2em; border:1px solid #eee; background:#F9F7ED; margin:1em 0; border:1px solid #eee;}
+ul, ol {padding-left:2em; margin-left:2em}
+h2{font-size:24px; font-weight:bold; margin:1.5em 0 0;}
+p.title{font-weight:bold; color:#333; margin-top:.5em}
+#foo{border:2px solid #ccc; padding:30px 50px; width:200px; text-align:center; margin-bottom:5px;}
+#toolbar-span span{background:#ddd; padding:5px; margin-right:5px;}
+#container li{background:#eee; margin-bottom:5px; list-style-type:none;}
+
+
+</style>
+</head>
+
+<body>
+<div id="warpper">
+<h2>addListener/remoevListener/getListeners</h2>
+<ol class="note">
+  <li>removeListener must specify the event type, ex: Event.removeListener('foo', 'dblclick', hello)</li>
+  <li>getListeners doesn't have to specify the event type, ex: Event.getListeners('foo')</li>
+</ol>
+<div id="foo">click me!</div>
+<p>
+<input type="button" value="add click Listner" id="addclick">
+<input type="button" value="add double click Listner" id="adddblclick">
+</p>
+<p>
+<input type="button" value="remove click Listener" id="removeclick">
+<input type="button" value="remove double click Listener" id="removedblclick">
+</p>
+<input type="button" value="getEventListner" id="get">
+<h2>focusin / focusout</h2>
+<ol class="note">
+  <li>DOM focus and blur events don't bubble, use YUI focusin &amp; focusout event to solve.</li>
+  <li>By giving it a tabindex you can make any element you like focusable. The focus and blur events should work on such elements.</li>
+</ol>
+<blockquote>Since the DOM focus and blur events do not bubble, use the Event Utility's focusin and focusout events as an alternative to attaching discrete DOM focus and blur event handlers to focusable elements. The focusin and focusout events make it possible to attach a single listener to an element and listen for the focus and blur events fired by all its focusable descendants. As reducing the number of event listeners is a proven strategy for improving performance, using the focusin and focusout events is a great way to help speed up any page or application that requires listening for focus and blur. </blockquote>
+note: only workable for focusable elements.
+<p class="title">focuable elements:</p>
+<div id="toolbar">
+  <input type="button" id="button-cut" name="button-cut" value="Cut"> 
+  <input type="button" id="button-copy" name="button-copy" value="Copy"> 
+  <input type="button" id="button-paste" name="button-paste" value="Paste"> 
+</div>
+<p class="title">unfocuable elements: add tabindex to make them foucable</p>
+<div id="toolbar-span">
+  <span tabindex="-1" id="span-cut"   value="Cut">Cut</span>
+  <span tabindex="-1" id="span-copy"  value="Copy">Copy</span>
+  <span tabindex="-1" id="span-paste" value="Paste">Paste</span> 
+</div>
+<h2>event delegate (with mouseenter/mouseout)</h2>
+<ol class="note">
+  <li>event delegate needs selector.js for the fourth argument</li>
+</ol>
+<div id="container"> 
+    <ul> 
+        <li id="item-1"><em>1</em>&nbsp;<span>Item Type One</span></li> 
+        <li id="item-2"><em>2</em>&nbsp;<span>Item Type Two</span></li> 
+        <li id="item-3"><em>3</em>&nbsp;<span>Item Type Three</span></li> 
+    </ul> 
+</div> 
+</div><!--end: #wrapper-->
+
+<script>
+
+/*
+ * addListener/remoevListener/getListeners
+ */
+Event = YAHOO.util.Event,
+DOM = YAHOO.util.Dom;
+
+Event.onDOMReady(function () {
+  var Event = YAHOO.util.Event;
+  
+  var hello = function () {
+    alert('hello');
+  };
+
+  var getListeners = function () {
+    console.log(Event.getListeners('foo'));
+  }
+
+  Event.on('addclick', 'click', function () {
+    Event.addListener('foo', 'click', hello);
+    getListeners();
+  });
+
+  Event.on('adddblclick', 'click', function () {
+    Event.addListener('foo', 'dblclick', hello);
+    getListeners();
+  });
+
+  // removeListener must specify the event type
+  Event.on('removeclick', 'click', function () {
+    Event.removeListener('foo', 'click', hello);
+    getListeners();
+  });
+
+  // removeListener must specify the event type
+  Event.on('removedblclick', 'click', function () {
+    Event.removeListener('foo', 'dblclick', hello);
+    getListeners();
+  });
+
+  // getListeners doesn't have to specify the event type.
+  Event.on('get', 'click', getListeners);
+});
+
+/*
+ * focusin/focusout
+ */
+
+Event.onDOMReady(function () {
+  Event.on('toolbar', 'focusin', function (e) {
+    console.log("target focusin: " + Event.getTarget(e).id);
+  })
+  Event.on('toolbar', 'focusout', function (e) {
+    console.log("target focusout: " + Event.getTarget(e).id);
+  })
+  Event.on('toolbar-span', 'focusin', function (e) {
+    console.log("target focusin: " + Event.getTarget(e).id);
+  })
+  Event.on('toolbar-span', 'focusout', function (e) {
+    console.log("target focusout: " + Event.getTarget(e).id);
+  })
+});
+
+/*
+ * Event delegate
+ */
+Event.onDOMReady(function () {
+  Event.delegate('container', 'mouseenter', function(e, el, container) {
+      console.log(e, el, container);
+  }, 'li')
+
+  Event.delegate('container', 'mouseleave', function(e, el, container) {
+      console.log(e, el, container);
+  }, 'li')
+
+});
+</script>
+</body>
+</html>

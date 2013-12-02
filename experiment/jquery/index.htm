@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+<div>DIV</div>
+
+<span>SPAN</span>
+<p>P <button>Button</button></p>
+<input name="first" value="foo">
+<script src="../../library/jquery-1.7.2.js"></script>
+<script>
+
+/*
+$(document); // whole document
+$('#myid');  // select element id = 'myid'
+$('div.myClass'); // select div element class = 'myClass'
+$('input[name=first]'); 
+
+// jquery properitary
+$('a:first')
+$('tr:odd')
+$('#myForm :input')
+$('div:visible')
+$('div:gt(2)')
+$('div:animated')
+
+// filters
+$('div').has('p');
+$('div').not('.myClass'); // select div element which className != 'myClass'
+$('div').filter('.myClass') // select div element which className == 'myClass'
+$('div').first();  // select first div
+$('div').eq(5);    // select 6th div
+
+// DOM traverse
+$('div').parent(); // select parent element
+$('div').children(); // select child nodes
+$('div').sibling(); // select sibling nodes
+$('div').close('form'); // select form element closet to the div
+
+
+// chain
+$('div')
+    .find('h3') // find the h3 inside div
+    .eq(2)      // select 3rd h3 elment
+    .html('hello'); // alter the content
+
+// setter and getter
+$('h1').html();         // getter
+$('h1').html('hello');  //setter
+
+.html();    // read html content
+.text();    // read txt content
+.attr();    // read attributes
+.width();   
+.height();
+.val();     // read the value from form element
+
+
+// utilities
+$.trim()
+$.each()
+$.inArray()
+$.grep();
+$.extend(); 
+$makeArray();
+$.type
+$.isArray
+$.isEmptyObject
+$.isFunction
+$.isPlainObject
+$.support
+*/
+
+</script>
+</body>
+</html>

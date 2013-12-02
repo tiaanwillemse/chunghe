@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>form</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.0r4/build/reset-fonts/reset-fonts.css">
+<link rel="stylesheet" type="text/css" href="form.css">
+</head>
+<body>
+<div id="doc">
+   <div class="mod" id="signup">
+      <div class="hd"><h2>Sign up for a new account</h2></div>
+
+      <div class="bd">
+         <form action="#">
+            <fieldset>
+               <legend>Personal Information</legend>
+               <ul>
+                  <li>
+                     <label for="first-name">First name <strong title="required">required</strong></label>
+
+                     <input id="first-name" name="fname">
+                  </li>
+                  <li>
+                     <label for="last-name">Last name <strong title="required">required</strong></label>
+                     <input id="last-name" name="lname">
+                  </li>
+                  <li>
+                     <label for="email">Email <strong title="required">required</strong></label>
+
+                     <input id="email" name="email">
+                  </li>
+                  <li>
+                     <label for="gender">Gender</label>
+                     <select id="gender" name="gender">
+                        <option selected="1">[Select]</option>
+                        <option>Male</option>
+
+                        <option>Female</option>
+                     </select>
+                  </li>
+                  <li>
+                     <label for="zip">ZIP/Postal code</label>
+                     <input id="zip" name="zip">
+                  </li>
+               </ul>
+
+            </fieldset>
+            <fieldset>
+               <legend>Account Information</legend>
+               <ul>
+                  <li>
+                     <label for="user-name">User name <strong title="required">required</strong></label>
+                     <input id="user-name" name="uname">
+
+                     <em>ID may consist of a-z, 0-9, and underscores.</em>
+                  </li>
+                  <li>
+                     <label for="password">Password <strong title="required">required</strong></label>
+                     <input id="password" name="pword">
+                     <em>Must be six characters or more.</em>
+                  </li>
+
+                  <li>
+                     <label for="password-confirm">Confirm password <strong title="required">required</strong></label>
+                     <input id="password-confirm" name="cpword">
+                  </li>
+                  <li class="last-child">
+                     <input type="checkbox" id="mailer" checked="1">
+                     <label for="mailer">Send me news and special deals</label>
+
+                  </li>
+               </ul>
+            </fieldset>  
+            <input type="submit" value="Sign up" class="submit">  
+         </form>
+      </div>
+   </div>
+</div>
+</body>
+</html>

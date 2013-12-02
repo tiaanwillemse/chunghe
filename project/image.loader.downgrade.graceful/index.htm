@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Using ImageLoader with CSS Class Names</title>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+	width:500px;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/fonts/fonts-min.css" />
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/imageloader/imageloader-min.js"></script>
+
+<!--there is no custom header content for this example-->
+
+</head>
+
+<body class=" yui-skin-sam">
+
+
+	<div class='topmain yui-imgload-scrollgroup' id='topmain' style='background-image:url("http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/museum.jpg");' title='group 1; mouseover image; 2 sec limit'></div>
+<p>orem ipsum dolor sit amet, consectetuer adipiscing elit. Nam eget leo. Aliquam erat volutpat. Sed dapibus arcu ut nisi. Ut vitae massa vel justo varius dignissim. Fusce rhoncus dolor a mi. Curabitur ipsum magna, scelerisque et, porta adipiscing, faucibus at, nisi. Sed elit purus, laoreet ut, aliquet non, lobortis et, odio. Ut bibendum luctus eros. Cras dapibus, leo a cursus rhoncus, mauris urna rhoncus sem, sagittis volutpat eros mi eleifend lorem. Aliquam vel sem id orci ultricies dapibus. Nulla mauris elit, congue a, mollis vitae, ultrices in, metus. Maecenas bibendum. Donec ipsum. Praesent vitae magna. Proin rutrum. Aenean velit risus, vulputate eu, consectetuer ac, hendrerit id, metus. Cras tempus massa ut nisi lacinia convallis.</p>
+
+<p>Etiam aliquam ornare sem. Aliquam hendrerit molestie turpis. Nullam tempus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris semper. Etiam vitae mi nec nibh scelerisque condimentum. Vivamus malesuada ipsum sed quam. Vivamus pharetra. Donec arcu lorem, pellentesque vitae, congue eget, dictum nec, nisi. Vivamus et urna sagittis neque dapibus adipiscing. Aliquam sed est. Vivamus sit amet felis at dolor volutpat vulputate.</p>
+
+<p>Sed luctus, neque at adipiscing convallis, augue tortor sagittis risus, sed dignissim magna eros vitae nulla. Vestibulum non mauris ut dui fermentum vulputate. Ut porta leo vitae neque. Quisque eu ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce sit amet massa. Aliquam nec nisl. Sed vestibulum rutrum urna. Curabitur sollicitudin nisl eget nisl. Nam velit felis, ultricies a, pretium id, pharetra vel, magna. Curabitur nulla metus, vulputate eu, dapibus non, vestibulum non, leo. Sed et eros.</p>
+
+<p>Pellentesque a nunc nec purus posuere dictum. Vestibulum eu turpis a urna porta feugiat. Donec accumsan posuere arcu. Donec cursus augue sit amet elit. Duis fringilla, nunc porttitor tristique auctor, nisl lorem elementum urna, ac rutrum lorem lorem eu sem. Sed purus nulla, molestie eu, tristique id, congue quis, elit. Sed molestie. Etiam at purus. Donec tempus mauris in sapien. Quisque auctor faucibus ligula. Phasellus mollis.</p>
+
+<p>Proin nisl. Nunc laoreet urna. Etiam blandit. Quisque sit amet turpis eu metus mattis varius. Morbi sit amet orci at arcu venenatis fringilla. Etiam nec libero. Suspendisse id risus vestibulum ligula congue ultrices. Morbi ut leo at tellus mattis sodales. Duis at nisl. Donec tempor libero ut erat. Sed eu enim. Phasellus orci pede, egestas nec, feugiat sit amet, posuere nec, justo. Vestibulum lacus mi, gravida sit amet, consequat vel, accumsan vel, quam. Nulla semper congue lorem. In dapibus viverra felis. Aliquam ultrices mauris vitae massa. Nulla bibendum. Vivamus sit amet eros. 
+</p>
+
+<style>
+
+.topmain { height:75px; width:100px; }
+.duo1 { height:67px; width:100px; }
+.duo2 {  height:53px; width:100px; }
+.scroll { height:72px; width:100px; }
+
+/*
+.yui-imgload-scrollgroup
+	{ background:none !important; }
+	*/
+
+</style>
+<script>
+document.write('<style>.yui-imgload-scrollgroup{background:none !important}</style>');
+</script>
+
+
+	<div class='duo1 yui-imgload-scrollgroup' id='duo1' style='background-image:url("http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/uluru.jpg");' title='group 2; mouseover left image, or click on right image; 4 sec limit'></div>
+
+	<div class='duo2 yui-imgload-scrollgroup' id='duo2' style='background-image:url("http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/katatjuta.jpg");' title='group 2; mouseover left image, or click on right image; 4 sec limit'></div>
+	<div class='scroll' title='group 3; scroll; no time limit'>
+		<img id='scrollImg' class='yui-imgload-scrollgroup' style='background-image:url("http://developer.yahoo.com/yui/docs/assets/examples/exampleimages/small/morraine.jpg");' src='http://us.i1.yimg.com/us.yimg.com/i/us/tr/b/1px_trans.gif' width='100' height='72' />
+	</div>
+
+
+<script>
+
+
+var scrollGroup = new YAHOO.util.ImageLoader.group(window, 'scroll');
+scrollGroup.foldConditional = true;
+scrollGroup.addTrigger(window, 'resize');
+scrollGroup.className = 'yui-imgload-scrollgroup';
+
+</script>
+
+</body>
+</html>
+

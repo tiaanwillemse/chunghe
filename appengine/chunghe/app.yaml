@@ -1,0 +1,22 @@
+#http://code.google.com/intl/zh-TW/appengine/docs/python/config/appconfig.html
+
+application: chunghe
+version: 2
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /flickr/.*
+  static_files: apps/flickr/index.htm
+  upload: apps/flickr/index.htm
+
+- url: /rate/.*
+  script: apps/rate/index.py
+
+- url: /plurk/.*
+  static_files: apps/plurk/index.htm
+  upload: apps/plurk/index.htm
+
+- url: /.*
+  script: home.py

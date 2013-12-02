@@ -1,0 +1,85 @@
+
+#signup {
+   margin:2em 0;
+   width:28em;
+}
+
+#signup h2 {
+   background:#fff;
+   color:green;
+   display:inline;
+   font:bold 180% arial;
+}
+
+#signup form {
+   padding:0.5em;
+   text-align:right;
+   zoom:1; /* IE: for correct width of first fieldset */
+}
+
+#signup fieldset {
+   border:1px solid #dcdcdc;
+   margin-bottom:1.5em;
+   padding:0 30px 10px 10px; /* pixels for "required" image */
+}
+
+#signup legend {
+   color:#000; /* override IE pretty forms */
+   font-weight:bold; 
+}
+
+#signup li {
+   list-style-type:none;
+   padding:0.75em 0 0;
+   position:relative; /* offsetParent of "required" icons */
+   zoom:1; /* IE: needs layout for vertical margin */
+}
+
+#signup label, #signup input {
+   vertical-align:middle;
+}
+
+#signup label {
+   float:left;
+   text-align:left;
+}
+
+#signup li.last-child {
+   text-align:left;
+}
+
+#signup li.last-child label {
+   float:none;
+   width:auto;
+} 
+
+#signup label strong {/* "required" fields */
+   background:url(../i/red_star.gif) no-repeat;
+   position:absolute;
+   right:-25px; top:0.8em; 
+   text-indent:-1000em; /* hide textNode */
+   width:20px;height:20px;
+}
+
+#signup fieldset input, #signup select {
+   width:63%;
+}
+
+#signup li.last-child input {
+   width:auto;
+}  
+
+#signup input.submit { /* #signup input[type="submit"] */
+   background:orange;
+   color:#fff;
+   font:bold 120% verdana;
+   padding:0.2em 0.5em;
+}
+
+#signup li em {
+   display:block;
+   font:78% verdana;
+   color:#666;
+   margin-left:36%; /* account for label  */
+   text-align:left;
+}

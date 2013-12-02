@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>transform:rotate | rotate3d</title>
+<meta content="width=320,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport" />
+<style type="text/css">
+*{padding: 0;margin: 0}
+body{
+	background-color: #ccc;
+	padding: 10px;
+}
+.box{
+	overflow: hidden;
+	display: inline-block;
+}
+
+li{
+	display: inline-block;
+	vertical-align: top;
+	padding:0 0 5px;
+}
+li span{
+	display: block;
+	font-size: 14px;
+}
+.border{
+	border:1px solid transparent;
+}
+
+.rotate{
+	-webkit-transform:rotate(3deg);
+}
+.rotate3d{
+	-webkit-transform:rotate3d(0,0,0,3deg);
+}
+img{
+	vertical-align: top;
+}
+.margin{
+	margin: -1px;
+}
+hr{
+	margin: 20px 0;
+}
+</style>
+
+</head>
+<body>
+<ul>
+	<li>
+		<img class="rotate" src="hawk.jpg" width="600" height="450">
+		<span>rotate</span>
+	</li>
+	<li>
+		<div class="rotate box"><img class="margin" src="hawk.jpg" width="600" height="450"></div>
+		<span>rotate+hidden</span>
+	</li>
+	<li>
+		<img class="rotate border" src="hawk.jpg" width="600" height="450">
+		<span>rotate+border</span>
+	</li>
+	<li>
+		<div class="rotate box border"><img class="margin" src="hawk.jpg" width="600" height="450"></div>
+		<span>rotate+hidden+border</span>
+	</li>
+</ul>
+<hr>
+<ul>
+	<li>
+		<img class="rotate3d" src="hawk.jpg" width="600" height="450">
+		<span>rotate3d</span>
+	</li>
+	<li>
+		<div class="rotate3d box"><img class="margin" src="hawk.jpg" width="600" height="450"></div>
+		<span>rotate3d+hidden</span>
+	</li>
+	<li>
+		<img class="rotate3d border" src="hawk.jpg" width="600" height="450">
+
+		<span>rotate3d+border</span>
+	</li>
+	<li>
+		<div class="rotate3d box border"><img class="margin" src="hawk.jpg" width="600" height="450"></div>
+		<span>rotate3d+hidden+border</span>
+	</li>
+</ul>
+
+
+
+
+</body>
+</html>

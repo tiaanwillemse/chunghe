@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>Nexus - Ticker</title>
+
+
+	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+@import url("http://img.yahoo.co.kr/ykc/rs_v1.css");
+body,form,div,p,h1,h2,h3,h4,h5,h6,ol,ul,dl,dt,dd,li,input{font:12px verdana,snas-serif;}
+body{padding:15px}
+h1{margin:20px 0 15px 0 ;text-align:left;font-size:20px;font-weight:bold;}
+a{color:#000;text-decoration:none;}
+a:hover{text-decoration:underline;}
+#tck2{border:1px solid #000;margin:0 auto 20px;text-align:left;padding:10px;width:278px;height:126px;}
+#tck2 h3{font:bold 15px Verdana;line-height:100%;padding-left:1px;margin-bottom:11px;}
+#tck2 .viewBox{position:relative;height:100px;overflow:hidden;}
+#tck2 ul{position:absolute;top:0;left:0;}
+#tck2 li{background:url(http://img.yahoo.co.kr/nexus/2007/u_dot01.gif) 4px 9px no-repeat; padding-left:15px;line-height:20px;}
+
+#adm{border:1px solid #cecece;font:0px/0px Verdana;text-align:left;padding:13px 0;margin:0 auto;width:360px;}
+#adm div.time{height:35px;}
+#adm span.speed{display:block;float:left;}
+#adm span.delay{display:block;float:left;margin-left:10px;}
+#adm,#adm select{font:12px Verdana;}
+#adm label{display:block;float:left;width:65px;padding:0 8px 0 0;font:bold 12px/170% Verdana;text-align:right;}
+#adm div.typ{clear:both;width:100%;}
+#adm div.typ ul{float:left;*margin-left:-3px;}
+#adm div.typ ul li{float:left;width:140px;font:12px/170% Verdana;}
+</style></head><body>
+
+
+<div id="tck2">
+<h3>Hot News</h3>
+<div id="tck2View" class="viewBox">
+<ul style="left: 0px; top: 1.50301px;" id="tck2Items">
+<li><a href="##">Anna Nicole Smith's last film due in May</a></li>
+<li><a href="##">Bullock: Way off on first impressions</a></li>
+<li><a href="##">Claims raise questions about prince</a></li>
+<li><a href="##">Lauren Bacall doesn't plan to retire</a></li>
+<li><a href="##">Cycling champ: personal life is private</a></li>
+<li><a href="##">Paula Abdul: 'I've never been drunk'</a></li>
+<li><a href="##">English springer spaniel becomes to dog</a></li>
+<li><a href="##">'Bone Collector' author's briard wins</a></li>
+<li><a href="##">Nielsen top-20: 'Idol' continues to rule</a></li>
+<li><a href="##">From 'GE Theater' To The Digital Stage</a></li>
+<li><a href="##">Anna Nicole Smith's last film due in May</a></li><li><a href="##">Bullock: Way off on first impressions</a></li><li><a href="##">Claims raise questions about prince</a></li><li><a href="##">Lauren Bacall doesn't plan to retire</a></li><li><a href="##">Cycling champ: personal life is private</a></li><li><a href="##">Paula Abdul: 'I've never been drunk'</a></li></ul>
+</div>
+</div>
+
+<!-- Admin : Auto Rolling Move Layer -->
+<fieldset id="adm">
+<div class="time">
+    <span class="speed">
+    <label for="spd">Speed</label>
+    <select id="spd" name="spd">
+    <option>0.3</option>
+    <option>0.4</option>
+    </select>
+    </span>
+
+    <span class="delay">
+    <label for="dly">Delay</label>
+    <select id="dly" name="dly">
+    <option>1</option>    
+    <option>2</option>    
+    <option>3</option>
+    <option>4</option>
+    </select>
+    </span>
+</div>
+
+<div class="typ">
+    <label for="typ1">Type</label>
+    <ul>
+    <li><input id="typ1" name="typ" title="backIn" checked="checked" type="radio"> backIn</li>
+    <li><input id="typ2" name="typ" title="backOut" type="radio"> backOut</li>
+    <li><input id="typ3" name="typ" title="backBoth" type="radio"> backBoth</li>
+    <li><input id="typ4" name="typ" title="bounceIn" type="radio"> bounceIn</li>
+    <li><input id="typ5" name="typ" title="bounceOut" type="radio"> bounceOut</li>
+    <li><input id="typ6" name="typ" title="bounceBoth" type="radio"> bounceBoth</li>
+    <li><input id="typ7" name="typ" title="elasticIn" type="radio"> elasticIn</li>
+    <li><input id="typ8" name="typ" title="elasticOut" type="radio"> elasticOut</li>
+    <li><input id="typ9" name="typ" title="elasticBoth" type="radio"> elasticBoth</li>
+    <li><input id="typ10" name="typ" title="easeNone" type="radio"> easeNone</li>
+    <li><input id="typ11" name="typ" title="easeIn" type="radio"> easeIn</li>
+    <li><input id="typ12" name="typ" title="easeOut" type="radio"> easeOut</li>
+    <li><input id="typ13" name="typ" title="easeBoth" type="radio"> easeBoth</li>
+    <li><input id="typ14" name="typ" title="easeInStrong" type="radio"> easeInStrong</li>
+    <li><input id="typ15" name="typ" title="easeOutStrong" type="radio"> easeOutStrong</li>
+    <li><input id="typ16" name="typ" title="easeBothStrong" type="radio"> easeBothStrong</li>
+    </ul>
+</div>
+</fieldset>
+<!--// Admin : Auto Rolling Move Layer -->
+<script src="ticker2_files/yahoo_2.js" type="text/javascript"></script>
+<script src="ticker2_files/dom_2.js" type="text/javascript"></script>
+<script src="ticker2_files/event_2.js" type="text/javascript"></script>
+<script src="ticker2_files/animation_2.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+YAHOO.namespace('KR.util') ;
+/***************************************************************************************
+Subject : YAHOO.KR.util.roopingMvLayer
+Writer : Cheong Ho Cheon ( Y!msg : shai0827 , Email : shai0827@yahoo-inc.com )
+Date : 11. 18. 2006
+Comment : Contents layer moving module. - Rolling
+#Constructor 
+{
+	contents : { view : 'view box layer ID', container : 'contents container ID', tag : 'content tag name' },
+	process : { container : 'process button container ID', tag : 'process button tag name', onClass : 'process btn's active class name' },	// if process button exist optional
+	ani : { speed : animation speed, type : 'animation type' },
+	action : { direction : 'action direction', mvItemNum : per moving layer num },
+	auto : auto rolling option,
+	delay : auto rolling delay time
+}
+#Member method.
+setEvtHandler ( 'node ID', 'event type', 'action type(prev/next)' ) ;
+#Requirement
+YAHOO.js, event.js, dom.js, animation.js ( version 2.1.0 )
+***************************************************************************************/
+// constructor
+YAHOO.KR.util.roopingMvLayer = function ( poConfig ) 
+{
+	if ( poConfig ) { this.init( poConfig ) ; }
+};
+// member variables
+YAHOO.KR.util.roopingMvLayer.prototype =
+{
+	bIsAnimate : false,	
+	nOriginPos : null,	
+	nCurCnt : 0,
+	nTotItem : null,
+	nTimer : null,
+	nPageInNum	: null,
+	nMoveSize : null,	
+	oCon : null,
+	oList : null,
+	aItemList : null,
+	aProcBtnList : null,
+	oCfg : null,
+	// get animation moving size / inner elements num.
+	getAniRange : function () 
+	{
+		this.nTotItem = this.aItemList.length ;	
+		switch ( this.oCfg.action.direction.toLowerCase() )
+		{
+			case 'vertical' :
+				this.nMoveSize = this.aItemList[0].offsetHeight * this.oCfg.action.mvItemNum;
+				this.nPageInNum = Math.round( this.oCon.offsetHeight / this.aItemList[0].offsetHeight ) ;
+				this.nOriginPos = YAHOO.util.Dom.getY ( this.oCon ) ;
+				this.nType = 1 ;
+			break;
+			
+			case 'horizonal' :
+				this.nMoveSize = this.aItemList[0].offsetWidth * this.oCfg.action.mvItemNum;
+				this.nPageInNum = Math.round( this.oCon.offsetWidth / this.aItemList[0].offsetWidth ) ;
+				this.nOriginPos = YAHOO.util.Dom.getX ( this.oCon ) ;
+				this.nType = 0 ;
+			break;
+		}
+	},
+	// go previous
+	goPrev : function ( e, THIS ) 
+	{	
+		if ( !THIS.bIsAnimate )
+		{	
+			var xy = YAHOO.util.Dom.getXY ( THIS.oList ) ;
+			
+			THIS.nCurCnt -= THIS.oCfg.action.mvItemNum ;
+			// set to last contents position.			
+			if ( THIS.nCurCnt < 0 )
+			{
+				THIS.nCurCnt = THIS.nTotItem + THIS.nCurCnt ;
+				xy[THIS.nType] = THIS.nOriginPos-(THIS.nCurCnt+THIS.oCfg.action.mvItemNum)*(THIS.nMoveSize/THIS.oCfg.action.mvItemNum) ;
+			}
+			
+			THIS.moveItem ( THIS.nCurCnt, xy ) ;
+		}
+		return false;		
+	},
+	// go next
+	goNext : function ( e, THIS ) 
+	{
+		if ( !THIS.bIsAnimate )
+		{	
+			var xy = YAHOO.util.Dom.getXY ( THIS.oList ) ;
+			
+			THIS.nCurCnt += THIS.oCfg.action.mvItemNum ;
+			// set to last contents position.
+			if ( THIS.nCurCnt >= THIS.nTotItem + THIS.oCfg.action.mvItemNum )
+			{				
+				THIS.nCurCnt = THIS.nCurCnt - THIS.nTotItem ;
+				xy[THIS.nType] = THIS.nOriginPos-(THIS.nCurCnt-THIS.oCfg.action.mvItemNum)*(THIS.nMoveSize/THIS.oCfg.action.mvItemNum) ;
+			}
+			
+			THIS.moveItem ( THIS.nCurCnt, xy ) ;
+		}
+		return false;		
+	},
+	// auto refresh func.
+	goAuto : function ()
+	{
+		var THIS = this ;
+		var refresh = function ()
+		{
+				var xy = YAHOO.util.Dom.getXY ( THIS.oList ) ;
+				
+				THIS.nCurCnt += THIS.oCfg.action.mvItemNum ;
+				if ( THIS.nCurCnt >= THIS.nTotItem + THIS.oCfg.action.mvItemNum )
+				{				
+					THIS.nCurCnt = THIS.nCurCnt - THIS.nTotItem ;
+					xy[THIS.nType] = THIS.nOriginPos-(THIS.nCurCnt-THIS.oCfg.action.mvItemNum)*(THIS.nMoveSize/THIS.oCfg.action.mvItemNum) ;
+				}
+				THIS.moveItem ( THIS.nCurCnt, xy ) ;
+				THIS.nTimer = setTimeout ( refresh, THIS.oCfg.delay ) ;				
+		};		
+		THIS.nTimer = setTimeout ( refresh, THIS.oCfg.delay ) ;
+	},
+	// go process click event button's target.
+	goTarget : function ( e, THIS )
+	{
+		if ( !THIS.bIsAnimate )
+		{		
+			var xy = YAHOO.util.Dom.getXY ( THIS.oList ) ;
+			var oTarget = YAHOO.util.Event.getTarget ( e ) ;
+			var i, max = THIS.aProcBtnList.length - 1, nOld = THIS.nCurCnt ;
+						
+			for ( i = max ; i >= 0 ; i -- )
+			{
+				if ( THIS.aProcBtnList[i] == oTarget )
+				{
+					THIS.nCurCnt = i ;
+				}
+			}
+			if ( THIS.nCurCnt != nOld ){	THIS.moveItem ( THIS.nCurCnt, xy ) ; }
+		}
+		return false;		
+	},	
+	// moving item.			
+	moveItem : function ( pnIdx, pnXY )
+	{
+		this.bIsAnimate = true ;
+		var toXY ;
+		switch ( this.oCfg.action.direction.toLowerCase() )
+		{
+			case 'vertical':
+				toXY = [pnXY[0], this.nOriginPos - this.nMoveSize*pnIdx/this.oCfg.action.mvItemNum ] ;
+			break;
+			case 'horizonal' :
+				toXY = [this.nOriginPos - this.nMoveSize*pnIdx/this.oCfg.action.mvItemNum, pnXY[1] ] ;			
+			break;
+		}
+		// set animation attribute.
+		var oAttr = 
+		{
+			points: 
+			{
+				from:pnXY,
+				to:toXY
+			}
+		};
+		
+		this.anim ( oAttr ) ;
+		// process button's style change when process button option activated.
+		if ( this.aProcBtnList ) {
+			this.setProcBtnStyle ( this.aProcBtnList, this.nCurCnt ) ; }
+	},
+	// set process button style.
+	setProcBtnStyle : function ( poNode, pnIdx )
+	{
+		var i, max = poNode.length - 1 ;
+		if ( this.oCfg.process.onClass.length )						
+		{
+			YAHOO.util.Dom.removeClass ( poNode, this.oCfg.process.onClass ) ;
+		}
+
+		pnIdx -= ( pnIdx >= this.nTotItem ) ? this.nTotItem : 0 ;
+		
+		YAHOO.util.Dom.addClass ( poNode[pnIdx], this.oCfg.process.onClass ) ;		
+	},
+	// animate.			
+	anim : function ( oAttr )
+	{
+		var THIS = this ;
+		var animComplete = function ( type, args )
+		{
+			THIS.bIsAnimate = false ;		
+		};
+		var anim = new YAHOO.util.Motion(this.oList, oAttr, this.oCfg.ani.speed, YAHOO.util.Easing[this.oCfg.ani.type]);
+		anim.onComplete.subscribe ( animComplete ) ;
+		anim.animate();
+	},
+	// animation is halt when contents view box layer / process button onmouse over event fired.
+	chkHalt : function ( e, oCallBack )
+	{
+			var THIS = oCallBack.THIS ;
+			var xy = new YAHOO.util.Point (YAHOO.util.Event.getXY(e)) ;
+			var oRegion = YAHOO.util.Dom.getRegion ( oCallBack.oTarget ) ;
+			
+			if ( oRegion.contains( xy ) )
+			{
+				clearTimeout ( THIS.nTimer ) ;
+			}
+			else
+			{
+				var refresh = function ()
+				{
+					THIS.goAuto () ;
+				};		
+				THIS.nTimer = setTimeout ( refresh, THIS.oCfg.delay ) ;
+			}
+	},
+	// set halt elements.
+	setPause : function ( pNode, psActType )
+	{
+		if ( this.oCfg.auto )
+		{
+			if ( typeof pNode == 'string' )
+			{
+				pNode = document.getElementById ( pNode ) ;
+			}
+			
+			var oCallBack =
+			{
+				THIS : this,
+				oTarget : pNode
+			}
+			YAHOO.util.Event.addListener ( pNode, 'mouseover', this.chkHalt, oCallBack ) ;
+			YAHOO.util.Event.addListener ( pNode, 'mouseout', this.chkHalt, oCallBack ) ;
+		}
+	},
+				
+	setEvtHandler : function ( pNode, psEvtType, psDirection )
+	{
+		switch ( psDirection.toLowerCase() )
+		{
+			case 'prev' :
+				this.setPause( pNode ) ;
+				YAHOO.util.Event.addListener ( pNode, psEvtType, this.goPrev, this ) ;
+			break;
+			
+			case 'next' :
+				this.setPause( pNode ) ;			
+				YAHOO.util.Event.addListener ( pNode, psEvtType, this.goNext, this ) ;			
+			break;
+
+			case 'process' :
+				YAHOO.util.Event.addListener ( pNode, psEvtType, this.goTarget, this ) ;
+			break;
+		}
+	
+	},
+	// make rolling clone nodes.
+	makeCloneNode : function ()
+	{
+		var i ;
+		for ( i=0 ; i < this.nPageInNum + this.oCfg.action.mvItemNum  ; i++)
+		{
+			var oClone = this.aItemList[i].cloneNode(true) ;
+			oClone.innerHTML = this.aItemList[i].innerHTML ;
+			this.oList.appendChild ( oClone ) ;		
+		}	
+	},
+	// initialize.
+	init:function ( poConfig ) 
+	{
+		this.oCfg = poConfig ;
+		this.oCon = document.getElementById ( poConfig.contents.view ) ;
+		this.oList = document.getElementById ( poConfig.contents.container ) ;
+		if ( poConfig.process ) 
+		{
+			this.oProc = document.getElementById ( poConfig.process.container );
+		}
+							
+		if ( this.oCon && this.oList )
+		{	
+			this.aItemList = this.oList.getElementsByTagName ( poConfig.contents.tag ) ;
+																									
+			// if process button exist, attach event.
+			if ( this.oProc )
+			{					
+				this.aProcBtnList = this.oProc.getElementsByTagName ( poConfig.process.tag ) ;
+				this.setEvtHandler ( this.aProcBtnList, 'click', 'process' ) ;
+				this.setPause ( this.oProc ) ;
+			}					
+			
+			this.getAniRange() ;
+			this.makeCloneNode() ;			
+			// check auto refresh.
+			if ( this.oCfg.auto && this.oCfg.delay )
+			{
+				var THIS = this ;
+				var refresh = function ()
+				{
+					THIS.goAuto () ;
+				}
+				// set halt when contents viewbox area onmouseover event fired.
+				this.setPause ( poConfig.contents.view ) ;
+				this.nTimer = setTimeout ( refresh, this.oCfg.delay ) ;
+			}			
+		}
+	}
+};
+/***************************************************************************************
+#Constructor 
+{
+	contents : { view : 'view box layer ID', container : 'contents container ID', tag : 'content tag name' },
+	process : { container : 'process button container ID', tag : 'process button tag name', onClass : 'process btn's active class name' },
+	ani : { speed : animation speed, type : 'animation type' },
+	action : { direction : 'action direction', mvItemNum : per moving layer num },
+	auto : auto rolling option,
+	delay : auto rolling delay time
+}
+***************************************************************************************/
+YAHOO.KR.util.init = function ()
+{		
+	YAHOO.KR.util.vars.ex2 = new YAHOO.KR.util.roopingMvLayer ( 
+		{
+			contents : { view : 'tck2View', container : 'tck2Items', tag : 'li' },
+//			process : { container : 'procBtn', tag : 'a', onClass : 'on' },
+			ani : { speed : 0.3, type : 'backIn' },
+			action : { direction : 'vertical', mvItemNum : 1 },
+			auto : true,
+			delay : 1000
+		}
+	);
+	
+	// test
+	var aTyp = document.getElementsByName ( 'typ' ) ;
+	YAHOO.util.Event.addListener ( 'spd', 'change', YAHOO.KR.util.demo, 'spd' ) ;
+	YAHOO.util.Event.addListener ( 'dly', 'change', YAHOO.KR.util.demo, 'dly' ) ;
+	YAHOO.util.Event.addListener ( aTyp, 'click', YAHOO.KR.util.demo, 'type' ) ;	
+		
+};
+
+YAHOO.KR.util.vars =
+{
+	ex2 : null
+};
+
+YAHOO.KR.util.demo = function ( e, psCase )
+{
+	var oNode = YAHOO.util.Event.getTarget ( e ) ;
+	
+	switch ( psCase )
+	{
+		case 'spd' :
+			YAHOO.KR.util.vars.ex2.oCfg.ani.speed = oNode.options[oNode.selectedIndex].innerHTML ;		
+		break; 
+		
+		case 'dly' :
+			YAHOO.KR.util.vars.ex2.oCfg.delay = parseInt(oNode.options[oNode.selectedIndex].innerHTML) * 1000 ;		
+		break; 
+		
+		case 'type' :
+			YAHOO.KR.util.vars.ex2.oCfg.ani.type = oNode.title;		
+		break;
+	}
+};
+
+YAHOO.util.Event.addListener ( window, 'load', YAHOO.KR.util.init ) ;
+-->	
+</script>
+<!-- f2e.corp.kr1.yahoo.com compressed/chunked Fri Apr 13 17:31:01 KST 2007 -->
+<!-- f2e.corp.kr1.yahoo.com compressed/chunked Thu Jan 31 20:00:24 KST 2008 -->
+</body></html>

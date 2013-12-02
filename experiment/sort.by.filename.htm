@@ -1,0 +1,17 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script>
+
+  function sortByFileName(a, b){
+  	var x = parseInt(a);
+	var y = parseInt(b);
+	if(( isNaN(x)) || (isNaN(y)))
+		return a.localeCompare(b);
+	return x-y;
+  }
+  var arr= ['跌','幅','202','減','半','實','施','2','個','禮','拜','100' ,'台','股','1','第','一','週'];
+
+  arr.sort(sortByFileName);
+  document.write(arr);
+
+</script>

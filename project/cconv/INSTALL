@@ -1,0 +1,7 @@
+
+http://code.google.com/p/cconv/wiki/README_zh_CN
+
+
+1. download the cconv-x.x.x.tar.gz, do not use apt-get instsall
+2. intsall php5-dev to get 'phpize' command
+3. php.ini: /etc/php5/apache2/php.ini
