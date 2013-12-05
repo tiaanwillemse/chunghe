@@ -1,0 +1,47 @@
+
+<head>
+<style>
+body{ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 14px;}
+svg {background: #eee;}
+pre {padding: 5px; border: 2px dashed #ccc; max-width: 700px;}
+p {font-size: 14px; font-weight: normal; color: #333; max-width:700px;}
+.hi{background: #FFF2CC;}
+</style>
+</head>
+
+<p><a href="http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started">http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started</a></p>
+
+<h3>Specifying User Coordinates for a Viewport</h3>
+
+<p>In the examples so far, numbers without units have been considered to be pixels. Sometimes this is not what you want. For example, you might want to set up a system where each user coordinate represents one-sixteenth of a centimeter. (We're using this coordinate system to prove a point, not to show a paragon of good design.) In this system, a square that is 40 units by 40 units will display as 2.5 centimeters on a side.</p>
+<p>To accomplish this effect, you set the viewBox attribute on the &lt;svg&gt; element. The value of this attribute consists of four numbers that represent the minimum x-coordinate, minimum y-coordinate, width, and height of the user coordinate system that you want to superimpose on the viewport.</p>
+<p>So, to set up the sixteen-units-per-centimeter coordinate system for a four centimeter by five centimeter drawing, you'd use this starting tag:</p>
+
+
+<pre>
+&lt;svg width="4cm" height="5cm" viewBox="0 0 64 80"&gt;
+</pre>
+
+
+<p>Example 2-4. Using a viewBox</p>
+<pre>&lt;svg width="4cm" height="5cm" viewBox="0 0 64 80"&gt;
+   &lt;rect x="10" y="35" width="40" height="40"
+      style="stroke: black; fill: none;"/&gt;
+   &lt;!-- roof --&gt;
+   &lt;polyline points="10 35, 30 7.68, 50 35" 
+      style="stroke:black; fill: none;"/&gt;
+   &lt;!-- door --&gt;
+   &lt;polyline points="30 75, 30 55, 40 55, 40 75"
+      style="stroke:black; fill: none;"/&gt;
+&lt;/svg&gt;
+</pre>
+<svg width="4cm" height="5cm" viewBox="0 0 64 80">
+   <rect x="10" y="35" width="40" height="40"
+      style="stroke: black; fill: none;"/>
+   <!-- roof -->
+   <polyline points="10 35, 30 7.68, 50 35" 
+      style="stroke:black; fill: none;"/>
+   <!-- door -->
+   <polyline points="30 75, 30 55, 40 55, 40 75"
+      style="stroke:black; fill: none;"/>
+ </svg>

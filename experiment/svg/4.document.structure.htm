@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+<style>
+body{ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 14px;}
+svg {background: #eee; height: 200px; width:400px;}
+pre {padding: 5px; border: 2px dashed #ccc; max-width: 700px;}
+p, ul li {font-size: 14px; font-weight: normal; color: #333; max-width:700px;}
+.hi{background: #FFF2CC;}
+hr{margin: 20px 0;}
+</style>
+</head>
+
+<body>
+<p><a href="http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started">http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started</a></p>
+
+<h2>Document Structure -- Grouping and Referencing Objects</h2>
+<h3>The g Element</h3>
+<p>The &lt;g&gt; element gathers all of its child elements as a group, and often has an id attribute to give that group a unique name. Furthermore, each group may have its own &lt;title&gt; and &lt;desc&gt; to identify it for text-based XML applications or to aid in accessibility for visually-impaired users. In addition to the conceptual clarity that comes from the ability to group and document objects, the &lt;g&gt; element also provides notational convenience. Any styles you specify in the starting &lt;g&gt; tag will apply to all the child elements in the group.</p>
+<p>You may think of the <g> element as analogous to the Group Objects function in programs such as Adobe Illustrator. It also serves a similar function to the concept of layers in such programs; a layer is also a grouping of related objects.</p>
+<pre>&lt;svg width="240px" height="240px" viewBox="0 0 240 240"&gt;
+&lt;title&gt;Grouped Drawing&lt;/title&gt;
+&lt;desc&gt;Stick-figure drawings of a house and people&lt;/desc&gt;
+
+&lt;g id="house" style="fill: none; stroke: black;"&gt;
+    &lt;desc&gt;House with door&lt;/desc&gt;
+    &lt;rect x="6" y="50" width="60" height="60"/&gt;
+    &lt;polyline points="6 50, 36 9, 66 50"/&gt;
+    &lt;polyline points="36 110, 36 80, 50 80, 50 110"/&gt;
+&lt;/g&gt;
+
+&lt;g id="man" style="fill: none; stroke: black;"&gt;
+    &lt;desc&gt;Male human&lt;/desc&gt;
+    &lt;circle cx="85" cy="56" r="10"/&gt;
+    &lt;line x1="85" y1="66" x2="85" y2="80"/&gt;
+    &lt;polyline points="76 104, 85 80, 94 104" /&gt;
+    &lt;polyline points="76 70, 85 76, 94 70" /&gt;
+&lt;/g&gt;
+
+&lt;g id="woman" style="fill: none; stroke: black;"&gt;
+    &lt;desc&gt;Female human&lt;/desc&gt;
+    &lt;circle cx="110" cy="56" r="10"/&gt;
+    &lt;polyline points="110 66, 110 80, 100 90, 120 90, 110 80"/&gt;
+    &lt;line x1="104" y1="104" x2="108" y2="90"/&gt;
+    &lt;line x1="112" y1="90" x2="116" y2="104"/&gt;
+    &lt;polyline points="101 70, 110 76, 119 70" /&gt;
+&lt;/g&gt;
+&lt;/svg&gt;
+</pre>
+<svg width="240px" height="240px" viewBox="0 0 240 240">
+<title>Grouped Drawing</title>
+<desc>Stick-figure drawings of a house and people</desc>
+
+<g id="house" style="fill: none; stroke: black;">
+    <desc>House with door</desc>
+    <rect x="6" y="50" width="60" height="60"/>
+    <polyline points="6 50, 36 9, 66 50"/>
+    <polyline points="36 110, 36 80, 50 80, 50 110"/>
+</g>
+
+<g id="man" style="fill: none; stroke: black;">
+    <desc>Male human</desc>
+    <circle cx="85" cy="56" r="10"/>
+    <line x1="85" y1="66" x2="85" y2="80"/>
+    <polyline points="76 104, 85 80, 94 104" />
+    <polyline points="76 70, 85 76, 94 70" />
+</g>
+
+<g id="woman" style="fill: none; stroke: black;">
+    <desc>Female human</desc>
+    <circle cx="110" cy="56" r="10"/>
+    <polyline points="110 66, 110 80, 100 90, 120 90, 110 80"/>
+    <line x1="104" y1="104" x2="108" y2="90"/>
+    <line x1="112" y1="90" x2="116" y2="104"/>
+    <polyline points="101 70, 110 76, 119 70" />
+</g>
+</svg>
+
+<hr>
+
+<h3>The use Element</h3>
+<p>Complex graphics often have repeated elements. For example, a product brochure may have the company logo at the upper left and lower right of each page. If you were drawing the brochure with a graphic design program, you'd draw the logo once, group all its elements together, then copy and paste them to the other location. The SVG &lt;use&gt; element gives you an analogous copy-and-paste ability with a group that you've defined with &lt;g&gt;.</p>
+
+<p>Once you have defined a group of graphic objects, you can display them again with the &lt;use&gt; tag. <sapn class="hi">To specify the group you wish to reuse, give its URI in an xlink:href attribute, and specify the x and y location where the group's (0, 0) point should be moved to</span>. So, to create another house and set of people as shown in Figure 4-5, you'd put these lines just before the closing </svg> tag:</p>
+
+<pre>&lt;use xlink:href="#house" x="70" y="100"/&gt;
+&lt;use xlink:href="#woman" x="-80" y="100"/&gt;
+&lt;use xlink:href="#man" x="-30" y="100"/&gt;
+</pre>
+<svg width="240px" height="240px" viewBox="0 0 240 240">
+<title>Grouped Drawing</title>
+<desc>Stick-figure drawings of a house and people</desc>
+
+<g id="house" style="fill: none; stroke: black;">
+    <desc>House with door</desc>
+    <rect x="6" y="50" width="60" height="60"/>
+    <polyline points="6 50, 36 9, 66 50"/>
+    <polyline points="36 110, 36 80, 50 80, 50 110"/>
+</g>
+
+<g id="man" style="fill: none; stroke: black;">
+    <desc>Male human</desc>
+    <circle cx="85" cy="56" r="10"/>
+    <line x1="85" y1="66" x2="85" y2="80"/>
+    <polyline points="76 104, 85 80, 94 104" />
+    <polyline points="76 70, 85 76, 94 70" />
+</g>
+
+<g id="woman" style="fill: none; stroke: black;">
+    <desc>Female human</desc>
+    <circle cx="110" cy="56" r="10"/>
+    <polyline points="110 66, 110 80, 100 90, 120 90, 110 80"/>
+    <line x1="104" y1="104" x2="108" y2="90"/>
+    <line x1="112" y1="90" x2="116" y2="104"/>
+    <polyline points="101 70, 110 76, 119 70" />
+</g>
+<use xlink:href="#house" x="70" y="100"/>
+<use xlink:href="#woman" x="-80" y="100"/>
+<use xlink:href="#man" x="-30" y="100"/>
+</svg>
+
+<hr>
+
+<h3>The defs Element</h3>
+
+You may have noticed some drawbacks with the preceding example:
+<ul>
+<li>The math for deciding where to place the re-used man and woman requires you to know the positions of the originals and use that as your base, rather than using a simple number like zero.</li>
+<li>The fill and stroke color for the house were established by the original, and can't be overriden by the &lt;use&gt;. This means you can't make a row of multi-colored houses.</li>
+<li>The document draws all three groups: the woman, the man, and the house. You can't "store them away" and draw only a set of houses or only a set of people.</li>
+</ul>
+<p>The &lt;defs&gt; element solves these problems. By putting the grouped objects between the beginning and ending &lt;defs&gt; tags, you instruct SVG to define them without displaying them. The SVG specification, in fact, recommends that you put all objects that you wish to re-use within a &lt;defs&gt; element so that SVG viewers working in a streaming environment can process data more efficiently. </p>
+<p>In Example 4-6, the house, man, and woman are defined so that their upper left corner is at (0, 0), and the house is not given any fill color. Since the groups will be within the &lt;defs&gt; element, they will not be drawn on the screen right away, and will serve as a "template" for future use. We have also constructed another group named couple, which, in turn, &lt;use&gt;s the man and woman groups. (Note that the bottom half of Figure 4-6 can't use couple, since the woman is to the left of the man.)</p>
+
+<pre>&lt;svg width="240px" height="240px" viewBox="0 0 240 240"&gt;
+&lt;title&gt;Grouped Drawing&lt;/title&gt;
+&lt;desc&gt;Stick-figure drawings of a house and people&lt;/desc&gt;
+
+&lt;defs&gt;
+&lt;g id="house" style="stroke: black;"&gt;
+    &lt;desc&gt;House with door&lt;/desc&gt;
+    &lt;rect x="0" y="41" width="60" height="60"/&gt;
+    &lt;polyline points="0 41, 30 0, 60 41"/&gt;
+    &lt;polyline points="30 101, 30 71, 44 71, 44 101"/&gt;
+&lt;/g&gt;
+
+&lt;g id="man" style="fill: none; stroke: black;"&gt;
+    &lt;desc&gt;Male human&lt;/desc&gt; 
+    &lt;circle cx="10" cy="10" r="10"/&gt;
+    &lt;line x1="10" y1="20" x2="10" y2="44"/&gt;
+    &lt;polyline points="1 58, 10 44, 19 58"/&gt;
+    &lt;polyline points="1 24, 10 30, 19 24"/&gt;
+&lt;/g&gt;
+
+&lt;g id="woman" style="fill: none; stroke: black;"&gt;
+    &lt;desc&gt;Female human&lt;/desc&gt;
+    &lt;circle cx="10" cy="10" r="10"/&gt;
+    &lt;polyline points="10 20, 10 34, 0 44, 20 44, 10 34"/&gt;
+    &lt;line x1="4" y1="58" x2="8" y2="44"/&gt;
+    &lt;line x1="12" y1="44" x2="16" y2="58"/&gt;
+    &lt;polyline points="1 24, 10 30, 19 24" /&gt;
+&lt;/g&gt;
+
+<span class="hi">&lt;g id="couple"&gt;</span>
+<span class="hi">    &lt;desc&gt;Male and female human&lt;/desc&gt;</span>
+<span class="hi">    &lt;use xlink:href="#man" x="0" y="0"/&gt;</span>
+<span class="hi">    &lt;use xlink:href="#woman" x="25" y="0"/&gt;</span>
+<span class="hi">&lt;/g&gt;</span>
+&lt;/defs&gt;
+
+&lt;!-- make use of the defined groups --&gt;
+&lt;use xlink:href="#house" x="0" y="0" style="fill: #cfc;"/&gt;
+&lt;use xlink:href="#couple" x="70" y="40"/&gt;
+
+&lt;use xlink:href="#house" x="120" y="0" style="fill: #99f;"/&gt;
+&lt;use xlink:href="#couple" x="190" y="40"/&gt;
+
+&lt;use xlink:href="#woman" x="0" y="145"/&gt;
+&lt;use xlink:href="#man" x="25" y="145"/&gt;
+&lt;use xlink:href="#house" x="65" y="105" style="fill: #c00;"/&gt;
+&lt;/svg&gt;
+</pre>
+
+
+<svg width="240px" height="240px" viewBox="0 0 240 240">
+<title>Grouped Drawing</title>
+<desc>Stick-figure drawings of a house and people</desc>
+
+<defs>
+<g id="house-1" style="stroke: black;">
+    <desc>House with door</desc>
+    <rect x="0" y="41" width="60" height="60"/>
+    <polyline points="0 41, 30 0, 60 41"/>
+    <polyline points="30 101, 30 71, 44 71, 44 101"/>
+</g>
+
+<g id="man-1" style="fill: none; stroke: black;">
+    <desc>Male human</desc> 
+    <circle cx="10" cy="10" r="10"/>
+    <line x1="10" y1="20" x2="10" y2="44"/>
+    <polyline points="1 58, 10 44, 19 58"/>
+    <polyline points="1 24, 10 30, 19 24"/>
+</g>
+
+<g id="woman-1" style="fill: none; stroke: black;">
+    <desc>Female human</desc>
+    <circle cx="10" cy="10" r="10"/>
+    <polyline points="10 20, 10 34, 0 44, 20 44, 10 34"/>
+    <line x1="4" y1="58" x2="8" y2="44"/>
+    <line x1="12" y1="44" x2="16" y2="58"/>
+    <polyline points="1 24, 10 30, 19 24" />
+</g>
+
+<g id="couple">
+    <desc>Male and female human</desc>
+    <use xlink:href="#man-1" x="0" y="0"/>
+    <use xlink:href="#woman-1" x="25" y="0"/>
+</g>
+</defs>
+
+<!-- make use of the defined groups -->
+<use xlink:href="#house-1" x="0" y="0" style="fill: #cfc;"/>
+<use xlink:href="#couple" x="70" y="40"/>
+
+<use xlink:href="#house-1" x="120" y="0" style="fill: #99f;"/>
+<use xlink:href="#couple" x="190" y="40"/>
+
+<use xlink:href="#woman-1" x="0" y="145"/>
+<use xlink:href="#man-1" x="25" y="145"/>
+<use xlink:href="#house-1" x="65" y="105" style="fill: #c00;"/>
+</svg>
+
+<hr>
+
+<h3>The image Element</h3>
+<p>While &lt;use&gt; lets you re-use a portion of an SVG file, the &lt;image&gt; element includes an entire SVG or raster file. If you are including an SVG file, the x, y, width, and height attributes establish the viewport in which the referenced file will be drawn; if you're including a raster file, it will be scaled to fit the rectangle that the attributes specify. You can currently include either JPEG or PNG raster files. Example 4-8 shows how to include a JPEG image with SVG; the result is in Figure 4-8.</p>
+
+<pre>&lt;svg width="310px" height="310px" viewBox="0 0 310 310"&gt;
+
+&lt;ellipse cx="154" cy="154" rx="150" ry="120" style="fill: #999999;"/&gt;     <b>[1]</b>
+&lt;ellipse cx="152" cy="152" rx="150" ry="120" style="fill: #cceeff;"/&gt;     <b>[2]</b>
+
+&lt;image xlink:href="kwanghwamun.jpg"     <b>[3]</b>
+    x="72" y="92"     <b>[4]</b>
+    width="160" height="120"/&gt;     <b>[5]</b>
+
+&lt;/svg&gt;
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+<style>
+body{ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 14px;}
+svg {background: #eee; height: 200px; width:400px;}
+pre {padding: 5px; border: 2px dashed #ccc; max-width: 700px;}
+p, ul li {font-size: 14px; font-weight: normal; color: #333; max-width:700px;}
+.hi{background: #FFF2CC;}
+hr{margin: 20px 0;}
+</style>
+</head>
+
+<body>
+<p><a href="http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started">http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started</a></p>
+
+<h3>moveto, lineto, and closepath</h3>
+
+<p>Every path must begin with a moveto command. The command letter is a capital M followed by an x- and y-coordinate, separated by commas or whitespace. This command sets the current location of the "pen" that's drawing the outline.</h3>
+<p>This is followed by one or more lineto commands, denoted by a capital L, also followed by x- and y-coordinates, and separated by commas or whitespace. Example 6-1 has three paths. The first draws a single line, the second draws a right angle, and the third draws two thirty-degree angles. When you "pick up" the pen with another moveto, you are starting a new subpath. Notice that the use of commas and whitespace as separators is different, but perfectly legal, in all three paths. The result is Figure 6-1.</p>
+
+
+<pre>&lt;g style="stroke: black; fill: none;"&gt;
+    &lt;!-- single line --&gt;
+    &lt;path d="M 10 10 L 100 10"/&gt;
+    
+    &lt;!-- a right angle --&gt;
+    &lt;path d="M 10, 20  L 100, 20  L  100,50"/&gt;
+    
+    &lt;!-- two thirty-degree angles --&gt;
+    &lt;path d="M 40 60, L 10 60, L 40 42.68,
+       M 60 60, L 90 60, L 60 42.68"/&gt;
+&lt;/g&gt;
+</pre>
+
+<svg>
+<g style="stroke: black; fill: none;">
+    <!-- single line -->
+    <path d="M 10 10 L 100 10"/>
+    
+    <!-- a right angle -->
+    <path d="M 10, 20  L 100, 20  L  100,50"/>
+    
+    <!-- two thirty-degree angles -->
+    <path d="M 40 60, L 10 60, L 40 42.68,
+       M 60 60, L 90 60, L 60 42.68"/>
+</g>
+</svg>
+<p>Examining the last path more closely:</p>
+<table border="1">
+
+<tbody><tr>
+<th> Value </th><th> Action
+</th></tr>
+<tr>
+<td> <tt>M 40 60</tt> </td><td> Move pen to (40, 60)
+</td></tr>
+<tr>
+<td> <tt>L 10 60</tt> </td><td> Draw a line to (10, 60)
+</td></tr>
+<tr>
+<td> <tt>L 40 42.68</tt> </td><td> Draw a line to (40, 42.68)
+</td></tr>
+<tr>
+<td> <tt>M 60 60</tt> </td><td> Start a new subpath; move pen to (60, 60) - no line is drawn
+</td></tr>
+<tr>
+<td> <tt>L 90 60</tt> </td><td> Draw a line to (90, 60)
+</td></tr>
+<tr>
+<td> <tt>L 60 42.68</tt> </td><td> Draw a line to (60, 42.68)
+</td></tr></tbody></table>
+
+<p>If you want to use a &lt;path&gt; to draw a rectangle, you can draw all four lines, <span class="hi">or you can draw the first three lines and then use the closepath command, denoted by a capital Z, to draw a straight line back to the beginning point of the current subpath.</span> Example 6-2 is the SVG for Figure 6-2, which shows a rectangle drawn the hard way, a rectangle drawn with closepath, and a path that draws two triangles by opening and closing two subpaths.</p>
+
+<pre>&lt;g style="stroke: black; fill: none;"&gt;
+    &lt;!-- rectangle; all four lines --&gt;
+    &lt;path d="M 10 10, L 40 10, L 40 30, L 10 30, L 10 10"/&gt;
+    
+    &lt;!-- rectangle with closepath --&gt;
+    &lt;path d="M 60 10, L 90 10, L 90 30, L 60 30, Z"/&gt;
+    
+    &lt;!-- two thirty-degree triangles --&gt;
+    &lt;path d="M 40 60, L 10 60, L 40 42.68, Z
+       M 60 60, L 90 60, L 60 42.68, Z"/&gt;
+&lt;/g&gt;
+</pre>
+
+<svg>
+<g style="stroke: black; fill: none;">
+    <!-- rectangle; all four lines -->
+    <path d="M 10 10, L 40 10, L 40 30, L 10 30, L 10 10"/>
+    
+    <!-- rectangle with closepath -->
+    <path d="M 60 10, L 90 10, L 90 30, L 60 30, Z"/>
+    
+    <!-- two thirty-degree triangles -->
+    <path d="M 40 60, L 10 60, L 40 42.68, Z
+       M 60 60, L 90 60, L 60 42.68, Z"/>
+</g>
+</svg>
+
+<hr>
+
+<h3>Relative moveto and lineto</h3>
+<p>The preceding commands are all represented by uppercase letters, and the coordinates are presumed to be absolute coordinates. If you use a lowercase command letter, the coordinates are interpreted as being relative to the current pen position. Thus, the following two paths are equivalent:</p>
+<pre>&lt;path d="M 10 10 L 20 10 L 20 30  M 40 40 L 55 35"
+    style="stroke: black;"/&gt;
+&lt;path d="M 10 10 l 10  0 l  0 20  m 20 10 l 15 -5"
+    style="stroke: black;"/&gt;
+</pre>
+<p>If you start a path with a lowercase m (moveto), its coordinates will be interpreted as an absolute position since there's no previous pen position from which to calculate a relative position. All the other commands in this chapter also have the same upper- and lowercase distinction. An uppercase command's coordinates are absolute and a lowercase command's coordinates are relative. The closepath command, which has no coordinates, has the same effect in both upper- and lowercase.</p>
+
+<hr>
+
+<h3>Path Shortcuts</h3>
+
+<h4>The Horizontal lineto and Vertical lineto Commands</h4>
+<p>Since horizontal and vertical lines are so common, a path may specify a horizontal line with an H command followed by an absolute x-coordinate or an h command followed by a relative x-coordinate. Similarly, a vertical line is specified with a V command followed by an absolute y-coordinate or a v command followed by a relative y-coordinate.</p>
+<table border="1">
+
+<tbody><tr>
+<th> Shortcut </th><th> Equivalent to </th><th> Effect
+</th></tr>
+<tr>
+<td> <tt>H 20</tt> </td><td> <tt>L 20 <i>current_y</i></tt> </td><td> Draws a line to absolute location (20, <tt><i>current_y</i></tt>)
+</td></tr>
+<tr>
+<td> <tt>h 20</tt> </td><td> <tt>l 20 0</tt> </td><td> Draws a line to (<tt><i>current_x</i></tt>+20, <tt><i>current_y</i></tt>)
+</td></tr>
+<tr>
+<td> <tt>V 20</tt> </td><td> <tt>L <i>current_x</i> 20</tt> </td><td> Draws a line to absolute location (<tt><i>current_x</i></tt>, 20)
+</td></tr>
+<tr>
+<td> <tt>v 20</tt> </td><td> <tt>l <i>current_x</i> 20</tt> </td><td> Draws a line to location (<tt><i>current_x</i></tt>, <tt><i>current_y</i></tt>+20)
+</td></tr></tbody></table>
+
+<h4>Notational Shortcuts for a Path</h4>
+<p>You may place multiple sets of coordinates after an L or l, just as you do in the &lt;polyline&gt; element. The following six paths all draw the same diamond that is shown in Figure 6-3; the first three are in absolute coordinates and the last three in relative coordinates. <span class="hi">The third and sixth paths have an interesting twist - if you place multiple pairs of coordinates after a moveto, all the pairs after the first are presumed to be preceded by a lineto.[1]</span></p>
+<pre>&lt;path d="M 30 30 L 55 5 L 80 30 L 55 55 Z"/&gt;
+&lt;path d="M 30 30 L 55 5 80 30 55 55 Z"/&gt;
+&lt;path d="M 30 30 55 5 80 30 55 55 Z"/&gt;
+&lt;path d="m 30 30 l 25 -25 l 25 25 l -25 25 z"/&gt;
+&lt;path d="m 30 30 l 25 -25 25 25 -25 25 z"/&gt;
+&lt;path d="m 30 30 25 -25 25 25 -25 25 z"/&gt;
+</pre>
+
+</body>
+</html>

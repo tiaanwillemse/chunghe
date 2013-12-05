@@ -1,0 +1,529 @@
+<head>
+<style>
+body{ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 14px;}
+svg {background: #eee;}
+pre {padding: 5px; border: 2px dashed #ccc; max-width: 700px;}
+p, ul li {font-size: 14px; font-weight: normal; color: #333; max-width:700px;}
+.hi{background: #FFF2CC;}
+hr{margin: 20px 0;}
+</style>
+</head>
+
+<p><a href="http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started">http://commons.oreilly.com/wiki/index.php/SVG_Essentials/Getting_Started</a></p>
+
+<svg width="300" height="50">
+<rect x="10" y="10" width="200" height="20" stroke="black" fill="none">
+    <animate
+        attributeName="width"
+        attributeType="XML"
+        from="200" to="20"
+        begin="0s" dur="5s"
+        repeatCount="10"
+        fill="freeze" />
+</rect>
+</svg>
+
+<pre>
+&lt;svg width="300" height="50"&gt;
+&lt;rect x="10" y="10" width="200" height="20" stroke="black" fill="none"&gt;     <b>[1]</b>
+    &lt;animate     <b>[2]</b>
+        attributeName="width"     <b>[3]</b>
+        attributeType="XML"     <b>[4]</b>
+        from="200" to="20"     <b>[5]</b>
+        begin="0s" dur="5s"     <b>[6]</b>
+        fill="freeze" /&gt;     <b>[7]</b>
+&lt;/rect&gt;     <b>[8]</b>
+&lt;/svg&gt;
+</pre>
+<p> [1] A &lt;rect&gt; element without the ending /&gt;. The animation will be contained within the element.</p>
+<p>[2] Begin specification of animation</p>
+<p>[3] Specify the attribute whose value should change over time.</p>
+<p><span class="hi">[4] Width is an XML attribute in the <rect> element. The other common value of attributeType is CSS, indicating that the property we want to change is a CSS property. If you leave this off, the default value of auto is used; it searches through CSS properties first and then XML attributes.</span></p>
+<p>[5] The starting and ending values for the attribute. In this example, the starting value is 200 and the ending value is 20.[1]</p>
+<p>[6] The beginning and duration times for the animation. In this example, we measure time in seconds, specified by the s after the number. For more details, see Section 11.2.</p>
+<p><span class="hi">[7] After the five-second duration, keep the attribute at its end value. If you remove this line, the attribute will return to its original value of 200 after the five-second animation has finished. This is the SMIL fill attribute, which tells the animation engine how to fill up the remaining time. Don't confuse it with SVG's fill attribute, which tells SVG how to paint an object.</span></p>
+<p>[8] We have to close the <rect> element, since it is now a container element.</[>
+</p>
+<hr>
+
+<pre>&lt;rect x="10" y="10" width="20" height="20"
+    style="stroke: black; fill: green; style: fill-opacity: 0.25;"&gt;
+&lt;animate attributeName="width" attributeType="XML"
+    from="20" to="250" begin="0s" dur="8s" fill="freeze"/&gt;
+&lt;animate attributeName="height" attributeType="XML"
+    from="20" to="200" begin="0s" dur="8s" fill="freeze"/&gt;
+&lt;animate attributeName="fill-opacity" attributeType="CSS"
+    from="0.25" to="1" begin="0s" dur="3s" fill="freeze"/&gt;
+&lt;animate attributeName="fill-opacity" attributeType="CSS"
+    from="1" to="0.25" begin="3s" dur="3s" fill="freeze"/&gt;
+&lt;/rect&gt;
+</pre>
+
+<svg height="300" width="500">
+<rect x="10" y="10" width="20" height="20"
+    style="stroke: black; fill: green; style: fill-opacity: 0.25;">
+<animate attributeName="width" attributeType="XML"
+    from="20" to="250" begin="0s" dur="8s" fill="freeze"/>
+<animate attributeName="height" attributeType="XML"
+    from="20" to="200" begin="0s" dur="8s" fill="freeze"/>
+<animate attributeName="fill-opacity" attributeType="CSS"
+    from="0.25" to="1" begin="0s" dur="3s" fill="freeze"/>
+<animate attributeName="fill-opacity" attributeType="CSS"
+    from="1" to="0.25" begin="3s" dur="3s" fill="freeze"/>
+</rect>
+</svg>
+
+<hr>
+<pre>&lt;rect x="10" y="10" width="20" height="20"
+    style="stroke: black; fill: #cfc;"&gt;
+    &lt;animate attributeName="width" attributeType="XML"
+         begin="0s" dur="8s" from="20" to="120" fill="freeze"/&gt;
+    &lt;animate attributeName="height" attributeType="XML"
+         begin="0s" dur="8s" from="20" to="120" fill="freeze"/&gt;
+&lt;/rect&gt;
+
+&lt;circle cx="70" cy="70" r="20"
+    style="fill: #ccf; stroke: black;"&gt;
+    &lt;animate attributeName="r" attributeType="XML"
+        begin="2s" dur="4s" from="20" to="50" fill="freeze"/&gt;
+&lt;/circle&gt;
+</pre>
+
+<svg height="200" width="400">
+<rect x="10" y="10" width="20" height="20"
+    style="stroke: black; fill: #cfc;">
+    <animate attributeName="width" attributeType="XML"
+         begin="0s" dur="8s" from="20" to="120" fill="freeze"/>
+    <animate attributeName="height" attributeType="XML"
+         begin="0s" dur="8s" from="20" to="120" fill="freeze"/>
+</rect>
+
+<circle cx="70" cy="70" r="20"
+    style="fill: #ccf; stroke: black;">
+    <animate attributeName="r" attributeType="XML"
+        begin="2s" dur="4s" from="20" to="50" fill="freeze"/>
+</circle>
+</svg>
+
+<hr>
+
+<h3>How Time Is Measured</h3>
+
+<p>SVG's animation clock starts ticking when the SVG has finished loading, and it stops ticking when the user leaves the page. You may specify a beginning or duration for a particular animation segment as a numeric value in one of these ways:</p>
+<ul>
+<li>A full clock value in hours, minutes, and seconds (1:20:23).</li>
+<li>A partial clock value in minutes and seconds (2:15).</li>
+<li>A time value followed by a "metric," which is one of h (hours), min (minutes), s (seconds), or ms (milliseconds), for example dur="3.5s" begin="1min". If no metric is specified, the default is seconds. You may not put any whitespace between the value and the metric.</li>
+</ul>
+
+<p><span class="hi">You may also tie an animation's beginning time to the beginning or end of another animation.</span> Example 11-4 shows two circles; the second one will start expanding as soon as the first one has stopped shrinking. Figure 11-4 shows the important stages of the animation.</p>
+
+<pre>&lt;circle cx="60" cy="60" r="30" style="fill: #f9f; stroke: gray;"&gt;
+    &lt;animate <b>id="c1"</b> attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="10" fill="freeze"/&gt;
+&lt;/circle&gt;
+
+&lt;circle cx="120" cy="60" r="10" style="fill: #9f9; stroke: gray;"&gt;
+    &lt;animate attributeName="r" attributeType="XML"
+        begin="<span class="hi">c1.end</span>" dur="4s" from="10" to="30" fill="freeze"/&gt;
+&lt;/circle&gt;
+</pre>
+
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30" style="fill: #f9f; stroke: gray;">
+    <animate id="c1" attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="10" fill="freeze"/>
+</circle>
+
+<circle cx="120" cy="60" r="10" style="fill: #9f9; stroke: gray;">
+    <animate attributeName="r" attributeType="XML"
+        begin="c1.end" dur="4s" from="10" to="30" fill="freeze"/>
+</circle>
+</svg>
+
+<p>It is also possible to add an offset to this synchronization. <span class="hi">To make an animation start two seconds after another animation, you would use a construction of the form begin="otherAnim.end+2s". (You may add whitespace around the plus sign.) The offset must be positive; to make an animation's start point begin="otherAnim.end-2s" would require the computer to look into the future, and there is no such thing as Psychic Vector Graphics.</span> In Example 11-5, the second circle begins to grow one and a fourth seconds after the first circle begins shrinking.</p>
+
+<pre>&lt;circle cx="60" cy="60" r="30" style="fill: #f9f; stroke: gray;"&gt;
+    &lt;animate <b>id="c1"</b> attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="10" fill="freeze"/&gt;
+&lt;/circle&gt;
+
+&lt;circle cx="120" cy="60" r="10" style="fill: #9f9; stroke: gray;"&gt;
+    &lt;animate attributeName="r" attributeType="XML"
+        begin="<b>c1.begin+1.25s</b>" dur="4s" from="10" to="30" fill="freeze"/&gt;
+&lt;/circle&gt;
+</pre>
+
+<circle cx="60" cy="60" r="30" style="fill: #f9f; stroke: gray;">
+    <animate id="c1" attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="10" fill="freeze"/>
+</circle>
+
+<circle cx="120" cy="60" r="10" style="fill: #9f9; stroke: gray;">
+    <animate attributeName="r" attributeType="XML"
+        begin="c1.begin+1.25s" dur="4s" from="10" to="30" fill="freeze"/>
+</circle>
+
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30" style="fill: #f9f; stroke: gray;">
+    <animate id="c1" attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="10" fill="freeze"/>
+</circle>
+
+<circle cx="120" cy="60" r="10" style="fill: #9f9; stroke: gray;">
+    <animate attributeName="r" attributeType="XML"
+        begin="c1.begin+1.25s" dur="4s" from="10" to="30" fill="freeze"/>
+</circle>
+</svg>
+
+<hr>
+
+<h3>Repeated Action</h3>
+
+<p>The animations we've produced so far occur exactly once; we set fill to freeze to keep the final stage of the animation. If we want to have the object return to its pre-animation state, we omit the attribute. (This is equivalent to setting fill to the default value of remove.)</p>
+<p>Two other attributes allow you to repeat an animation. The first of them, repeatCount, is set to an integer value telling how many times you want a particular animation to repeat. The second, repeatDur, is set to a time telling how long the repetition should last. If you want an animation to repeat until the user leaves the page, set either repeatCount or repeatDur to the value indefinite. The animation in Example 11-6 shows two circles. The upper circle moves from left to right in two repetitions of five seconds each. The second circle moves from right to left for a total of eight seconds.</p>
+
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30" style="fill: none; stroke: red;">
+    <animate attributeName="cx" attributeType="XML"
+        begin="0s" dur="5s" repeatCount="2"
+        from="60" to="260" fill="freeze"/>
+</circle>
+
+<circle cx="260" cy="130" r="30" style="fill: #ccf; stroke: black;">
+    <animate attributeName="cx" attributeType="XML"
+        begin="0s" dur="5s" repeatDur="8s"
+        from="260" to="60" fill="freeze"/>
+</circle>
+</svg>
+<pre>&lt;circle cx="60" cy="60" r="30" style="fill: none; stroke: red;"&gt;
+    &lt;animate attributeName="cx" attributeType="XML"
+        begin="0s" dur="5s" <b>repeatCount="2"</b>
+        from="60" to="260" fill="freeze"/&gt;
+&lt;/circle&gt;
+
+&lt;circle cx="260" cy="130" r="30" style="fill: #ccf; stroke: black;"&gt;
+    &lt;animate attributeName="cx" attributeType="XML"
+        begin="0s" dur="5s" <b>repeatDur="8s"</b>
+        from="260" to="60" fill="freeze"/&gt;
+&lt;/circle&gt;
+</pre>
+
+<p>Just as it was possible to synchronize an animation with the beginning or ending of another animation, we can tie the start of one animation to the start of a specific repetition of another animation. You give the first animation an id, then set the begin of the second animation to id .repeat( count ), where count is a number beginning at zero for the first repetition. In Example 11-7, we have an upper circle moving from left to right three times, requiring five seconds for each repetition. <span class="hi">The lower square will go right to left only once, and will not begin until halfway through the second repetition. (We use an offset to achieve this effect.)</span></p>
+
+<pre>&lt;circle cx="60" cy="60" r="30"
+    style="fill: none; stroke: red;"&gt;
+    &lt;animate <b>id="circle-anim"</b> attributeName="cx" attributeType="XML"
+        begin="0s" dur="5s" <b>repeatCount="3"</b>
+        from="60" to="260" fill="freeze"/&gt;
+&lt;/circle&gt;
+
+&lt;rect x="230" y="100" width="60" height="60"
+    style="fill: #ccf; stroke: black;"&gt;
+    &lt;animate attributeName="x" attributeType="XML"
+        begin="<span class="hi">circle-anim.repeat(1) + 2.5s</span>" dur="5s"
+        from="230" to="30" fill="freeze"/&gt;
+&lt;/rect&gt;
+</pre>
+
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30"
+    style="fill: none; stroke: red;">
+    <animate id="circle-anim" attributeName="cx" attributeType="XML"
+        begin="0s" dur="5s" repeatCount="3"
+        from="60" to="260" fill="freeze"/>
+</circle>
+
+<rect x="230" y="100" width="60" height="60"
+    style="fill: #ccf; stroke: black;">
+    <animate attributeName="x" attributeType="XML"
+        begin="circle-anim.repeat(1) + 2.5s" dur="5s"
+        from="230" to="30" fill="freeze"/>
+</rect>
+</svg>
+
+<hr>
+
+<h3>The set Element</h3>
+
+<p>All of these animations have modified numeric values over time. You may want to set a non-numeric attribute or property though. For example, you might want an initially invisible text item to become visible at a certain time; there's no real need for both a from and to. Thus, we have the convenient shorthand of the <set> element, which needs only a to attribute and the proper timing information. Example 11-8 shrinks a circle down to zero, then reveals text one-half second after the circle is gone.</p>
+<pre>&lt;circle cx="60" cy="60" r="30" style="fill: #ff9; stroke: gray;"&gt;
+    &lt;animate id="c1" attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="0" fill="freeze"/&gt;
+&lt;/circle&gt;
+
+&lt;text text-anchor="middle" x="60" y="60" style="visibility: hidden;"&gt;
+    <span class="hi">&lt;set attributeName="visibility" attributeType="CSS"</span>
+<span class="hi">        to="visible" begin="4.5s" dur="1s" fill="freeze"/&gt;</span>
+    All gone!
+&lt;/text&gt;
+</pre>
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30" style="fill: #ff9; stroke: gray;">
+    <animate id="c1" attributeName="r" attributeType="XML"
+        begin="0s" dur="4s" from="30" to="0" fill="freeze"/>
+</circle>
+
+<text text-anchor="middle" x="60" y="60" style="visibility: hidden;">
+    <set attributeName="visibility" attributeType="CSS"
+        to="visible" begin="4.5s" dur="1s" fill="freeze"/>  
+    All gone!
+</text>
+</svg>
+
+<h3>The animateColor Element</h3>
+
+
+<p>The &lt;animate&gt; element doesn't work with colors, since a color is not represented as a simple numeric value. Instead, the special <animateColor> element fills that purpose. Its from and to attributes are color values, as described in Chapter 3, in Section 3.2.2. In Example 11-9 we animate the fill and stroke colors of a circle, changing the fill from light yellow to red and the gray outline to blue. Both animations start two seconds after the page loads; this gives you time to see the original colors.</p>
+
+<pre>&lt;circle cx="60" cy="60" r="30"
+  style="fill: #ff9; stroke: gray; stroke-width: 10;"&gt;
+    &lt;animateColor attributeName="fill"
+        begin="2s" dur="4s" from="#ff9" to="red" fill="freeze"/&gt;
+    &lt;animateColor attributeName="stroke"
+        begin="2s" dur="4s" from="gray" to="blue" fill="freeze"/&gt;
+&lt;/circle&gt;
+</pre>
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30"
+  style="fill: #ff9; stroke: gray; stroke-width: 10;">
+    <animateColor attributeName="fill"
+        begin="2s" dur="4s" from="#ff9" to="red" fill="freeze"/>
+    <animateColor attributeName="stroke"
+        begin="2s" dur="4s" from="gray" to="blue" fill="freeze"/>
+</circle>
+</svg>
+
+<p>If you have several animations for a particular object, one animation can refer to the previous one with the keyword prev. We could rewrite the preceding example as Example 11-10. Tying two related animations together with prev lets you change them both by editing just the first one.</p>
+
+<pre>&lt;circle cx="60" cy="60" r="30"
+  style="fill: #ff9; stroke: gray; stroke-width: 10;"&gt;
+    &lt;animateColor attributeName="fill"
+        begin="2s" dur="4s" from="#ff9" to="red" fill="freeze"/&gt;
+    &lt;animateColor attributeName="stroke"
+        begin="<b>prev.begin</b>" dur="4s" from="gray" to="blue" fill="freeze"/&gt;
+&lt;/circle&gt;
+</pre>
+<svg height="200" width="400">
+<circle cx="60" cy="60" r="30"
+  style="fill: #ff9; stroke: gray; stroke-width: 10;">
+    <animateColor attributeName="fill"
+        begin="2s" dur="4s" from="#ff9" to="red" fill="freeze"/>
+    <animateColor attributeName="stroke"
+        begin="prev.begin" dur="4s" from="gray" to="blue" fill="freeze"/>
+</circle>
+</span>
+
+<h3>The animateTransform Element</h3>
+
+<p>Just as &lt;animate&gt; doesn't work with colors, it doesn't work with rotate, translate, scale, or skew transformations either, since they're all "wrapped up" inside the transform attribute. The &lt;animateTransform&gt; element comes to the rescue. You set its attributeName to transform. The type attribute's value then specifies the transformation whose values should change (one of translate, scale, rotate, skewX, or skewY). The from and to values are specified as appropriate for the transform that you're animating.<p>
+<p>Example 11-11 stretches a rectangle from normal scale to a scale of four times in the horizontal direction and two times in the vertical direction. Note that we've centered the rectangle around the origin so it doesn't move as it scales; we place it inside a <g> so it can be translated to a more convenient location. Figure 11-5 shows the beginning and end of the animation.</p>
+
+<pre>&lt;g transform="translate(120,60)"&gt;
+&lt;rect x="-10" y="-10" width="20" height="20"
+    style="fill: #ff9; stroke: black;"&gt;
+    &lt;animateTransform attributeType="XML"
+        <b>attributeName="transform" type="scale"</b>
+        from="1" to="4 2"
+        begin="0s" dur="4s" fill="freeze"/&gt;
+    Stretch
+&lt;/rect&gt;
+&lt;/g&gt;
+</pre>
+
+<svg height="200" width="400">
+<g transform="translate(120,60)">
+<rect x="-10" y="-10" width="20" height="20"
+    style="fill: #ff9; stroke: black;">
+    <animateTransform attributeType="XML"
+        attributeName="transform" type="scale"
+        from="1" to="4 2"
+        begin="0s" dur="4s" fill="freeze"/>
+    Stretch
+</rect>
+</g>
+</svg>
+
+<p><span class="hi">If you intend to animate more than one transformation, you must use the additive attribute.</span> The default value of additive is replace, which replaces the specified transformation in the object being animated. This won't work in a series of animations, since the second animation would override the first one. By setting additive to sum, SVG will accumulate the transformations. Example 11-12 stretches and rotates the rectangle; the before and after pictures are in Figure 11-6.</p>
+
+<pre>&lt;rect x="-10" y="-10" width="20" height="20"
+    style="fill: #ff9; stroke: black;"&gt;
+    &lt;animateTransform attributeName="transform" attributeType="XML"
+        type="scale" from="1" to="4 2"
+        <b>additive="sum"</b> begin="0s" dur="4s" fill="freeze"/&gt;
+    &lt;animateTransform attributeName="transform" attributeType="XML"
+        type="rotate" from="0" to="45"
+        <b>additive="sum"</b> begin="0s" dur="4s" fill="freeze"/&gt;
+&lt;/rect&gt;
+</pre>
+
+<svg height="300" width="400">
+<rect x="80" y="40" width="20" height="20"
+    style="fill: #ff9; stroke: black;">
+    <animateTransform attributeName="transform" attributeType="XML"
+        type="scale" from="1" to="4 2"
+        additive="sum" begin="0s" dur="4s" fill="freeze"/>
+    <animateTransform attributeName="transform" attributeType="XML"
+        type="rotate" from="0" to="45"
+        additive="sum" begin="0s" dur="4s" fill="freeze"/>
+</rect>
+</svg>
+
+<hr>
+
+<h3>The animateMotion Element</h3>
+
+<p>By using translate with the &lt;animateTransform&gt; element, you can cause an object to animate along a straight-line path. The <animateMotion> element lets you do this as well; additionally, it allows you to animate an object along an arbitrary path.</p>
+If you insist on using &lt;animateMotion&gt; for straight-line motion, you simply set the from and to attributes, assigning them each a pair of (x, y) coordinates. Example 11-13 moves a grouped circle and rectangle from (0,0) to (60,30).
+
+<svg height="200" width="400">
+<g>
+    <rect x="0" y="0" width="30" height="30" style="fill: #ccc;"/>
+    <circle cx="30" cy="30" r="15" style="fill: #cfc; stroke: green;"/>
+    <animateMotion from="0,0" to="60,30" dur="4s" fill="freeze"/>
+</g>
+</svg>
+
+<p>If you want a more complex path to follow, use the path attribute instead; its value is in the same format as the d attribute in the <path> element. Example 11-14, adapted from the SVG specification, animates a triangle along a cubic Bézier curve path.</p>
+
+<pre>&lt;!-- show the path along which the triangle will move --&gt;
+&lt;path d="M50,125 C 100,25 150,225, 200, 125"
+        style="fill: none; stroke: blue;"/&gt;
+
+&lt;!-- Triangle to be moved along the motion path.
+   It is defined with an upright orientation with the base of
+   the triangle centered horizontally just above the origin. --&gt;
+&lt;path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;"&gt;
+    &lt;animateMotion
+        <b>path="M50,125 C 100,25 150,225, 200, 125"</b>
+        dur="6s" fill="freeze"/&gt;
+&lt;/path&gt;
+</pre>
+
+<svg height="200" width="400">
+<!-- show the path along which the triangle will move -->
+<path d="M50,125 C 100,25 150,225, 200, 125"
+        style="fill: none; stroke: blue;"/>
+
+<!-- Triangle to be moved along the motion path.
+   It is defined with an upright orientation with the base of
+   the triangle centered horizontally just above the origin. -->
+<path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;">
+    <animateMotion
+        path="M50,125 C 100,25 150,225, 200, 125"
+        dur="6s" fill="freeze"/>
+</path>
+</svg>
+
+<p>If you would prefer that the object tilt so its x-axis is always parallel to the slope of the path, just add the rotate attribute with a value of auto to the <animateMotion> element. Example 11-15 shows the SVG and Figure 11-8 shows screenshots taken at various stages of the animation.</p>
+
+<pre>&lt;!-- show the path along which the triangle will move --&gt;
+&lt;path d="M50,125 C 100,25 150,225, 200, 125"
+        style="fill: none; stroke: blue;"/&gt;
+
+&lt;!-- Triangle to be moved along the motion path.
+   It is defined with an upright orientation with the base of
+   the triangle centered horizontally just above the origin. --&gt;
+&lt;path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;" &gt;
+    &lt;animateMotion
+        <span class="hi">path="M50,125 C 100,25 150,225, 200, 125"</span>
+               <span class="hi">rotate="auto"</span>
+        dur="6s" fill="freeze"/&gt;
+&lt;/path&gt;
+</pre>
+
+<svg height="200" width="400">
+<!-- show the path along which the triangle will move -->
+<path d="M50,125 C 100,25 150,225, 200, 125"
+        style="fill: none; stroke: blue;"/>
+
+<!-- Triangle to be moved along the motion path.
+   It is defined with an upright orientation with the base of
+   the triangle centered horizontally just above the origin. -->
+<path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;" >
+    <animateMotion
+        path="M50,125 C 100,25 150,225, 200, 125"
+               rotate="auto"
+        dur="6s" fill="freeze"/>
+</path>
+</svg>
+
+
+<p>In Example 11-15, we drew the path in blue so that it was visible, and then duplicated the path in the <animateMotion> element. You can avoid this duplication by adding an &lt;mpath&gt; element within the &lt;animateMotion&gt; element. The &lt;mpath&gt; will contain an xlink:href attribute that references the path you want to use. This also comes in handy when you have one path you wish to use to animate multiple objects. Here's the preceding example, rewritten as Example 11-16, using &lt;mpath&gt;.</p>
+
+
+<pre>&lt;path <b>id="cubicCurve"</b> d="M50,125 C 100,25 150,225, 200, 125"
+        style="fill: none; stroke: blue;"/&gt;
+
+&lt;path d="M-10,-3 L10,-3 L0,-25z" style="fill: yellow; stroke: red;" &gt;
+    &lt;animateMotion dur="6s" rotate="auto" fill="freeze"&gt;
+        <span class="hi">&lt;mpath xlink:href="#cubicCurve"/&gt;</span>
+    &lt;/animateMotion&gt;
+&lt;/path&gt;
+</pre>
+
+<hr>
+
+
+<h3>Using Links in SVG</h3>
+<p>The easiest sort of interactivity to provide is linking, accomplished with the &lt;a&gt; element. By enclosing a graphic in this element, it becomes active; when clicked, you go to the URL specified in the xlink:href attribute. You can link to another SVG file or, depending upon your environment, a web page. In Example 11-17, clicking the word "Cat" will link to an SVG drawing of a cat; clicking the red, green, and blue shapes will link to the World Wide Web Consortium's SVG page. All the items within the second link are individually linked to the same destination, not the entire bounding box. When you test this example and move the cursor between the shapes, you will see that those areas are not linked.</p>
+<svg height="200" width="400">
+<a xlink:href="cat.svg">
+    <text x="100" y="30" style="font-size: 12pt;">Cat</text>
+</a>
+
+<a xlink:href="http://www.w3.org/SVG/">
+    <circle cx="50" cy="70" r="20" style="fill: red;"/>
+    <rect x="75" y="50" width="40" height="40" style="fill: green;"/>
+    <path d="M120 90, 140 50, 160 90 Z" style="fill: blue;"/>
+</a>
+</svg>
+
+<h3>Scripting SVG</h3>
+<pre>&lt;script type="text/ecmascript"&gt;     <b>[1]</b>
+&lt;![CDATA[     <b>[2]</b>
+function enlarge_circle(evt)     <b>[3]</b>
+{
+    var circle = evt.getTarget();     <b>[4]</b>
+
+    circle.setAttribute("r", 50);     <b>[5]</b>
+}
+
+function shrink_circle(evt)     <b>[6]</b>
+{
+    var circle = evt.getTarget();
+
+    circle.setAttribute("r", 25);
+}
+// ]]&gt;     <b>[7]</b>
+&lt;/script&gt;
+ 
+&lt;circle cx="150" cy="100" r="25" fill="red"     <b>[8]</b>
+    onmouseover="enlarge_circle(evt)"     <b>[9]</b>
+    onmouseout="shrink_circle(evt)"/&gt;
+  
+&lt;text x="150" y="175" style="text-anchor: middle;"&gt;
+    Mouse over the circle to change its size.
+&lt;/text&gt;
+</pre>
+<script>
+function enlarge_circle(evt) {
+    var circle = evt.target;
+    circle.setAttribute("r", 50);
+}
+
+function shrink_circle(evt) {
+    var circle = evt.target;
+    circle.setAttribute("r", 25);
+}
+</script>
+ 
+<svg height="200" width="400">
+<circle cx="150" cy="100" r="25" fill="red"
+    onmouseover="enlarge_circle(evt)" 
+    onmouseout="shrink_circle(evt)"/>
+  
+<text x="150" y="175" style="text-anchor: middle;">
+    Mouse over the circle to change its size.
+</text>
+</svg>
