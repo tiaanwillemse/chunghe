@@ -16,7 +16,36 @@ hr{margin: 20px 0;}
 <p><a href="https://coderwall.com/p/blx8kw">https://coderwall.com/p/blx8kw</a></p>
 
 <h3>Clipping to a Path</h3>
-<p>When you create an SVG document, you establish its viewport by specifying the width and height of the area you're interested in. This automatically becomes your clipping area; anything drawn outside these limits will not be displayed. You can establish a clipping area of your own with the <clipPath> element. Here's the simplest case: establishing a rectangular clip path. Inside the <clipPath> element will be the <rect> we wish to clip to.</p>
+<p>When you create an SVG document, you establish its viewport by specifying the width and height of the area you're interested in. This automatically becomes your clipping area; anything drawn outside these limits will not be displayed. You can establish a clipping area of your own with the &lt;clipPath&gt; element. Here's the simplest case: establishing a rectangular clip path. Inside the &lt;clipPath&gt; element will be the &lt;rect&gt; we wish to clip to. The rectangle itself is not displayed; we only love it for its coordinates. Thus, we are free to add any fill or stroke styles we wish to the elements within the &lt;clipPath&gt;. On the object to be clipped we add a clip-path style property whose value references the &lt;clipPath&gt; element. Note that the property is hyphenated and not capitalized; the element is capitalized and not hyphenated. In Example 9-1, the object being clipped is a small version of the cat picture from Chapter 1, producing Figure 9-1.</p>
+
+
+<pre>&lt;defs&gt;
+&lt;clipPath id="rectClip"&gt;
+    &lt;rect id="rect1" x="15" y="15"
+       width="40" height="45"
+       style="stroke: gray; fill: none;"/&gt;
+&lt;/clipPath&gt;
+&lt;/defs&gt;
+
+&lt;!-- clip to rectangle --&gt;
+&lt;use xlink:href="minicat.svg#cat" style="clip-path: url(#rectClip);"/&gt;
+
+&lt;!--
+  for reference, show entire picture with clipping area outlined --&gt;
+&lt;g transform="translate(100,0)"&gt;
+    &lt;use xlink:href="#rect1"/&gt;    &lt;!-- show clip rectangle --&gt;
+    &lt;use xlink:href="minicat.svg#cat"/&gt;
+&lt;/g&gt;
+</pre>
+
+<svg class="svg-graphic" width="180" height="200" viewBox="0 0 560 645" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1">
+    <g>
+       <clipPath id="hexagonal-mask">
+          <polygon points="130,0 0,160 0,485 270,645 560,485 560,160" />
+       </clipPath>
+    </g> 
+   <image clip-path="url(#hexagonal-mask)" height="100%" width="100%" xlink:href="../../dr-evil-802.jpg" />
+</svg>
 
 </body>
 </html>
