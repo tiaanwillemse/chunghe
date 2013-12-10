@@ -1,0 +1,20 @@
+
+<script>
+
+  var contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
+  if (contextClass) {
+    var context = new contextClass
+    console.log('context', context)
+  } else {
+    console.log('not support web audio')
+  }
+
+  var request = new XMLHttpRequest();
+  request.open('GET', 'DANCEHALL.mp3', true);
+  request.responseType = 'arraybuffer';
+
+  request.onload = function () {
+    console.log('arguments', arguments)
+  }
+
+</script>

@@ -1,0 +1,15 @@
+
+<style>
+  p {max-width:750px; font-size: 16px; }
+</style>
+<p>A single audio context can support multiple sound inputs and complex audio graphs, so generally speaking, we will only need one for each audio application we create.</p>
+<script>
+
+  var contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
+  if (contextClass) {
+    var context = new contextClass
+    console.log('context', context)
+  } else {
+    console.log('not support web audio')
+  }
+</script>
