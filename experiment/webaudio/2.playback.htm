@@ -1,0 +1,57 @@
+
+<style>
+#drop_zone{border: 2px dotted #ccc; padding: 25px; border-radius: 5px;}
+</style>
+<div id="drop_zone">Drop files here</div>
+
+<script>
+  function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    var files = evt.dataTransfer.files; // FileList object.
+    play(files[0]);
+  }
+
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+
+  // Setup the dnd listeners.
+  var dropZone = document.getElementById('drop_zone');
+  dropZone.addEventListener('dragover', handleDragOver, false);
+  dropZone.addEventListener('drop', handleFileSelect, false);
+
+
+  // ---- web audio context ----
+  var contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
+  if (contextClass) {
+    var context = new contextClass
+    console.log('context', context)
+  } else {
+    console.log('not support web audio')
+  }
+
+  var source = context.createBufferSource();
+  var reader = new FileReader();
+
+  var play = function (file) {
+    if (file.type !== 'audio/mp3') {
+      console.error('file type not supported', file.type);
+      return false;
+    }
+    reader.onload = function (e) {
+      // e.target: FileReader itself
+      // e.target.result: ArrayBuffer {} ...
+      context.decodeAudioData(e.target.result, function (buffer) {
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start(0);
+      })
+    }
+    reader.readAsArrayBuffer(file);
+  }
+
+
+</script>
