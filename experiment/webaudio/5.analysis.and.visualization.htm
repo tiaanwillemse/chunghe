@@ -1,0 +1,84 @@
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<style>
+  canvas {background: lightblue;}
+</style>
+<canvas id="canvas" height="300" width="500"></canvas>
+<script>
+
+  var contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
+  if (contextClass) {
+    var context = new contextClass
+    console.log('context', context)
+  } else {
+    console.log('not support web audio')
+  }
+
+  var url = './sounds/br-jam-loop.wav';
+  var url = './sounds/Guilt.mp3';
+  var url = './sounds/DANCEHALL.mp3';
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
+
+
+  var source = context.createBufferSource();
+  var analyser = context.createAnalyser();
+  var numBars = 16;
+  // analyser.smoothingTimeConstant = 0.3;
+  analyser.fftSize = 1024;
+
+  function average(data, start, end) {
+    var vals = 0;
+    var length = end - start + 1;
+
+    for (var i=start; i<=end; i++) {
+      vals += data[i];
+    }
+
+    return (vals / length)
+  }
+
+  var group = function (data, groupSize) {
+    // grouping every 16 items
+    var result = [];
+    var groupSize = groupSize || 16;
+    for ( groupIndex = 0; groupIndex < Math.floor(data.length / groupSize); groupIndex += 1) {
+      var start = groupIndex * groupSize;
+      var end = (groupIndex + 1) * groupSize - 1;
+      result[groupIndex] = average(data, start, end);
+    }
+    return result;
+  }
+
+
+
+  var canvas = document.querySelector('#canvas');
+  var canvasContext = canvas.getContext('2d');
+  canvasContext.fillStyle='green';
+  var barWidth = canvas.width / numBars;
+
+  var update = function () {
+    var data = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(data);
+    canvasContext.clearRect(0, 0, 500, 300);
+    var groupping = group(data);
+    groupping.forEach(function (g, index) {
+      console.log('->', index * barWidth, canvas.height, barWidth, g)
+      canvasContext.fillRect(index * barWidth, canvas.height - g, barWidth, g);
+      //console.log(index * barWidth, canvas.height, barWidth, d*20);
+    })
+  };
+
+  request.onload = function () {
+    context.decodeAudioData(request.response, function(buffer) {
+      source.buffer = buffer;
+      source.connect(analyser);
+      analyser.connect(context.destination);
+      //window.timer = window.setInterval(update, 1000/60);
+      source.start(0);
+    });
+  }
+  request.send();
+
+</script>
