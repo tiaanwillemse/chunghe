@@ -1,0 +1,86 @@
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<style>
+  canvas {background: lightblue;}
+</style>
+<canvas id="canvas" height="300" width="640"></canvas>
+<script>
+
+  var contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
+  window.requestAnimFrame = (window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame);
+  if (contextClass) {
+    var context = new contextClass
+    console.log('context', context)
+  } else {
+    console.log('not support web audio')
+  }
+  var canvas = document.querySelector('#canvas');
+  var canvasContext = canvas.getContext('2d');
+  canvasContext.fillStyle='green';
+
+  var url = './sounds/br-jam-loop.wav';
+  var url = './sounds/DANCEHALL.mp3';
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
+
+  var source = context.createBufferSource();
+  source.addEventListener('ended', function () {
+    console.log('ended');
+  });
+  var analyser = context.createAnalyser();
+  var numBars = 16;
+  analyser.smoothingTimeConstant = 0.8;
+  analyser.fftSize = 1024;
+
+  function average(data, start, end) {
+    var vals = 0;
+    var length = end - start + 1;
+
+    for (var i=start; i<=end; i++) {
+      vals += data[i];
+    }
+    return (vals / length)
+  }
+
+  var group = function (data, groupSize) {
+    // grouping every 16 items
+    var result = [];
+    var groupSize = groupSize || 16;
+    for ( groupIndex = 0; groupIndex < Math.floor(data.length / groupSize); groupIndex += 1) {
+      var start = groupIndex * groupSize;
+      var end = (groupIndex + 1) * groupSize - 1;
+      result[groupIndex] = average(data, start, end);
+    }
+    return result;
+  }
+
+  var barWidth = Math.floor(canvas.width / numBars);
+
+  var update = function () {
+    if (source.playbackState !== 3) {
+      requestAnimationFrame(update);
+    }
+    var data = new Uint8Array(analyser.frequencyBinCount);
+    //window.mozRequestAnimationFrame(update)
+    analyser.getByteFrequencyData(data);
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+    var groupping = group(data);
+    groupping.forEach(function (g, index) {
+      var scaled = (g/256) * canvas.height;
+      canvasContext.fillRect(index * barWidth, canvas.height - g, barWidth - 1, scaled);
+    });
+  };
+
+  request.onload = function () {
+    context.decodeAudioData(request.response, function(buffer) {
+      source.buffer = buffer;
+      source.connect(analyser);
+      analyser.connect(context.destination);
+      requestAnimFrame(update);
+      source.start(0);
+    });
+  }
+  request.send();
+
+</script>
