@@ -3,7 +3,7 @@
 <style>
   canvas {background: lightblue;}
 </style>
-<canvas id="canvas" height="300" width="500"></canvas>
+<canvas id="canvas" height="300" width="640"></canvas>
 <script>
 
   var contextClass = (window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext || window.msAudioContext);
@@ -13,19 +13,23 @@
   } else {
     console.log('not support web audio')
   }
+  var canvas = document.querySelector('#canvas');
+  var canvasContext = canvas.getContext('2d');
+  canvasContext.fillStyle='green';
 
-  var url = './sounds/br-jam-loop.wav';
-  var url = './sounds/Guilt.mp3';
   var url = './sounds/DANCEHALL.mp3';
+  var url = './sounds/br-jam-loop.wav';
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.responseType = 'arraybuffer';
 
-
   var source = context.createBufferSource();
+  source.addEventListener('ended', function () {
+    console.log('ended');
+  });
   var analyser = context.createAnalyser();
   var numBars = 16;
-  // analyser.smoothingTimeConstant = 0.3;
+  analyser.smoothingTimeConstant = 0.8;
   analyser.fftSize = 1024;
 
   function average(data, start, end) {
@@ -35,7 +39,6 @@
     for (var i=start; i<=end; i++) {
       vals += data[i];
     }
-
     return (vals / length)
   }
 
@@ -51,23 +54,17 @@
     return result;
   }
 
-
-
-  var canvas = document.querySelector('#canvas');
-  var canvasContext = canvas.getContext('2d');
-  canvasContext.fillStyle='green';
-  var barWidth = canvas.width / numBars;
+  var barWidth = Math.floor(canvas.width / numBars);
 
   var update = function () {
     var data = new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(data);
-    canvasContext.clearRect(0, 0, 500, 300);
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     var groupping = group(data);
     groupping.forEach(function (g, index) {
-      console.log('->', index * barWidth, canvas.height, barWidth, g)
-      canvasContext.fillRect(index * barWidth, canvas.height - g, barWidth, g);
-      //console.log(index * barWidth, canvas.height, barWidth, d*20);
-    })
+      var scaled = (g/256) * canvas.height;
+      canvasContext.fillRect(index * barWidth, canvas.height - g, barWidth - 1, scaled);
+    });
   };
 
   request.onload = function () {
@@ -75,7 +72,7 @@
       source.buffer = buffer;
       source.connect(analyser);
       analyser.connect(context.destination);
-      //window.timer = window.setInterval(update, 1000/60);
+      window.timer = window.setInterval(update, 1000/60);
       source.start(0);
     });
   }
