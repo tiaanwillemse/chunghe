@@ -1,0 +1,53 @@
+
+<!doctype html>
+
+<html>
+<head>
+<style>
+.module { border: 1px solid #ccc; padding: 1em;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="lib/build/react.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script type="text/coffeescript">
+
+# this.setState(text: e.target.value) <- can only modify part of the state
+{div, input, form, button, h3, ul, li} = React.DOM
+
+TodoList = React.createClass(
+  render: ->
+    ul null, @props.items.map((itemText) ->
+      li null, itemText
+    )
+)
+
+TodoApp = React.createClass(
+
+  getInitialState: ->
+    items: [], text: ''
+
+  onChange: (e) ->
+    this.setState(text: e.target.value)
+
+  handleSubmit: (e) ->
+    e.preventDefault()
+    nextItems = this.state.items.concat([this.state.text])
+    @setState(items: nextItems, text: '')
+
+  render: ->
+    div null, [
+      h3 null, 'TODO'
+      TodoList {items: @state.items}
+      form {onSubmit: @handleSubmit}, [
+        input {onChange: @onChange, value: this.state.text}
+        button null, "add ##{@state.items.length + 1}"
+      ]
+    ]
+)
+
+React.renderComponent(TodoApp(null), document.querySelector('#app'))
+</script>
+</body>
+</html>
