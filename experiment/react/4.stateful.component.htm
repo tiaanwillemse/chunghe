@@ -13,19 +13,17 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
 <script type="text/coffeescript">
 
-  ###
-   getInitialState to set the initial state
-   set set via @setState, should never modify the state directly
-   component lifecycle: 
-    1. Mounting: componentWillMount
-    2. Mounting: componentDidMount
-    3. Updating: componentWillReceiveProps
-    4. Updating: shouldComponentUpdate
-    5. Updating: componentWillUpdate
-    6. Updating: componentDidUpdate
-    7. Unmounting: componentWillUnmount
-  only have to think about user interface and data structure (secondsElapsed is the only state needed for this app)
-  ###
+#   getInitialState to set the initial state
+#   set set via @setState, should never modify the state directly
+#   component lifecycle: 
+#    1. Mounting: componentWillMount
+#    2. Mounting: componentDidMount
+#    3. Updating: componentWillReceiveProps
+#    4. Updating: shouldComponentUpdate
+#    5. Updating: componentWillUpdate
+#    6. Updating: componentDidUpdate
+#    7. Unmounting: componentWillUnmount
+#  only have to think about user interface and data structure (secondsElapsed is the only state needed for this app)
 
 {div, h4} = React.DOM
 
