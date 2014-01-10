@@ -14,6 +14,13 @@
 <script type="text/coffeescript">
 
 # this.setState(text: e.target.value) <- can only modify part of the state
+# onSubmit/onChange is actually synthetic event, not really native DOM event
+# @props.items.map is a common pattern
+# only need to tell React how to render the application, there's no direct dom access to render the ui (no innerHTML or something)
+# very easy to do subview management
+# get setting `ref` attribute, could access the node through this.refs['input'], no parentNode, no getElementById, no queryselector
+# could get the native DOM node through getDOMNode() method on the virtual DOM
+
 {div, input, form, button, h3, ul, li} = React.DOM
 
 TodoList = React.createClass(
@@ -35,13 +42,14 @@ TodoApp = React.createClass(
     e.preventDefault()
     nextItems = this.state.items.concat([this.state.text])
     @setState(items: nextItems, text: '')
+    this.refs.input.getDOMNode().focus()
 
   render: ->
     div null, [
       h3 null, 'TODO'
       TodoList {items: @state.items}
       form {onSubmit: @handleSubmit}, [
-        input {onChange: @onChange, value: this.state.text}
+        input {onChange: @onChange, ref: 'input', value: this.state.text}
         button null, "add ##{@state.items.length + 1}"
       ]
     ]
