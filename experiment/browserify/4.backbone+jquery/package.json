@@ -1,0 +1,16 @@
+{
+  "name": "4.backbone.with.jquery",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "jquery": "~2.1.0-beta3",
+    "backbone": "~1.1.0"
+  }
+}
