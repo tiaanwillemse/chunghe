@@ -1,0 +1,102 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<style>
+body {padding: 50px;}
+.module { border: 1px solid #ccc; padding: 1em;}
+#todos {list-style-type: none; padding-left: 0; font-size: 22px;}
+#todos .content {display: inline-block; width: 250px; overflow: hidden; text-overflow: ellipsis;}
+#todos .glyphicon-trash:hover{text-decoration: none;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="lib/build/react.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script type="text/coffeescript">
+
+# this.setState(text: e.target.value) <- can only modify part of the state
+# onSubmit/onChange is actually synthetic event, not really native DOM event
+# @props.items.map is a common pattern
+# only need to tell React how to render the application, there's no direct dom access to render the ui (no innerHTML or something)
+# very easy to do subview management
+# get setting `ref` attribute, could access the node through this.refs['input'], no parentNode, no getElementById, no queryselector
+# could get the native DOM node through getDOMNode() method on the virtual DOM
+
+
+{div, input, form, button, h3, ul, li, a, span} = React.DOM
+
+
+TodoList = React.createClass(
+  render: ->
+    ul {id: 'todos'}, @props.items.map((itemText, index) =>
+      li null, [
+        span {className: 'content'}, itemText
+        a {onClick: @props.deleteItem.bind(this, index), className: 'glyphicon glyphicon-trash', href: '#'}, ''
+      ]
+    )
+)
+
+Nav = React.createClass(
+  render: ->
+    div {className: 'btn-group'}, [
+      button {onClick: @props.undo, type: 'button', className: 'btn btn-default'}, span {className: 'glyphicon glyphicon-chevron-left'}
+      button {onClick: @props.redo, type: 'button', className: 'btn btn-default'}, span {className: 'glyphicon glyphicon-chevron-right'}
+    ]
+)
+
+TodoApp = React.createClass(
+
+  getInitialState: ->
+    items: []
+
+  states: [{items: []}]
+
+  handleSubmit: (e) ->
+    e.preventDefault()
+    elInput = this.refs.input.getDOMNode()
+    nextItems = this.state.items.concat([elInput.value])
+    @states.push(items: nextItems)
+    if not @currentStateIndex
+      @currentStateIndex = 0
+    @currentStateIndex += 1
+    @setState(items: nextItems)
+    elInput.value = ''
+    elInput.focus()
+
+  deleteItem: (index) ->
+    nextItems = this.state.items.slice(0)
+    nextItems.splice(index, 1)
+    @states.push(items: nextItems)
+    @currentStateIndex += 1
+    @setState(items: nextItems)
+
+  undo: (e) ->
+    return false if @currentStateIndex <= 0
+    @currentStateIndex -= 1
+    @setState(@states[@currentStateIndex])
+
+  redo: (e) ->
+    return false if @currentStateIndex + 1>= @states.length
+    @currentStateIndex += 1
+    @setState(@states[@currentStateIndex])
+
+  render: ->
+    div null, [
+      Nav {undo: @undo, redo: @redo}
+      h3 null, 'TODO'
+      TodoList {items: @state.items, deleteItem: @deleteItem}
+      form {onSubmit: @handleSubmit}, [
+        input {ref: 'input'}
+        button null, "add ##{@state.items.length + 1}"
+      ]
+    ]
+)
+
+React.renderComponent(TodoApp(null), document.querySelector('#app'))
+</script>
+</body>
+</html>
