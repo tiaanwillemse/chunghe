@@ -1,2 +1,2 @@
 #!/usr/bin/env  bash
-browserify -t hbsfy index.js > bundle.js
+browserify -t hbsfy --debug index.js > bundle.js
