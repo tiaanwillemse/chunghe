@@ -1,0 +1,53 @@
+<!doctype html>
+
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+<style>
+  .grid {background: #ccc; border: 1px solid green;}
+  .row {margin-bottom: 1em;}
+</style>
+<h2>fixed container</h2>
+<div class="container">
+  <div class="row">
+    <div class="grid col-xs-6">col-xs-6</div>
+    <div class="grid col-xs-6">col-xs-6</div>
+  </div>
+  <div class="row">
+    <div class="grid col-sm-6">col-sm-6</div>
+    <div class="grid col-sm-6">col-sm-6</div>
+  </div>
+  <div class="row">
+    <div class="grid col-md-6">col-md-6</div>
+    <div class="grid col-md-6">col-md-6</div>
+  </div>
+  <div class="row">
+    <div class="grid col-lg-6">col-lg-6</div>
+    <div class="grid col-lg-6">col-lg-6</div>
+  </div>
+</div>
+<h2>fluid container</h2>
+<div class="container-fluid">
+  <div class="row">
+    <div class="grid col-xs-6">col-xs-6</div>
+    <div class="grid col-xs-6">col-xs-6</div>
+  </div>
+  <div class="row">
+    <div class="grid col-sm-6">col-sm-6</div>
+    <div class="grid col-sm-6">col-sm-6</div>
+  </div>
+  <div class="row">
+    <div class="grid col-md-6">col-md-6</div>
+    <div class="grid col-md-6">col-md-6</div>
+  </div>
+  <div class="row">
+    <div class="grid col-lg-6">col-lg-6</div>
+    <div class="grid col-lg-6">col-lg-6</div>
+  </div>
+</div>
+
+<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+<div class="row">
+  <div class="grid col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+  <div class="grid col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+  <div class="grid col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+</div>
