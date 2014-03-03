@@ -1,3 +1,6 @@
+file /Users/chunghe/dev/google.code/experiment/browserify/7.source.transforms.hbsfy/1.basic/index.js
+file /Users/chunghe/dev/google.code/experiment/browserify/7.source.transforms.hbsfy/1.basic/hello.hbs
+file /Users/chunghe/dev/google.code/experiment/browserify/7.source.transforms.hbsfy/1.basic/fruits.hbs
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
