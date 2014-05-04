@@ -1,0 +1,49 @@
+<!doctype html>
+
+<head>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./bootstrap.js"></script>
+
+<style>
+#example {padding: 50px;}
+</style>
+</head>
+<body>
+<div id="example">
+  <input type="text" class="weekday">
+  <input type="text" class="time">
+  <input type="text" class="time">
+</div>
+<script>
+//  $('#example input').popover({placement: 'bottom', trigger: 'click'}).blur(function() {
+//    $(this).popover('hide');
+//  })
+
+$('body').popover({
+  selector: '.time,.weekday',
+  trigger: 'focus',
+  html: true,
+  title: 'select weekday',
+  content: function (el) {
+    console.log(this)
+    if( this.classList.contains('weekday'))
+      return '<span>Sun</span><span>Mon</span><span>Tue</span>'
+    else
+      return '<span>12:00</span><span>13:00</span><span>14:00</span>'
+  },
+  placement: 'bottom'
+});
+
+
+var latestFocusElement = null;
+$('body').on('show.bs.popover', function (e) {
+  latestFocusElement = e.target
+});
+$('body').on('click', 'span', function (e) {
+  value = e.target.innerHTML;
+  latestFocusElement.value = e.target.innerHTML
+});
+
+</script>
+</body>
