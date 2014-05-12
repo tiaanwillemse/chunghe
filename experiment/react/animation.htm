@@ -10,6 +10,9 @@
         font-size: 20px;
         color: #444;
       }
+      .delete {
+        margin-left: 10px;
+      }
       .example-enter {
         opacity: 0.01;
         transition: opacity .5s ease-in;
@@ -47,12 +50,20 @@ var TodoList = React.createClass({
     this.setState({items: newItems});
   },
 
+
+  handleRemove: function (index) {
+    var newItems = this.state.items;
+    newItems.splice(index, 1);
+    this.setState({items: newItems});
+  },
+
   render: function () {
     var items = this.state.items.map(function (item, i) {
       return (
-        <div>{item}</div>
+        /*key is very important here*/
+        <div key={item} onClick={this.handleRemove.bind(this, i)}>{item}</div>
       )
-    });
+    }.bind(this));
     return (<div><button onClick={this.handleAdd}>Add</button><ReactCSSTransitionGroup transitionName="example">{items}</ReactCSSTransitionGroup></div>)
   }
 });
