@@ -1,1 +1,1 @@
-browserify -t uglifyify index.js  > bundle.js
+browserify -t uglifyify index.js  --debug> bundle.js
