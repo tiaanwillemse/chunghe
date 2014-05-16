@@ -1,0 +1,41 @@
+
+<!doctype html>
+
+
+
+<script>
+
+function get(url) {
+
+  return new Promise(function(resolve, reject) {
+
+    var req = new XMLHttpRequest();
+    req.open('GET', url)
+    req.onload = function () {
+      if (req.status == 200) {
+        resolve(req.response)
+      } 
+      else {
+        reject(Error(req.statusText))
+      }
+    }
+
+    req.onerror = function () {
+      reject(Error('Network Error'));
+    }
+
+    req.send();
+  })
+}
+
+
+requests = [get('http://json.chunghe.me/5375833dd0125a7f7979d1ce'), get('http://json.chunghe.me/5375807ed0125a7f7979d1cd')]
+
+Promise.all(requests).then(function (result) {
+  console.log('first respose', result[0]);
+  console.log('second response', result[1]);
+  console.log('all done!');
+})
+
+
+</script>
