@@ -1,0 +1,20 @@
+
+<pre>
+// util.js
+module.exports = {
+  multiply: function (a, b) {
+    return a * b;
+  }
+}
+
+// main.js
+util = require('../util.js');
+console.log('mutliply', util.multiply(3, 4));
+
+<b>// webpack</b>
+webpack main.js bundle.js
+
+// result
+mutliply 12
+</pre>
+<script src="./bundle.js"></script>
