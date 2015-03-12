@@ -1,0 +1,18 @@
+
+<script>
+
+function* foo() {
+  try {
+    var x = yield 3;
+    console.log('x: ' + x);
+  } catch (err) {
+    console.log('error: ' + err);
+  }
+}
+
+
+var it = foo();
+var res = it.next();  // this line is necessary, or there will be an uncaught error
+
+it.throw('Oops!')
+</script>

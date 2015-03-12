@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promises test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="story"></div>
+  <script src="utils.js"></script>
+<script>
+
+function get(url, callback) {
+
+  var req = new XMLHttpRequest();
+  req.open('get', url);
+
+  req.onload = function() {
+    if (req.status == 200) {
+      callback(JSON.parse(req.response));
+    } else {
+      console.error('error: ' + req.statusText);
+    }
+  };
+
+  req.send();
+}
+
+function request(url) {
+  get(url, function(response) {
+    it.next(response) // send value to the generator
+  });
+  // Note: nothing returned here
+}
+
+function* main() {
+  var story = yield request('story.json');
+  console.log('story', story);
+  var url = story.chapterUrls[0];
+  var content = yield request(url);
+  console.log('chapter1 content', content);
+  addHtmlToPage(content.html);
+}
+
+var it = main();
+it.next(); // first called request function and returned undefined;
+</script>
+</body>
+<html>

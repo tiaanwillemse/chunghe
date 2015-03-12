@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promises test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="network-fake">
+    <label><input type="checkbox"> Fake network delay</label>
+  </div>
+  <div class="story"></div>
+  <svg class="spinner" viewBox="0 0 100 100" width="20" height="20">
+    <circle cx="50" cy="50" r="42" transform="rotate(-90,50,50)" />
+  </svg>
+  <script src="utils.js"></script>
+  <script>
+    // download all json simuntaneously
+    getJson('story.json')
+      .then(function(story) {
+
+        // Promise.all will return a promise, resolved if all of its promises resolved
+        return Promise.all(story.chapterUrls.map(getJson))
+      })
+      .then(function (chapters) {
+        // Now we have the chapters joins in order
+        chapters.forEach(function (chapter) {
+          addHtmlToPage(chapter.html);
+        })
+      
+      })
+      .then(function() {
+        addTextToPage("All done");
+      })
+      .catch(function (err) {
+        addTextToPage("Argh, broken: " + err.message);
+      })
+      .then(function(){
+        document.querySelector('.spinner').style.display = 'none';
+      })
+  </script>
+</body>
+</html>

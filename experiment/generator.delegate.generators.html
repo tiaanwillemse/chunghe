@@ -1,0 +1,21 @@
+
+<script>
+
+
+
+  function *foo() {
+    yield 3;
+    yield 4;
+  }
+
+  function *bar() {
+    yield 1;
+    yield 2;
+    yield* foo(); // `yield*` delegates iteration control to `foo()`
+    yield 5;
+  }
+
+  for (var v of bar()) {
+    console.log(v); // 1 2 3 4 5
+  }
+</script>

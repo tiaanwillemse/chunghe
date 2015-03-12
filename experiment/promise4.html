@@ -1,0 +1,37 @@
+
+
+
+<script>
+
+  function get(url) {
+    return new Promise(function(resolve, reject) {
+      var req = new XMLHttpRequest();
+      req.open('GET', url);
+
+      req.onload = function () {
+        if (req.status == 200) {
+          resolve(req.response);
+        } else {
+          reject(Error(req.statusText));
+        }
+      }
+
+      req.onerror = function () {
+        reject(Error('Network Error'));
+      };
+
+      req.send();
+    })
+  }
+
+  get('/')
+    .then(JSON.parse)
+    .then(function(data) {
+      // This never happends, '/' is an HTML page, not JSON
+      console.log("It worked!", data);
+    })
+    .catch(function(err) {
+      console.log("It failed!", err);
+    })
+
+</script>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promises test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="story"></div>
+  <script src="utils.js"></script>
+<script>
+
+function get(url, callback) {
+
+  var req = new XMLHttpRequest();
+  req.open('get', url);
+
+  req.onload = function() {
+    if (req.status == 200) {
+      callback(JSON.parse(req.response));
+    } else {
+      console.error('error: ' + req.statusText);
+    }
+  };
+
+  req.send();
+}
+
+function request(url) {
+  return new Promise(function(resolve, reject) {
+    get(url, resolve);
+  })
+}
+
+function* main() {
+
+  var story = yield request('story.json');
+  console.log('story', story);
+  var url = story.chapterUrls[0];
+  var content = yield request(url);
+  console.log('chapter1 content', content);
+  addHtmlToPage(content.html);
+};
+
+var it = main();
+var ret = it.next(); // {value: Promise, done: false}
+ret.value.then(function(response) { 
+  console.log('response1', response)// {heading: "...", chapterUrls: Array[5]}
+  var ret = it.next(response) // {value: Promise, done: false}
+  ret.value.then(function (response) {
+    console.log('response2', response); //  {chapter: 1, html: "..."}
+    var ret = it.next(response);
+    console.log('ret', ret) // {value: undefined, done: true}
+  });
+});
+
+</script>
+</body>
+<html>

@@ -1,0 +1,27 @@
+
+<script>
+
+function* someNumbers() {
+     yield 1;
+     yield 2;
+     yield 3;
+}
+var iter = someNumbers();
+console.log(iter.next()); // {value: 1, done: false}
+console.log(iter.next()); // {value: 2, done: false}
+console.log(iter.next()); // {value: 3, done: false}
+console.log(iter.next()); // {value: undefined, done: true}
+
+// or
+
+for (var num of someNumbers()) {
+     console.log(num);
+}
+
+
+console.log(iter[Symbol.iterator]);
+console.log(iter[Symbol.iterator]());
+console.log(iter[Symbol.iterator]() === iter);
+
+
+</script>

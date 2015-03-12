@@ -1,0 +1,48 @@
+
+<script src="utils.js"></script>
+<button id="go">go</button>
+
+
+<script>
+  function get(url) {
+    return new Promise(function(resolve, reject) {
+      var req = new XMLHttpRequest();
+      req.open('GET', url);
+
+      req.onload = function () {
+        if (req.status == 200) {
+          resolve(req.response);
+        } else {
+          reject(Error(req.statusText));
+        }
+      }
+
+      req.onerror = function () {
+        reject(Error('Network Error'));
+      };
+
+      req.send();
+    })
+  }
+
+  // reuse storyPromise, only one http request
+  var storyPromise  = get('story.json');
+  storyPromise.then(JSON.parse).then(function(story) {
+    console.log('story', story);
+    console.log('heading', story.heading);
+    return getJson(story.chapterUrls[0]);
+  }).then(function(chapter1) {
+    console.log("Got chapter1!", chapter1);
+  });
+
+  document.querySelector('#go').addEventListener('click', function () {
+    storyPromise.then(function(response) {
+      console.log('reponse', response);
+    })
+  });
+
+  // note: print storyPromise value in the console
+
+
+
+</script>

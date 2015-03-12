@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promises test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="story"></div>
+  <script src="utils.js"></script>
+<script>
+
+function get(url, callback) {
+
+  var req = new XMLHttpRequest();
+  req.open('get', url);
+
+  req.onload = function() {
+    if (req.status == 200) {
+      callback(JSON.parse(req.response));
+    } else {
+      console.error('error: ' + req.statusText);
+    }
+  };
+
+  req.send();
+}
+
+function request(url) {
+  return new Promise(function(resolve, reject) {
+    get(url, resolve);
+  })
+}
+
+
+// run (async) a generator to completion
+// Note: simplified approach: no error handling here
+function runGenerator(g) {
+    var it = g(), ret;
+
+    // asynchronously iterate over generator
+    (function iterate(val){
+        ret = it.next( val );
+
+        if (!ret.done) {
+            // poor man's "is it a promise?" test
+            if ("then" in ret.value) {
+                // wait on the promise
+                ret.value.then( iterate );
+            }
+            // immediate value: just send right back in
+            else {
+                // avoid synchronous recursion
+                setTimeout( function(){
+                    iterate( ret.value );
+                }, 0 );
+            }
+        }
+    })();
+}
+
+runGenerator(function* main() {
+
+  var story = yield request('story.json');
+  console.log('story', story);
+  var chapters = yield Promise.all(story.chapterUrls.map(request));
+  console.log('chapters', chapters);
+  chapters.forEach(function(chapter) {
+    addHtmlToPage(chapter.html);
+  })
+});
+
+</script>
+</body>
+<html>
