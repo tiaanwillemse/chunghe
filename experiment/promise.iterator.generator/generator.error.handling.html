@@ -1,5 +1,11 @@
 
-<script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+
+
+<pre id="source">
+</pre>
+<script id="code">
 
 function* foo() {
   try {
@@ -15,4 +21,11 @@ var it = foo();
 var res = it.next();  // this line is necessary, or there will be an uncaught error
 
 it.throw('Oops!')
+</script>
+
+<script>
+  var source = document.querySelector('#source');
+  var code = document.querySelector('#code')
+  source.innerHTML = code.innerHTML
+  hljs.highlightBlock(source);
 </script>

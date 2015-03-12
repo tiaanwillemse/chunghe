@@ -1,0 +1,39 @@
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+
+
+<pre id="source">
+</pre>
+<script id="code">
+
+function* someNumbers() {
+     yield 1;
+     yield 2;
+     yield 3;
+}
+var iter = someNumbers();
+console.log(iter.next()); // {value: 1, done: false}
+console.log(iter.next()); // {value: 2, done: false}
+console.log(iter.next()); // {value: 3, done: false}
+console.log(iter.next()); // {value: undefined, done: true}
+
+// or
+
+for (var num of someNumbers()) {
+     console.log(num);
+}
+
+
+console.log(iter[Symbol.iterator]);
+console.log(iter[Symbol.iterator]());
+console.log(iter[Symbol.iterator]() === iter);
+
+
+</script>
+<script>
+  var source = document.querySelector('#source');
+  var code = document.querySelector('#code')
+  source.innerHTML = code.innerHTML
+  hljs.highlightBlock(source);
+</script>

@@ -1,9 +1,14 @@
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 <script src="utils.js"></script>
 <button id="go">go</button>
 
 
-<script>
+<pre id="source">
+</pre>
+
+<script id="code">
   function get(url) {
     return new Promise(function(resolve, reject) {
       var req = new XMLHttpRequest();
@@ -45,4 +50,11 @@
 
 
 
+</script>
+
+<script>
+  var source = document.querySelector('#source');
+  var code = document.querySelector('#code')
+  source.innerHTML = code.innerHTML
+  hljs.highlightBlock(source);
 </script>

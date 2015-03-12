@@ -1,5 +1,11 @@
 
-<script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+
+
+<pre id="source">
+</pre>
+<script id="code">
   function* foo () {
     yield 1;
     yield 2;
@@ -11,4 +17,10 @@
   for (n of it) {
     console.log(n)
   }
+</script>
+<script>
+  var source = document.querySelector('#source');
+  var code = document.querySelector('#code')
+  source.innerHTML = code.innerHTML
+  hljs.highlightBlock(source);
 </script>
