@@ -1,0 +1,37 @@
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+
+
+<pre id="source">
+</pre>
+<script id="code">
+function* fib(){
+  var n1 = 1;
+  var n2 = 1;
+  while (1){
+    var current = n2;
+    n2 = n1;
+    n1 = n1 + current;
+    yield current;
+  }
+}
+function* take(list ,n) {
+  var i = 0;
+  for (var x of list) {
+    if (n === i++) {
+      return;
+    }
+    yield x;
+  }
+}
+for (var x of take(fib(), 5)) {
+  console.log(x)
+}
+</script>
+<script>
+  var source = document.querySelector('#source');
+  var code = document.querySelector('#code')
+  source.innerHTML = code.innerHTML
+  hljs.highlightBlock(source);
+</script>
