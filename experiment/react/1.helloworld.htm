@@ -3,21 +3,22 @@
 
 <html>
 <body>
-<script src="lib/build/react.min.js"></script>
+<script src="./lib/react.js"></script>
 <script>
 
-// React.renderComponent to render a component (HelloMessage component)
+// React.render to render a component (HelloMessage component)
 // document.body is where to mount this component
-// every component must implement at least `render` functino
+// every component must implement at least `render` function
 // properties pass to component could be read from `this.props` inside the component
+// `null` means no child for the div
 
 var HelloMessage = React.createClass({
   render: function() {
-    return React.DOM.div({}, 'Hello ' + this.props.name) // <- this.props
+    return React.createElement('div', null, 'Hello ' + this.props.name);
   }
 });
 
-React.renderComponent(HelloMessage({name: 'John'}), document.body)
+React.render(React.createElement(HelloMessage, {name: 'John'}), document.body);
 </script>
 </body>
 </html>

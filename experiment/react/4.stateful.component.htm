@@ -9,42 +9,49 @@
 </head>
 <body>
 <div id="app"></div>
-<script src="lib/build/react.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script type="text/coffeescript">
 
-#   getInitialState to set the initial state
-#   set set via @setState, should never modify the state directly
-#   component lifecycle: 
-#    1. Mounting: componentWillMount
-#    2. Mounting: componentDidMount
-#    3. Updating: componentWillReceiveProps
-#    4. Updating: shouldComponentUpdate
-#    5. Updating: componentWillUpdate
-#    6. Updating: componentDidUpdate
-#    7. Unmounting: componentWillUnmount
-#  only have to think about user interface and data structure (secondsElapsed is the only state needed for this app)
+<script src="./lib/react.js"></script>
+<script src="./lib/babel-browser.js"></script>
+<script type="text/babel">
 
-{div, h4} = React.DOM
+/*
+   initialCount passed as props for the Counter component
+   this.state to set the initial internal state
+   set set via @setState, should never modify the state directly
 
-Timer = React.createClass(
-  getInitialState: ->
-    secondsElapsed: 0
+   component lifecycle: 
+    1. Mounting: componentWillMount
+    2. Mounting: componentDidMount
+    3. Updating: componentWillReceiveProps
+    4. Updating: shouldComponentUpdate
+    5. Updating: componentWillUpdate
+    6. Updating: componentDidUpdate
+    7. Unmounting: componentWillUnmount
+  only have to think about user interface and data structure (count is the only state needed for this app)
+*/
 
-  tick: ->
-    @setState(secondsElapsed: @state.secondsElapsed + 1)
-  
-  componentDidMount: ->
-    @interval = window.setInterval(@tick, 1000)
 
-  componentWillUnmount: ->
-    clearInterval(@interval)
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {count: +props.initialCount}
+  }
 
-  render: ->
-    div null, 'Seconds Elapsed: ', @state.secondsElapsed
-)
+  tick() {
+    this.setState({count: this.state.count + 1});
+  }
 
-React.renderComponent(Timer(null), document.querySelector('#app'))
+  componentDidMount() {
+    this.interval = setInterval(this.tick.bind(this), 1000);
+  }
+
+  render() {
+    return (
+      <div> Seconds Elapsed: {this.state.count}</div>
+    );
+  }
+}
+React.render(<Counter initialCount="0" />, document.body);
 </script>
 </body>
 </html>
